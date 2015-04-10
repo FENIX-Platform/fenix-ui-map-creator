@@ -291,7 +291,10 @@ define([
 
         FENIX_FX_MAP_Adapter.prototype.getJoinData = function (data, geoColumnIndex, valueColumnIhdex) {
             var joindata = [];
+
+            // TODO: remove cachedValues on final version. Check on join data consistency?
             var cachedValues = {}
+            
             // TODO: add on check
             data.forEach(_.bind(function (row) {
                 var obj = {}
