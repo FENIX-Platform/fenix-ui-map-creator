@@ -37,7 +37,7 @@ define([
                             layers: 'fenix:gaul0_faostat_3857',
                             joincolumn: 'faost_code',
                             joincolumnlabel: 'areanamee'
-                        },
+                        }
                     },
                     style: {
                         layertype: 'JOIN',
@@ -47,20 +47,6 @@ define([
                         lang: 'EN',
                         opacity: '0.7'
                     }
-                },
-
-                data: {},
-
-                aux: {
-                    ids: [],
-                    subjects: [],
-                    id2index: {},
-                    index2id: {},
-                    //contains id_column : {code : label}
-                    code2label: {},
-                    subject2id: {},
-                    id2subject: {},
-                    nameIndexes: []
                 }
             },
             e = {

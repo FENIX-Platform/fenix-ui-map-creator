@@ -22,7 +22,6 @@ requirejs(['./paths'], function (paths) {
             //})
 
             $.get("../tests/dataset/FAOSTAT_QC.json", function (model) {
-                console.log(model);
                 mapCreator.addLayer(model);
             })
         })
