@@ -171,6 +171,7 @@ define([
         };
 
         FENIX_FX_MAP_Adapter.prototype.addLayer = function (model) {
+            var layer = null;
             // TODO: switch to check if it's a fenix layer
             if (!model.hasOwnProperty("metadata")) {
                 this.errors['metadata'] = "Model does not contain 'metadata' attribute.";
@@ -180,12 +181,15 @@ define([
             // Handle layers from FENIX (D3S)
             if (!model.hasOwnProperty("data")) {
                 // standard layer
-                this.fenixMap.addLayer(new FM.layer(this.createLayerFenix(model)));
+                layer = new FM.layer(this.createLayerFenix(model));
+                this.fenixMap.addLayer(layer);
             }
             else {
                 // Create Join data layer
-                this.fenixMap.addLayer(new FM.layer(this.createLayerFenixJoin(model)));
+                layer = new FM.layer(this.createLayerFenix(model));
+                this.fenixMap.addLayer(layer);
             }
+            return layer;
         }
 
         FENIX_FX_MAP_Adapter.prototype.createLayerFenix = function (model) {
@@ -247,6 +251,17 @@ define([
                     },
                     showpopup: true
                 }
+
+                // TODO: add check on the zoomto data (move it to a function)
+                var codes = []
+                layer.joindata.forEach(function (code) {
+                    _.keys(code).forEach(function (key) {
+                        codes.push(key)
+                    });
+                });
+                var zoomlayer = layer.layers.split(":");
+                zoomlayer = zoomlayer.length > 1? zoomlayer[1]: zoomlayer[0];
+                this.fenixMap.zoomTo(zoomlayer, layer.joincolumn, codes);
                 return layer;
             } else {
                 console.error(this.errors);
