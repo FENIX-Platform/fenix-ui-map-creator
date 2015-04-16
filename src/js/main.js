@@ -23,6 +23,7 @@ requirejs(['./paths'], function (paths) {
 
             $.get("../tests/dataset/FAOSTAT_QC.json", function (model) {
                 mapCreator.addLayer(model);
+                mapCreator.addCountryBoundaries()
             })
         })
     });

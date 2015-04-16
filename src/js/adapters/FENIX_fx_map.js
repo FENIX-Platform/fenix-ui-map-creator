@@ -161,9 +161,6 @@ define([
             this.fenixMap.createMap();
             // Map Ready event
             amplify.publish(e.READY, this);
-
-            // if add boundaries by default
-            //this.fenixMap.addLayer(new FM.layer(this.config.layers.boundary));
         };
 
         FENIX_FX_MAP_Adapter.prototype.addLayer = function (model) {
@@ -271,17 +268,28 @@ define([
                 }
             }, this));
 
-            // TODO: Handle reference Area
-            var referenceArea = null;
-
             if (this._validateJoinColumnInput(geoColumn)) {
+                // TODO: check reference area and if exist the variable geoColumn['domain']['codes'][0].idCodeList
+                //var layer = this.join.layerMapping[geoColumn['domain']['codes'][0].idCodeList.toLowerCase()];
+                var layer = null;
+                var codelist = geoColumn['domain']['codes'][0].idCodeList.toLowerCase();
+
+                // if codelist has a mapping with the join.layerMapping then use it.
+                if (this.join.layerMapping[codelist]) {
+                    var layer = this.join.layerMapping[codelist];
+                }
+                // else check with the referenceArea the right correspondacy
+                else {
+                    // TODO: Handle reference Area
+                    var referenceArea = null;
+                }
+
+                // data model to be mapped
                 var data = model['data'];
 
-                // TODO: check reference area and if exist the variable geoColumn['domain']['codes'][0].idCodeList
-                var layer = this.join.layerMapping[geoColumn['domain']['codes'][0].idCodeList.toLowerCase()];
-
                 // check measurementunit
-                // TODO: Add measurement unit to the layer definition
+                // TODO: Add measurement unit to the layer definition (using label column of the mu)
+                //data[0][muColumn.index ]
 
                 // get joinData
                 layer.joindata = this.getJoinData(data, geoColumn.index, valueColumn.index);
@@ -294,7 +302,6 @@ define([
 
             // TODO: remove cachedValues on final version. Check on join data consistency?
             var cachedValues = {}
-            
             // TODO: add on check
             data.forEach(_.bind(function (row) {
                 var obj = {}
@@ -359,6 +366,13 @@ define([
             // TODO: check domain and referencearea if needed
 
             return (Object.keys(this.errors).length === 0);
+        }
+
+        FENIX_FX_MAP_Adapter.prototype.addCountryBoundaries = function (layer) {
+            // if add boundaries by default
+            if (layer)
+                this.config.layers.boundary = $.extend(true, layer, this.config.layers.boundary);
+            this.fenixMap.addLayer(new FM.layer(this.config.layers.boundary));
         }
 
         return FENIX_FX_MAP_Adapter;
