@@ -15,16 +15,15 @@ define(function () {
             underscore: "//fenixapps.fao.org/repository/js/underscore/1.7.0/underscore.min",
             amplify: "//fenixapps.fao.org/repository/js/amplify/1.1.2/amplify.min",
 
-            'handlebars': 'node_modules/handlebars/dist/handlebars.min',
-            'domReady':  'node_modules/domReady/domReady',
+            'handlebars': "{FENIX_CDN}/js/handlebars/2.0.0/handlebars",
 
             // fenix-ui-map-js
             'import-dependencies':'http://fenixapps.fao.org/repository/js/FENIX/utils/import-dependencies-1.0',
-            'leaflet': '../../node_modules/leaflet/dist/leaflet',
-            'jquery.power.tip': '../../node_modules/jquery-powertip/dist/jquery.powertip.min',
-            'jquery-ui':   'http://fenixapps.fao.org/repository/js/jquery-ui/1.10.3/jquery-ui-1.10.3.custom.min',
+            'leaflet': '{FENIX_CDN}/js/leaflet/0.7.3/leaflet',
+            'jquery.power.tip': '{FENIX_CDN}/js/jquery.power.tip/1.2.0/jquery.powertip.min',
+            'jquery-ui': 'http://fenixapps.fao.org/repository/js/jquery-ui/1.10.3/jquery-ui-1.10.3.custom.min',
             'jquery.i18n.properties': 'http://fenixapps.fao.org/repository/js/jquery/1.0.9/jquery.i18n.properties-min',
-            'jquery.hoverIntent': '../../node_modules/jquery.hoverIntent/jquery.hoverIntent.min',
+            'jquery.hoverIntent': '{FENIX_CDN}/js/jquery.hoverIntent/1.8.0/jquery.hoverIntent.min',
 
             'fenix-ui-map': '../../libs/fenix-ui-map/fenix-ui-map.min',
             'fenix-ui-map-config': '../../libs/fenix-ui-map/fenix-ui-map-config'
