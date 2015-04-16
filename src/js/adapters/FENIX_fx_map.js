@@ -11,8 +11,8 @@ define([
         var defaultOptions = {
                 lang: 'EN',
                 s: {
-                    //CONTENT: '[data-role="content"]'
-                    CONTENT: '#map'
+                    CONTENT: '[data-role="content"]'
+                   // CONTENT: '#map'
                 },
                 //type: 'timeseries', //[custom, scatter, pie]
 
@@ -66,7 +66,11 @@ define([
         }
 
         FENIX_FX_MAP_Adapter.prototype.render = function (config) {
+            //config.s.CONTENT = '#map';
             $.extend(true, this, config);
+
+            console.log(config)
+            console.log(this)
 
             if (this._validateInput() === true) {
                 this._initVariable();
