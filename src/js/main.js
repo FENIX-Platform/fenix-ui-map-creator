@@ -21,10 +21,16 @@ requirejs(['./paths'], function (paths) {
             //    mapCreator.addLayer(model)
             //})
 
-            $.get("../tests/dataset/FAOSTAT_QC.json", function (model) {
+            //$.get("../tests/dataset/FAOSTAT_QC.json", function (model) {
+            //    mapCreator.addLayer(model);
+            //    mapCreator.addCountryBoundaries()
+            //})
+            //
+            $.get('http://fenix.fao.org/d3s_fenix/msd/resources/uid/CSTAT_Kenya_AreaHarvested_PrimaryCrops_GeoDistribution_2008?full=true&dsd=true', function (model) {
                 mapCreator.addLayer(model);
                 mapCreator.addCountryBoundaries()
             })
+
         })
     });
 });

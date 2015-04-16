@@ -33,6 +33,13 @@ define([
                         gaul1: {
                             layerName: ''
                         },
+
+                        gaul_adm1: {
+                            layers: 'fenix:gaul1_3857',
+                            joincolumn: 'adm1_code',
+                            joincolumnlabel: 'adm1_name'
+                        },
+
                         faostat_countrycodes: {
                             layers: 'fenix:gaul0_faostat_3857',
                             joincolumn: 'faost_code',
@@ -280,8 +287,10 @@ define([
                 }
                 // else check with the referenceArea the right correspondacy
                 else {
+                    geoColumn['domain']['codes'][0].idCodeList.toLowerCase();
                     // TODO: Handle reference Area
-                    var referenceArea = null;
+                    var referenceArea = metadata["meContent"]["seReferencePopulation"]["referenceArea"]['codes'][0].code.toLowerCase();
+                    var layer = this.join.layerMapping[codelist + "_" + referenceArea];
                 }
 
                 // data model to be mapped
