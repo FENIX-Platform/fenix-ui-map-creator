@@ -190,7 +190,7 @@ define([
             }
             else {
                 // Create Join data layer
-                layer = new FM.layer(this.createLayerFenix(model));
+                layer = new FM.layer(this.createLayerFenixJoin(model));
                 this.fenixMap.addLayer(layer);
             }
             return layer;
@@ -229,7 +229,6 @@ define([
         }
 
         // JOIN
-
         FENIX_FX_MAP_Adapter.prototype.createLayerFenixJoin = function (model) {
             if (this._validateJoinInput(model) === true) {
 
