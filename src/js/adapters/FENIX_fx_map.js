@@ -69,9 +69,6 @@ define([
             //config.s.CONTENT = '#map';
             $.extend(true, this, config);
 
-            console.log(config)
-            console.log(this)
-
             if (this._validateInput() === true) {
                 this._initVariable();
                 this._prepareData();
@@ -400,6 +397,10 @@ define([
             if (layer)
                 this.config.layers.boundary = $.extend(true, layer, this.config.layers.boundary);
             this.fenixMap.addLayer(new FM.layer(this.config.layers.boundary));
+        }
+
+        FENIX_FX_MAP_Adapter.prototype.invalidateSize = function () {
+            this.fenixMap.map.invalidateSize();
         }
 
         return FENIX_FX_MAP_Adapter;

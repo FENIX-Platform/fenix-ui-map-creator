@@ -17,11 +17,11 @@ define([
 
         MapCreator.prototype.render = function (config) {
             if (this._validateInput(config)) {
-                this.preloadResouces(config);
+                this.preloadResources(config);
             }
         };
 
-        MapCreator.prototype.preloadResouces = function ( config ) {
+        MapCreator.prototype.preloadResources = function ( config ) {
 
             var baseTemplate = this.getTemplateUrl(),
                 adapter =  this.getAdapterUrl(),
@@ -66,6 +66,10 @@ define([
 
         MapCreator.prototype.addCountryBoundaries = function () {
             return this.adapter.addCountryBoundaries()
+        };
+
+        MapCreator.prototype.invalidateSize = function () {
+            return this.adapter.invalidateSize()
         };
 
         return MapCreator;
