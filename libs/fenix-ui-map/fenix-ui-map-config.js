@@ -40,9 +40,9 @@ define(function() {
 		METADATA_GET_LAYERS: 'http://168.202.28.214:5005/search/layer/',
 		METADATA_GET_LAYERS_BY_PRODUCT: 'http://168.202.28.214:5005/search/layer/product/',
 
-        // ZOOM TO BBOX
-        ZOOM_TO_BBOX: 'http://fenix.fao.org/geo/fenix/spatialquery/db/spatial/bbox/layer/', //country/iso2/IT'
+		// ZOOM TO BBOX
+		ZOOM_TO_BBOX: 'http://fenix.fao.org/geo/fenix/spatialquery/db/spatial/bbox/layer/', //country/iso2/IT'
 
-        CSS_TO_SLD: 'http://fenixapps2.fao.org/geoservices/CSS2SLD' //country/iso2/IT'
-    };
+		CSS_TO_SLD: 'http://fenixapps2.fao.org/geoservices/CSS2SLD' //country/iso2/IT'
+	};
 });

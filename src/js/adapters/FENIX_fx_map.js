@@ -12,7 +12,7 @@ define([
                 lang: 'EN',
                 s: {
                     //CONTENT: '[data-role="content"]'
-                    CONTENT: 'map'
+                    CONTENT: '#map'
                 },
                 //type: 'timeseries', //[custom, scatter, pie]
 
