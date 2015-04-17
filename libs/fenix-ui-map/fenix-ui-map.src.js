@@ -1,5 +1,5 @@
 /* 
- * fenix-ui-map v0.0.1 - 2015-04-16 
+ * fenix-ui-map v0.0.1 - 2015-04-17 
  * Copyright 2015  
  * FENIX Development Team 
  * 
@@ -1038,6 +1038,11 @@ FM.WMSSERVERS = {
             label_EN: 'FENIX', // not currently used for the multilingual, it is needed?
             url: 'http://fenix.fao.org/demo/fenix/geoserver/earthstat/wms'
         },
+        {
+            label: 'Green Housegasses Data',
+            label_EN: 'FENIX', // not currently used for the multilingual, it is needed?
+            url: 'http://fenix.fao.org/demo/ghg/geoserver/wms'
+        },
 //        {
 //            label: 'FENIX WMS Server',
 //            label_EN: 'FENIX', // not currently used for the multilingual, it is needed?
@@ -1209,8 +1214,15 @@ FM.Map = FM.Class.extend({
         var suffix = FM.Util.randomID();
         var mapContainerID =  suffix + '-container-map';
         var mapID =  suffix + '-map';
-        
-        $(id).append("<div class='fm-map-box fm-box' id='"+ mapContainerID +"'><div>");
+
+        var mapDIV = "<div class='fm-map-box fm-box' id='"+ mapContainerID +"'><div>";
+        //TODO check if id or other selector
+        console.log($(id));
+        console.log($(id).length);
+        $(id).length > 0? $(id).append(mapDIV): $("#" + id).append(mapDIV);
+        //typeof id === 'string'?  $("#" + id).append(mapDIV): $(id).append(mapDIV);
+
+        //$(id).append("<div class='fm-map-box fm-box' id='"+ mapContainerID +"'><div>");
         $("#" + mapContainerID).append("<div style='width:100%; height: 100%;' id='"+ mapID +"'><div>");
 
         this.id = mapID;
