@@ -8,6 +8,8 @@ define([
     ],
     function ($, baseConfig, _) {
 
+        'use strict';
+
         var defaultOptions = {
                 lang: 'EN',
                 s: {
@@ -160,7 +162,7 @@ define([
         };
 
         FENIX_FX_MAP_Adapter.prototype._createConfiguration = function () {
-            this.config = $.extend(true, baseConfig, this.options, this.data);
+            this.config = $.extend(true, this.options, this.data, baseConfig);
         };
 
         FENIX_FX_MAP_Adapter.prototype._renderMap = function () {
