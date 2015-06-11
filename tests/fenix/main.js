@@ -1,13 +1,13 @@
 /*global requirejs, amplify, console*/
-requirejs(['../../src/js/paths'], function (paths) {
+requirejs(['../../src/js/paths','../utils'], function (paths, Utils) {
 
     'use strict';
 
-    var FENIX_CDN = "http://fenixapps.fao.org/repository",
+    var FENIX_CDN = "//fenixapps.fao.org/repository",
         baseUrl = '../../src/js/';
 
     // replace placeholders and baseUrl
-    paths = replacePlaceholders(paths);
+    paths = Utils.replacePlaceholders(paths, FENIX_CDN);
     paths.baseUrl = baseUrl;
 
     console.log(paths);
@@ -45,13 +45,4 @@ requirejs(['../../src/js/paths'], function (paths) {
         });
     });
 
-    /** TODO: make it nicer or use directly the compiler **/
-    function replacePlaceholders(paths) {
-        for(var i in Object.keys(paths.paths)) {
-            if (paths.paths.hasOwnProperty(Object.keys(paths.paths)[i])) {
-                paths.paths[Object.keys(paths.paths)[i]] = paths.paths[Object.keys(paths.paths)[i]].replace('{FENIX_CDN}', FENIX_CDN);
-            }
-        }
-        return paths;
-    }
 });
