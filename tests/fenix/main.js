@@ -1,9 +1,11 @@
-/*global requirejs*/
-requirejs(['./paths'], function (paths) {
+/*global requirejs, amplify, console*/
+requirejs(['../../src/js/paths'], function (paths) {
 
-    requirejs.config(paths);
+    'use strict';
 
-    requirejs(['fx-m-c/start', 'amplify'], function (MapCreator) {
+    requirejs.config(replacePlaceholders(paths));
+
+    requirejs(['fx-m-c/start', 'jquery', 'amplify'], function (MapCreator, $) {
 
         var mapCreator = new MapCreator();
 
@@ -28,9 +30,19 @@ requirejs(['./paths'], function (paths) {
             //
             $.get('http://fenix.fao.org/d3s_fenix/msd/resources/uid/CSTAT_Kenya_AreaHarvested_PrimaryCrops_GeoDistribution_2008?full=true&dsd=true', function (model) {
                 mapCreator.addLayer(model);
-                mapCreator.addCountryBoundaries()
-            })
+                mapCreator.addCountryBoundaries();
+            });
 
-        })
+        });
     });
+
+    /** TODO: make it nicer or use directly the compiler **/
+    function replacePlaceholders(paths) {
+        for(var i in Object.keys(paths.paths)) {
+            if (paths.paths.hasOwnProperty(Object.keys(paths.paths)[i])) {
+                paths.paths[Object.keys(paths.paths)[i]] = paths.paths[Object.keys(paths.paths)[i]].replace('{FENIX_CDN}', paths.FENIX_CDN);
+            }
+        }
+        return paths;
+    }
 });

@@ -5,6 +5,8 @@ define([
     ],
     function ($, template) {
 
+        'use strict';
+
         var defaultOptions = {};
 
         function Base_template() {
@@ -14,13 +16,11 @@ define([
         Base_template.prototype.render = function (config) {
             $.extend(true, this, config);
 
-            console.log(config)
-
             if (this._validateInput() === true) {
                 this._initVariable();
                 this._injectTemplate();
             } else {
-                console.error(this.errors);
+                //console.error(this.errors);
                 throw new Error("FENIX Map creator has not a valid configuration");
             }
         };

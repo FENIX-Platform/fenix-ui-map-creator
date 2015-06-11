@@ -7,6 +7,8 @@ define([
     ],
     function (RequireJS, $) {
 
+        'use strict';
+
         var defaultOptions = {
             default: ''
         };
@@ -57,19 +59,19 @@ define([
 
         // Handle Layers
         MapCreator.prototype.addLayer = function (model) {
-            return this.adapter.addLayer(model)
+            return this.adapter.addLayer(model);
         };
 
         MapCreator.prototype.removeLayer = function (model) {
-            return this.adapter.removeLayer(model)
+            return this.adapter.removeLayer(model);
         };
 
         MapCreator.prototype.addCountryBoundaries = function () {
-            return this.adapter.addCountryBoundaries()
+            return this.adapter.addCountryBoundaries();
         };
 
         MapCreator.prototype.invalidateSize = function () {
-            return this.adapter.invalidateSize()
+            return this.adapter.invalidateSize();
         };
 
         return MapCreator;
