@@ -3,14 +3,7 @@ define(function () {
 
     'use strict';
 
-
-
     var config = {
-
-        // CDN
-        FENIX_CDN: "http://fenixapps.fao.org/repository",
-
-        baseUrl: '../../src/js/',
 
         paths : {
             'fx-m-c/start' : './start',

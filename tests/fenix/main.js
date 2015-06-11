@@ -3,7 +3,16 @@ requirejs(['../../src/js/paths'], function (paths) {
 
     'use strict';
 
-    requirejs.config(replacePlaceholders(paths));
+    var FENIX_CDN = "http://fenixapps.fao.org/repository",
+        baseUrl = '../../src/js/';
+
+    // replace placeholders and baseUrl
+    paths = replacePlaceholders(paths);
+    paths.baseUrl = baseUrl;
+
+    console.log(paths);
+
+    requirejs.config(paths);
 
     requirejs(['fx-m-c/start', 'jquery', 'amplify'], function (MapCreator, $) {
 
@@ -40,7 +49,7 @@ requirejs(['../../src/js/paths'], function (paths) {
     function replacePlaceholders(paths) {
         for(var i in Object.keys(paths.paths)) {
             if (paths.paths.hasOwnProperty(Object.keys(paths.paths)[i])) {
-                paths.paths[Object.keys(paths.paths)[i]] = paths.paths[Object.keys(paths.paths)[i]].replace('{FENIX_CDN}', paths.FENIX_CDN);
+                paths.paths[Object.keys(paths.paths)[i]] = paths.paths[Object.keys(paths.paths)[i]].replace('{FENIX_CDN}', FENIX_CDN);
             }
         }
         return paths;
