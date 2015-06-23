@@ -69,7 +69,9 @@ define(function () {
                     joincolumnlabel: 'adm0_name'
                 },
                 gaul1: {
-                    layerName: ''
+                    layers: 'fenix:gaul1_3857',
+                    joincolumn: 'adm1_code',
+                    joincolumnlabel: 'adm1_name'
                 },
 
                 gaul_adm1: {
@@ -81,8 +83,21 @@ define(function () {
                 faostat_countrycodes: {
                     layers: 'fenix:gaul0_faostat_3857',
                     joincolumn: 'faost_code',
-                    joincolumnlabel: 'areanamee'
+                    joincolumnlabel: 'areanamee',
+                },
+
+                gaul: {
+                    layers: 'fenix:gaul1_3857',
+                    joincolumn: 'adm1_code',
+                    joincolumnlabel: 'adm1_name'
+                },
+
+                gaul1_afg: {
+                    layers: 'fenix:gaul1_3857',
+                    joincolumn: 'adm1_code',
+                    joincolumnlabel: 'adm1_name'
                 }
+
             },
             style: {
                 layertype: 'JOIN',

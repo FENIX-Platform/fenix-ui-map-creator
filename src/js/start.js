@@ -62,8 +62,8 @@ define([
             return this.adapter.addLayer(model);
         };
 
-        MapCreator.prototype.removeLayer = function (model) {
-            return this.adapter.removeLayer(model);
+        MapCreator.prototype.removeLayer = function (layer) {
+            return this.adapter.removeLayer(layer);
         };
 
         MapCreator.prototype.addCountryBoundaries = function () {

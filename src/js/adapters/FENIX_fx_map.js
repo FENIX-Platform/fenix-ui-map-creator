@@ -62,6 +62,7 @@ define([
             //this.$dsd = this.$metadata.dsd;
             //this.$columns = this.$dsd.columns;
             //this.$data = this.model.data;
+            this.$map = $(this.o.container).find(this.o.s.CONTENT);
         };
 
         FENIX_FX_MAP_Adapter.prototype._validateInput = function () {
@@ -128,8 +129,7 @@ define([
         };
 
         FENIX_FX_MAP_Adapter.prototype._renderMap = function () {
-            // map
-            this.fenixMap = new FM.Map(this.o.s.CONTENT, this.o.fenix_ui_map, this.o.leaflet);
+            this.fenixMap = new FM.Map(this.$map, this.o.fenix_ui_map, this.o.leaflet);
             this.fenixMap.createMap();
             // Map Ready event
             amplify.publish(e.READY, this);
@@ -263,14 +263,14 @@ define([
 
                 // if codelist has a mapping with the join.layerMapping then use it.
                 if (this.o.join.layerMapping[codelist]) {
-                    var layer = this.o.join.layerMapping[codelist];
+                    layer = this.o.join.layerMapping[codelist];
                 }
                 // else check with the referenceArea the right correspondacy
                 else {
                     geoColumn['domain']['codes'][0].idCodeList.toLowerCase();
                     // TODO: Handle reference Area
                     var referenceArea = metadata["meContent"]["seReferencePopulation"]["referenceArea"]['codes'][0].code.toLowerCase();
-                    var layer = this.o.join.layerMapping[codelist + "_" + referenceArea];
+                    layer = this.o.join.layerMapping[codelist + "_" + referenceArea];
                 }
 
                 // data model to be mapped
@@ -363,6 +363,10 @@ define([
                 this.o.layers.boundary = $.extend(true, {}, layer, this.o.layers.boundary);
             }
             this.fenixMap.addLayer(new FM.layer(this.o.layers.boundary));
+        };
+
+        FENIX_FX_MAP_Adapter.prototype.removeLayer = function (layer) {
+            this.fenixMap.removeLayer(layer);
         };
 
         FENIX_FX_MAP_Adapter.prototype.invalidateSize = function () {
