@@ -139,7 +139,7 @@ define([
             var layer = null;
             // TODO: switch to check if it's a fenix layer
             if (!model.hasOwnProperty("metadata")) {
-                this.errors['metadata'] = "Model does not contain 'metadata' attribute.";
+                this.errors.metadata = "Model does not contain 'metadata' attribute.";
                 throw new Error("FENIX Map creator has not a valid configuration");
             }
 
@@ -158,16 +158,16 @@ define([
         };
 
         FENIX_FX_MAP_Adapter.prototype.createLayerFenix = function (model) {
-            var metadata = model["metadata"];
+            var metadata = model.metadata;
             var layer = {};
 
             // Define the layer
             if (metadata.hasOwnProperty("dsd")) {
                 layer.layers = "";
-                if (metadata["dsd"].hasOwnProperty("workspace")) {
-                    layer.layers += metadata["dsd"]["workspace"] + ":";
+                if (metadata.dsd.hasOwnProperty("workspace")) {
+                    layer.layers += metadata.dsd.workspace + ":";
                 }
-                layer.layers += metadata["dsd"]["layerName"];
+                layer.layers += metadata.dsd.layerName;
             }
             else {
                 this.errors['dsd'] = "Model['metadata'] does not contain 'dsd' attribute.";
@@ -274,7 +274,7 @@ define([
                 }
 
                 // data model to be mapped
-                var data = model['data'];
+                var data = model.data;
 
                 // check measurementunit
                 // TODO: Add measurement unit to the layer definition (using label column of the mu)
@@ -319,12 +319,12 @@ define([
 
             //Metadata TODO: add all metadata checks
             if (!model.hasOwnProperty("metadata")) {
-                this.errors['metadata'] = "'metadata' attribute not present.";
+                this.errors.metadata = "'metadata' attribute not present.";
             }
 
             //Data
             if (!model.hasOwnProperty("data")) {
-                this.errors['data'] = "'data' attribute not present.";
+                this.errors.data = "'data' attribute not present.";
             }
 
             return (Object.keys(this.errors).length === 0);
@@ -335,20 +335,20 @@ define([
 
             //Metadata TODO: add all metadata checks
             if (!column.hasOwnProperty('key')) {
-                this.errors['column'] = "'key' attribute not present.";
+                this.errors.column = "'key' attribute not present.";
             }
             else {
-                if (column['key'] !== true) {
-                    this.errors['column'] = "'key' is not true.";
+                if (column.key !== true) {
+                    this.errors.column = "'key' is not true.";
                 }
             }
 
             if (!column.hasOwnProperty('dataType')) {
-                this.errors['column'] = "'dataType' attribute not present.";
+                this.errors.column = "'dataType' attribute not present.";
             }
             else {
-                if (column['dataType'] != 'code') {
-                    this.errors['column'] = "'dataType' attribute is not a coding system.";
+                if (column.dataType !== 'code') {
+                    this.errors.column = "'dataType' attribute is not a coding system.";
                 }
             }
 
