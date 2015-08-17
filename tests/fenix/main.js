@@ -17,8 +17,7 @@ requirejs(['../../src/js/paths','../utils'], function (paths, Utils) {
         var mapCreator = new MapCreator();
 
         mapCreator.render({
-            container: '.content',
-            model: {}
+            container: '.content'
         });
 
         // TODO: add map to existing map
@@ -35,7 +34,7 @@ requirejs(['../../src/js/paths','../utils'], function (paths, Utils) {
             //    mapCreator.addCountryBoundaries()
             //})
             //
-            $.get('http://fenix.fao.org/d3s_fenix/msd/resources/uid/CSTAT_Kenya_AreaHarvested_PrimaryCrops_GeoDistribution_2008?full=true&dsd=true', function (model) {
+            $.get('http://fenix.fao.org/d3s/msd/resources/uid/FAOSTAT_fertilizer_test?full=true&dsd=true', function (model) {
                 mapCreator.addLayer(model);
                 mapCreator.addCountryBoundaries();
             });

@@ -15,12 +15,20 @@ define([
 
         function MapCreator() {
             $.extend(true, this, defaultOptions);
+            return this;
         }
 
         MapCreator.prototype.render = function (config) {
-            if (this._validateInput(config)) {
-                this.preloadResources(config);
+
+            var self = this;
+            try {
+                if (this._validateInput(config)) {
+                    this.preloadResources(config);
+                }
+            }catch(e) {
+                self.onError(e);
             }
+
         };
 
         MapCreator.prototype.preloadResources = function ( config ) {
@@ -40,6 +48,10 @@ define([
                 //currently both of them are sync fns
                 self.template.render(config);
                 self.adapter.render(config);
+
+                if (typeof config.onReady === 'function') {
+                    config.onReady(self);
+                }
             });
         };
 
