@@ -40,7 +40,7 @@ define(function () {
                 layers: 'fenix:gaul0_faostat_3857',
                 // TODO: remove the url to wms
                 urlWMS: 'http://fenixapps2.fao.org/geoserver-demo',
-                opacity: '0.6',
+                opacity: '0.9',
                 joincolumn: 'adm0_code',
                 joincolumnlabel: 'areanamee',
                 layertype: 'JOIN',

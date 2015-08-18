@@ -70,8 +70,8 @@ define([
         };
 
         // Handle Layers
-        MapCreator.prototype.addLayer = function (model) {
-            return this.adapter.addLayer(model);
+        MapCreator.prototype.addLayer = function (model, options) {
+            return this.adapter.addLayer(model, options);
         };
 
         MapCreator.prototype.removeLayer = function (layer) {

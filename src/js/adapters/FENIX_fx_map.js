@@ -135,7 +135,7 @@ define([
             amplify.publish(e.READY, this);
         };
 
-        FENIX_FX_MAP_Adapter.prototype.addLayer = function (model) {
+        FENIX_FX_MAP_Adapter.prototype.addLayer = function (model, options) {
             var layer = null;
             // TODO: switch to check if it's a fenix layer
             if (!model.hasOwnProperty("metadata")) {
@@ -146,18 +146,22 @@ define([
             // Handle layers from FENIX (D3S)
             if (!model.hasOwnProperty("data")) {
                 // standard layer
-                layer = new FM.layer(this.createLayerFenix(model));
-                this.fenixMap.addLayer(layer);
+                layer = this.createLayerFenix(model);
             }
             else {
                 // Create Join data layer
-                layer = new FM.layer(this.createLayerFenixJoin(model));
-                this.fenixMap.addLayer(layer);
+                layer = this.createLayerFenixJoin(model);
             }
+            if (options !== null) {
+                layer = $.extend(true, {}, layer, options);
+            }
+            layer = new FM.layer(layer);
+            this.fenixMap.addLayer(layer);
+            console.log(layer);
             return layer;
         };
 
-        FENIX_FX_MAP_Adapter.prototype.createLayerFenix = function (model) {
+        FENIX_FX_MAP_Adapter.prototype.createLayerFenix = function (model, options) {
             var metadata = model.metadata;
             var layer = {};
 

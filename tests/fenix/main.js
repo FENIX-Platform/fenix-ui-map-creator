@@ -35,7 +35,7 @@ requirejs(['../../src/js/paths','../utils'], function (paths, Utils) {
             //})
             //
             $.get('http://fenix.fao.org/d3s/msd/resources/uid/FAOSTAT_fertilizer_test?full=true&dsd=true', function (model) {
-                mapCreator.addLayer(model);
+                mapCreator.addLayer(model, { colorramp: 'Greens' });
                 mapCreator.addCountryBoundaries();
             });
 
