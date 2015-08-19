@@ -209,7 +209,7 @@ define([
                     }
                 }
                 else {
-                    layer.layertitle = "(JOIN) " + model['metadata']['uid'];
+                    layer.layertitle = model['metadata']['uid'];
                 }
 
                 // create popup
