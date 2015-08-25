@@ -157,7 +157,6 @@ define([
             }
             layer = new FM.layer(layer);
             this.fenixMap.addLayer(layer);
-            console.log(layer);
             return layer;
         };
 

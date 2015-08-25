@@ -15,9 +15,9 @@ define(function () {
                 zoomcontrol: 'bottomright'
             },
             guiController: {
-                overlay: true,
+                overlay: false,
                 baselayer: true,
-                wmsLoader: true
+                wmsLoader: false
             },
             gui: {
                 disclaimerfao: true
@@ -25,7 +25,8 @@ define(function () {
         },
         leaflet: {
             zoomControl: false,
-            attributionControl: false
+            attributionControl: false,
+            minZoom: 1
         },
         layers: {
             boundary: {
@@ -47,7 +48,7 @@ define(function () {
                 jointype: 'shaded',
                 openlegend: true,
                 defaultgfi: true,
-                colorramp: 'OrRd',
+                colorramp: 'YlGn',
                 lang: 'en'
             }
         },
@@ -109,7 +110,8 @@ define(function () {
                 defaultgfi: true,
                 openlegend: true,
                 lang: 'EN',
-                opacity: '0.7'
+                opacity: '0.7',
+                colorramp: 'Greens'
             }
         }
         // TODO: add boundaries option
