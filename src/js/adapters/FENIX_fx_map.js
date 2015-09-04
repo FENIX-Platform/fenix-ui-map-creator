@@ -195,6 +195,7 @@ define([
 
         // JOIN
         FENIX_FX_MAP_Adapter.prototype.createLayerFenixJoin = function (model) {
+
             if (this._validateJoinInput(model) === true) {
 
                 // create the join layer
@@ -211,14 +212,15 @@ define([
                     layer.layertitle = model['metadata']['uid'];
                 }
 
+
                 // create popup
                 // TODO: Handle more dinamically from the model 'geo' codelist.
                 layer.customgfi = {
                     content: {
-                        EN: "<div class='fm-popup'>{{"+ layer.joincolumnlabel +"}}<div class='fm-popup-join-content'>{{{"+ layer.joincolumn+"}}}</div></div>"
+                        EN: "<div class='fm-popup'>{{"+ layer.joincolumnlabel +"}}<div class='fm-popup-join-content'>{{{"+ layer.joincolumn + "}}} </div></div>"
                     },
                     showpopup: true
-                }
+                };
 
                 // TODO: add check on the zoomto data (move it to a function)
                 var codes = []
@@ -281,10 +283,12 @@ define([
 
                 // check measurementunit
                 // TODO: Add measurement unit to the layer definition (using label column of the mu)
-                //data[0][muColumn.index ]
+                //
 
                 // get joinData
                 layer.joindata = this.getJoinData(data, geoColumn.index, valueColumn.index);
+                layer.mesurementunit = data[0][muColumn.index];
+
                 return layer;
             }
         };
@@ -300,7 +304,7 @@ define([
                 var code = row[geoColumnIndex];
                 var value = row[valueColumnIhdex];
                 if (code && value) {
-                    obj[code] = value;
+                    obj[code] = value ;
                     if (!cachedValues.hasOwnProperty(code)) {
                         // check null values
                         cachedValues[code] = true;
@@ -308,6 +312,7 @@ define([
                     }
                 }
             }, this));
+
             return joindata;
         };
 

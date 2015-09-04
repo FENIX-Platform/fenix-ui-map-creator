@@ -1,5 +1,5 @@
 /*global define*/
-define(function () {
+define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) {
 
     'use strict';
 
@@ -33,14 +33,14 @@ define(function () {
                 layers: 'fenix:gaul0_line_3857',
                 layertitle: 'Country Boundaries',
                 // TODO: remove the url to wms
-                urlWMS: 'http://fenixapps2.fao.org/geoserver-demo',
+                urlWMS: ( C.SERVER || DC.SERVER ) + '/geoserver-demo',
                 opacity: '0.9',
                 lang: 'en'
             },
             gaul0: {
                 layers: 'fenix:gaul0_faostat_3857',
                 // TODO: remove the url to wms
-                urlWMS: 'http://fenixapps2.fao.org/geoserver-demo',
+                urlWMS: ( C.SERVER || DC.SERVER ) + '/geoserver-demo',
                 opacity: '0.9',
                 joincolumn: 'adm0_code',
                 joincolumnlabel: 'areanamee',
@@ -53,7 +53,7 @@ define(function () {
             }
         },
         url: {
-            wms: "http://fenix.fao.org/demo/ghg/geoserver"
+            wms: C.WMS_URL | DC.WMS_URL
         },
         geoSubject: 'geo',
         valueSubject: 'value',
