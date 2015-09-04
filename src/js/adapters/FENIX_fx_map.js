@@ -20,7 +20,7 @@ define([
                 geoSubject: 'geo',
                 valueSubject: 'value',
                 // measurement unit
-                muSubject: null
+                muSubject: 'um'
             },
             e = {
                 DESTROY: 'fx.component.map.destroy',
@@ -217,7 +217,7 @@ define([
                 // TODO: Handle more dinamically from the model 'geo' codelist.
                 layer.customgfi = {
                     content: {
-                        EN: "<div class='fm-popup'>{{"+ layer.joincolumnlabel +"}}<div class='fm-popup-join-content'>{{{"+ layer.joincolumn + "}}} </div></div>"
+                        EN: "<div class='fm-popup'>{{"+ layer.joincolumnlabel +"}}<div class='fm-popup-join-content'>{{{"+ layer.joincolumn + "}}} " +layer.mesurementunit+ "</div></div>"
                     },
                     showpopup: true
                 };
@@ -280,6 +280,7 @@ define([
 
                 // data model to be mapped
                 var data = model.data;
+
 
                 // check measurementunit
                 // TODO: Add measurement unit to the layer definition (using label column of the mu)
