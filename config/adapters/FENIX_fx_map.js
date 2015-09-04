@@ -86,7 +86,11 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
                     joincolumn: 'faost_code',
                     joincolumnlabel: 'areanamee',
                 },
-
+                faostat_countries: {
+                    layers: 'fenix:gaul0_faostat_3857',
+                    joincolumn: 'faost_code',
+                    joincolumnlabel: 'areanamee',
+                },
                 gaul: {
                     layers: 'fenix:gaul1_3857',
                     joincolumn: 'adm1_code',
