@@ -212,12 +212,11 @@ define([
                     layer.layertitle = model['metadata']['uid'];
                 }
 
-
                 // create popup
                 // TODO: Handle more dinamically from the model 'geo' codelist.
                 layer.customgfi = {
                     content: {
-                        EN: "<div class='fm-popup'>{{"+ layer.joincolumnlabel +"}}<div class='fm-popup-join-content'>{{{"+ layer.joincolumn + "}}} " +layer.mesurementunit+ "</div></div>"
+                        EN: "<div class='fm-popup'>{{"+ layer.joincolumnlabel +"}}<div class='fm-popup-join-content'>{{{"+ layer.joincolumn + "}}} {{measurementunit}}</div></div>"
                     },
                     showpopup: true
                 };
@@ -288,7 +287,12 @@ define([
 
                 // get joinData
                 layer.joindata = this.getJoinData(data, geoColumn.index, valueColumn.index);
-                layer.mesurementunit = data[0][muColumn.index];
+
+                // TODO: check on the column index
+                layer.measurementunit = data[0][muColumn.index];
+
+                // TODO: check if is the right legendtitle
+                layer.legendtitle = layer.measurementunit;
 
                 return layer;
             }

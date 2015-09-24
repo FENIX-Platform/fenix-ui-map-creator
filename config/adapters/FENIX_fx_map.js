@@ -115,7 +115,8 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
                 openlegend: true,
                 lang: 'EN',
                 opacity: '0.7',
-                colorramp: 'Greens'
+                colorramp: 'Greens',
+                decimalvalues: 2
             }
         }
         // TODO: add boundaries option
