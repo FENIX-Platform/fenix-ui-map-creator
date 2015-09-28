@@ -53,7 +53,7 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
             }
         },
         url: {
-            wms: C.WMS_URL | DC.WMS_URL
+            wms: C.WMS_URL ||  DC.WMS_URL
         },
         geoSubject: 'geo',
         valueSubject: 'value',
@@ -70,6 +70,11 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
                     joincolumnlabel: 'adm0_name'
                 },
                 gaul1: {
+                    layers: 'fenix:gaul1_3857',
+                    joincolumn: 'adm1_code',
+                    joincolumnlabel: 'adm1_name'
+                },
+                uae_gaul: {
                     layers: 'fenix:gaul1_3857',
                     joincolumn: 'adm1_code',
                     joincolumnlabel: 'adm1_name'
