@@ -245,7 +245,7 @@ define([
             var valueColumn = {};
             var muColumn = {};
             columns.forEach(_.bind(function (column, index) {
-                if (column.subject === this.o.geoSubject) {
+                if (column.subject === this.o.geoSubject || column.id === this.o.geoSubject ) {
                     geoColumn = column;
                     geoColumn.index = index;
                 }
