@@ -101,13 +101,11 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
                     joincolumn: 'adm1_code',
                     joincolumnlabel: 'adm1_name'
                 },
-                UNECA_Partner: {
+                uneca_partner: {
                     layers: 'fenix:gaul0_faostat3_3857',
                     joincolumn: 'iso3',
                     joincolumnlabel: 'areanamee'
                 },
-
-
                 gaul1_afg: {
                     layers: 'fenix:gaul1_3857',
                     joincolumn: 'adm1_code',

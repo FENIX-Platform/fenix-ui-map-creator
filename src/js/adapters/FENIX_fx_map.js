@@ -136,6 +136,7 @@ define([
         };
 
         FENIX_FX_MAP_Adapter.prototype.addLayer = function (model, options) {
+
             var layer = null;
             // TODO: switch to check if it's a fenix layer
             if (!model.hasOwnProperty("metadata")) {
@@ -151,6 +152,7 @@ define([
             else {
                 // Create Join data layer
                 layer = this.createLayerFenixJoin(model);
+
             }
             if (options !== null) {
                 layer = $.extend(true, {}, layer, options);
@@ -195,9 +197,7 @@ define([
 
         // JOIN
         FENIX_FX_MAP_Adapter.prototype.createLayerFenixJoin = function (model) {
-
             if (this._validateJoinInput(model) === true) {
-
                 // create the join layer
                 var layer = this.getJoinLayer(model);
                 $.extend(true, layer, this.o.join.style);
@@ -259,6 +259,7 @@ define([
                 }
             }, this));
 
+
             if (this._validateJoinColumnInput(geoColumn)) {
                 // TODO: check reference area and if exist the variable geoColumn['domain']['codes'][0].idCodeList
                 //var layer = this.join.layerMapping[geoColumn['domain']['codes'][0].idCodeList.toLowerCase()];
@@ -269,6 +270,7 @@ define([
                 if (this.o.join.layerMapping[codelist]) {
                     layer = this.o.join.layerMapping[codelist];
                 }
+
                 // else check with the referenceArea the right correspondacy
                 else {
                     geoColumn['domain']['codes'][0].idCodeList.toLowerCase();
@@ -295,6 +297,8 @@ define([
                 layer.legendtitle = layer.measurementunit;
 
                 return layer;
+            } else{
+                console.error('Error JoinColumnInput not valid')
             }
         };
 
