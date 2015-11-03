@@ -3,7 +3,8 @@ define([
         'require',
         'jquery',
         'fx-m-c/templates/base_template',
-        'fx-m-c/adapters/FENIX_fx_map'
+        'fx-m-c/adapters/FENIX_fx_map',
+        'fx-m-c/adapters/FAOSTAT_fx_map'
     ],
     function (RequireJS, $) {
 
@@ -34,7 +35,7 @@ define([
         MapCreator.prototype.preloadResources = function ( config ) {
 
             var baseTemplate = this.getTemplateUrl(),
-                adapter =  this.getAdapterUrl(),
+                adapter =  this.getAdapterUrl((config.adapter) ? config.adapter.adapterType : null),
                 self = this;
 
             RequireJS([
@@ -55,9 +56,19 @@ define([
             });
         };
 
-        MapCreator.prototype.getAdapterUrl = function () {
+        MapCreator.prototype.getAdapterUrl = function (adapterType) {
             //TODO add here adapter discovery logic
-            return this.adapterUrl ? this.adapterUrl : 'fx-m-c/adapters/FENIX_fx_map';
+            if (adapterType !== null && adapterType !== undefined) {
+                switch (adapterType.toLocaleLowerCase()) {
+                    case 'fenix':
+                        return this.adapterUrl ? this.adapterUrl : 'fx-m-c/adapters/FENIX_fx_map';
+                    case 'faostat':
+                        return this.adapterUrl ? this.adapterUrl : 'fx-m-c/adapters/FAOSTAT_fx_map';
+                }
+            }
+            else {
+                return this.adapterUrl ? this.adapterUrl : 'fx-m-c/adapters/FENIX_fx_map';
+            }
         };
 
         MapCreator.prototype.getTemplateUrl = function () {
@@ -70,8 +81,8 @@ define([
         };
 
         // Handle Layers
-        MapCreator.prototype.addLayer = function (model, options) {
-            return this.adapter.addLayer(model, options);
+        MapCreator.prototype.addLayer = function (model, layerOptions, modelOptions) {
+            return this.adapter.addLayer(model, layerOptions, modelOptions);
         };
 
         MapCreator.prototype.removeLayer = function (layer) {
