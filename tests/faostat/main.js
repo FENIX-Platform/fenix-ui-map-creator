@@ -29,12 +29,35 @@ requirejs(['../../src/js/paths','../utils'], function (paths, Utils) {
         // TODO: add JOIN from catalog to the map
         amplify.subscribe('fx.component.map.ready', function () {
 
-            $.get('data/data.json', function (model) {
+  /*          $.get('data/aggregation.json', function (model) {
                 mapCreator.addLayer(model, { colorramp: 'Greens' }, {
                     modelType: 'faostat',
                     dimensions: {
                         geoDimensions: {
-                            dimension_id: 'areagroup',
+                            dimension_id: 'area',
+                            type: 'code'
+                        },
+                        valueDimensions: {
+                            dimension_id: 'value',
+                            type: 'value'
+                        },
+                        muDimensions: {
+                            dimension_id: 'unit',
+                            type: 'unit'
+                        }
+                    },
+                    layerMapping: 'faostat'
+                });
+                mapCreator.addCountryBoundaries();
+            });*/
+
+
+            $.get('data/aggregation_object.json', function (model) {
+                mapCreator.addLayer(model, { colorramp: 'Greens' }, {
+                    modelType: 'faostat',
+                    dimensions: {
+                        geoDimensions: {
+                            dimension_id: 'area',
                             type: 'code'
                         },
                         valueDimensions: {

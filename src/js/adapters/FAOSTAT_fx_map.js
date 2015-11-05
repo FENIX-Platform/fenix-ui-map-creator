@@ -14,13 +14,7 @@ define([
                 lang: 'EN',
                 s: {
                     CONTENT: '[data-role="content"]'
-                },
-                //type: 'timeseries', //[custom, scatter, pie]
-
-                geoSubject: 'geo',
-                valueSubject: 'value',
-                // measurement unit
-                muSubject: 'um'
+                }
             },
             e = {
                 DESTROY: 'fx.component.map.destroy',
@@ -290,7 +284,7 @@ define([
                 };
 
                 // TODO: add check on the zoomto data (move it to a function)
-                var codes = []
+                var codes = [];
                 layer.joindata.forEach(function (code) {
                     _.keys(code).forEach(function (key) {
                         codes.push(key);
@@ -317,14 +311,17 @@ define([
                 if (column.dimension_id === dimensions.geoDimensions.dimension_id && column.type === dimensions.geoDimensions.type){
                     geoColumn = column;
                     geoColumn.index = column.index;
+                    geoColumn.key = column.key;
                 }
                 if (column.dimension_id === dimensions.valueDimensions.dimension_id && column.type === dimensions.valueDimensions.type){
                     valueColumn = column;
                     valueColumn.index = column.index;
+                    valueColumn.key = column.key;
                 }
                 if (column.dimension_id === dimensions.muDimensions.dimension_id && column.type === dimensions.muDimensions.type){
                     muColumn = column;
-                    muColumn.index =column.index;
+                    muColumn.index = column.index;
+                    muColumn.key = column.key;
                 }
             }, this));
 
@@ -337,7 +334,7 @@ define([
                 // data model to be mapped
                 var data = model.data;
                 // get joinData
-                layer.joindata = this.getJoinData(data, geoColumn.index, valueColumn.index);
+                layer.joindata = this.getJoinData(data, geoColumn.key, valueColumn.key);
 
                 // TODO: check on the column index
                 layer.measurementunit = data[0][muColumn.index];
@@ -354,16 +351,17 @@ define([
             }
         };
 
-        FENIX_FX_MAP_Adapter.prototype.getJoinData = function (data, geoColumnIndex, valueColumnIhdex) {
+        FENIX_FX_MAP_Adapter.prototype.getJoinData = function (data, geoColumnKey, valueColumnKey) {
             var joindata = [];
 
             // TODO: remove cachedValues on final version. Check on join data consistency?
-            var cachedValues = {}
+            var cachedValues = {};
+            console.log(data);
             // TODO: add on check
             data.forEach(_.bind(function (row) {
-                var obj = {}
-                var code = row[geoColumnIndex];
-                var value = row[valueColumnIhdex];
+                var obj = {};
+                var code = row[geoColumnKey];
+                var value = row[valueColumnKey];
                 if (code && value) {
                     obj[code] = value ;
                     if (!cachedValues.hasOwnProperty(code)) {
