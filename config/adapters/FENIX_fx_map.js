@@ -64,6 +64,11 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
         join: {
 
             layerMapping: {
+                escap_area: {
+                    layers: 'fenix:gaul0_3857',
+                    joincolumn: 'adm0_code',
+                    joincolumnlabel: 'adm0_name'
+                },
                 gaul0: {
                     layers: 'fenix:gaul0_3857',
                     joincolumn: 'adm0_code',
