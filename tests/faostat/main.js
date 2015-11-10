@@ -55,7 +55,7 @@ requirejs(['../../src/js/paths','../utils'], function (paths, Utils) {
             $.get('data/aggregation_object.json', function (model) {
                 mapCreator.addLayer(model, { colorramp: 'Greens' }, {
                     modelType: 'faostat',
-                    dimensions: {
+/*                    dimensions: {
                         geoDimensions: {
                             dimension_id: 'area',
                             type: 'code'
@@ -69,7 +69,7 @@ requirejs(['../../src/js/paths','../utils'], function (paths, Utils) {
                             type: 'unit'
                         }
                     },
-                    layerMapping: 'faostat'
+                    layerMapping: 'faostat'*/
                 });
                 mapCreator.addCountryBoundaries();
             });

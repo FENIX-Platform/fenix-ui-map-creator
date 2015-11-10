@@ -11,6 +11,24 @@ define([
         'use strict';
 
         var defaultOptions = {
+                defaultModelOptions: {
+                    dimensions: {
+                        geoDimensions: {
+                            dimension_id: 'area',
+                            type: 'code'
+                        },
+                        valueDimensions: {
+                            dimension_id: 'value',
+                            type: 'value'
+                        },
+                        muDimensions: {
+                            dimension_id: 'unit',
+                            type: 'unit'
+                        }
+                    },
+                    layerMapping: 'faostat'
+                },
+
                 lang: 'EN',
                 s: {
                     CONTENT: '[data-role="content"]'
@@ -21,12 +39,14 @@ define([
                 READY: 'fx.component.map.ready'
             };
 
-        function FENIX_FX_MAP_Adapter() {
+        function FAOSTAT_FX_MAP_Adapter() {
             this.o = $.extend(true, {}, defaultOptions);
         }
 
-        FENIX_FX_MAP_Adapter.prototype.render = function (config) {
+        FAOSTAT_FX_MAP_Adapter.prototype.render = function (config) {
             this.o = $.extend(true, {}, this.o, config);
+
+            console.log(this.o);
 
             if (this._validateInput() === true) {
                 this._initVariable();
@@ -41,16 +61,16 @@ define([
             }
         };
 
-        FENIX_FX_MAP_Adapter.prototype._prepareData = function () {
+        FAOSTAT_FX_MAP_Adapter.prototype._prepareData = function () {
 
         };
 
-        FENIX_FX_MAP_Adapter.prototype._validateData = function () {
+        FAOSTAT_FX_MAP_Adapter.prototype._validateData = function () {
             this.errors = {};
             return (Object.keys(this.errors).length === 0);
         };
 
-        FENIX_FX_MAP_Adapter.prototype._initVariable = function () {
+        FAOSTAT_FX_MAP_Adapter.prototype._initVariable = function () {
             //this.$container = $(this.container).find(this.s.id);
             //this.$metadata = this.model.metadata;
             //this.$dsd = this.$metadata.dsd;
@@ -59,32 +79,34 @@ define([
             this.$map = $(this.o.container).find(this.o.s.CONTENT);
         };
 
-        FENIX_FX_MAP_Adapter.prototype._validateInput = function () {
+        FAOSTAT_FX_MAP_Adapter.prototype._validateInput = function () {
             this.errors = {};
 
             return (Object.keys(this.errors).length === 0);
         };
 
-        FENIX_FX_MAP_Adapter.prototype._onValidateDataSuccess = function () {
+        FAOSTAT_FX_MAP_Adapter.prototype._onValidateDataSuccess = function () {
             this.$mapRendered = true;
             this._createConfiguration();
             this._renderMap();
         };
 
-        FENIX_FX_MAP_Adapter.prototype._createConfiguration = function () {
+        FAOSTAT_FX_MAP_Adapter.prototype._createConfiguration = function () {
             this.o = $.extend(true, {}, baseConfig, this.o);
         };
 
-        FENIX_FX_MAP_Adapter.prototype._renderMap = function () {
+        FAOSTAT_FX_MAP_Adapter.prototype._renderMap = function () {
             this.fenixMap = new FM.Map(this.$map, this.o.fenix_ui_map, this.o.leaflet);
             this.fenixMap.createMap();
             // Map Ready event
             amplify.publish(e.READY, this);
         };
 
-        FENIX_FX_MAP_Adapter.prototype.addLayer = function (model, layerOptions, modelOptions) {
+        FAOSTAT_FX_MAP_Adapter.prototype.addLayer = function (model, layerOptions, modelOptions) {
 
-            var modelType = ((modelOptions === null || modelOptions === undefined)? 'fenix': (modelOptions.modelType) || 'fenix');
+            var modelType = ((modelOptions === null || modelOptions === undefined)? 'faostat': (modelOptions.modelType) || 'faostat');
+
+            modelOptions = $.extend(true, {}, this.o.defaultModelOptions, modelOptions);
 
             var layer = null;
             // TODO: switch to check if it's a fenix layer
@@ -117,7 +139,7 @@ define([
             return layer;
         };
 
-        FENIX_FX_MAP_Adapter.prototype.createLayerFenix = function (model) {
+        FAOSTAT_FX_MAP_Adapter.prototype.createLayerFenix = function (model) {
             var metadata = model.metadata;
             var layer = {};
 
@@ -151,7 +173,7 @@ define([
         };
 
         // JOIN
-        FENIX_FX_MAP_Adapter.prototype.createLayerFenixJoin = function (model) {
+        FAOSTAT_FX_MAP_Adapter.prototype.createLayerFenixJoin = function (model) {
             if (this._validateJoinInput(model) === true) {
                 // create the join layer
                 var layer = this.getJoinLayerFenix(model);
@@ -193,7 +215,7 @@ define([
             }
         };
 
-        FENIX_FX_MAP_Adapter.prototype.getJoinLayerFenix = function (model, modelOptions) {
+        FAOSTAT_FX_MAP_Adapter.prototype.getJoinLayerFenix = function (model, modelOptions) {
             var metadata = model['metadata'];
             var columns = metadata['dsd']['columns'];
             var geoColumn = {};
@@ -257,7 +279,7 @@ define([
             }
         };
 
-        FENIX_FX_MAP_Adapter.prototype.createLayerFaostatJoin = function (model, modelOptions) {
+        FAOSTAT_FX_MAP_Adapter.prototype.createLayerFaostatJoin = function (model, modelOptions) {
 
             if (this._validateJoinInput(model) === true) {
                 // create the join layer
@@ -300,7 +322,7 @@ define([
             }
         };
 
-        FENIX_FX_MAP_Adapter.prototype.getJoinLayerFaostat = function (model, modelOptions) {
+        FAOSTAT_FX_MAP_Adapter.prototype.getJoinLayerFaostat = function (model, modelOptions) {
             var metadata = model['metadata'];
             var columns = metadata['dsd'];
             var dimensions = modelOptions['dimensions'];
@@ -351,7 +373,7 @@ define([
             }
         };
 
-        FENIX_FX_MAP_Adapter.prototype.getJoinData = function (data, geoColumnKey, valueColumnKey) {
+        FAOSTAT_FX_MAP_Adapter.prototype.getJoinData = function (data, geoColumnKey, valueColumnKey) {
             var joindata = [];
 
             // TODO: remove cachedValues on final version. Check on join data consistency?
@@ -381,7 +403,7 @@ define([
         // column['key'] == true
         // column['domain']['codes'][0].idCodelist == gaul0
         // look to referenceArea i.e. gaul0, gaul2, gaul2)
-        FENIX_FX_MAP_Adapter.prototype._validateJoinInput = function (model) {
+        FAOSTAT_FX_MAP_Adapter.prototype._validateJoinInput = function (model) {
             this.errors = {};
 
             //Metadata TODO: add all metadata checks
@@ -397,11 +419,11 @@ define([
             return (Object.keys(this.errors).length === 0);
         };
 
-        FENIX_FX_MAP_Adapter.prototype._validateJoinColumnInputFaostat = function (column) {
+        FAOSTAT_FX_MAP_Adapter.prototype._validateJoinColumnInputFaostat = function (column) {
             return true;
         };
 
-        FENIX_FX_MAP_Adapter.prototype._validateJoinColumnInputFenix = function (column) {
+        FAOSTAT_FX_MAP_Adapter.prototype._validateJoinColumnInputFenix = function (column) {
             this.errors = {};
 
             //Metadata TODO: add all metadata checks
@@ -428,7 +450,7 @@ define([
             return (Object.keys(this.errors).length === 0);
         };
 
-        FENIX_FX_MAP_Adapter.prototype.addCountryBoundaries = function (layer) {
+        FAOSTAT_FX_MAP_Adapter.prototype.addCountryBoundaries = function (layer) {
             // if add boundaries by default
             if (layer !== null && layer !== undefined) {
                 this.o.layers.boundary = $.extend(true, {}, layer, this.o.layers.boundary);
@@ -436,13 +458,13 @@ define([
             this.fenixMap.addLayer(new FM.layer(this.o.layers.boundary));
         };
 
-        FENIX_FX_MAP_Adapter.prototype.removeLayer = function (layer) {
+        FAOSTAT_FX_MAP_Adapter.prototype.removeLayer = function (layer) {
             this.fenixMap.removeLayer(layer);
         };
 
-        FENIX_FX_MAP_Adapter.prototype.invalidateSize = function () {
+        FAOSTAT_FX_MAP_Adapter.prototype.invalidateSize = function () {
             this.fenixMap.map.invalidateSize();
         };
 
-        return FENIX_FX_MAP_Adapter;
+        return FAOSTAT_FX_MAP_Adapter;
     });
