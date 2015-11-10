@@ -21,6 +21,8 @@ define([
 
         MapCreator.prototype.render = function (config) {
 
+            console.log(config);
+
             var self = this;
             try {
                 if (this._validateInput(config)) {
