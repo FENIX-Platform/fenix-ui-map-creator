@@ -44,9 +44,8 @@ define([
         }
 
         FAOSTAT_FX_MAP_Adapter.prototype.render = function (config) {
-            this.o = $.extend(true, {}, this.o, config);
 
-            console.log(this.o);
+            this.o = $.extend(true, {}, this.o, config);
 
             if (this._validateInput() === true) {
                 this._initVariable();
@@ -378,7 +377,7 @@ define([
 
             // TODO: remove cachedValues on final version. Check on join data consistency?
             var cachedValues = {};
-            console.log(data);
+
             // TODO: add on check
             data.forEach(_.bind(function (row) {
                 var obj = {};
