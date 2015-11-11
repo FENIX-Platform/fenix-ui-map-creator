@@ -64,6 +64,23 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
         join: {
 
             layerMapping: {
+                faostat3: {
+                    'en': {
+                        layers: 'fenix:gaul0_faostat3_3857',
+                        joincolumn: 'faost_code',
+                        joincolumnlabel: 'areanamee'
+                    },
+                    'fr': {
+                        layers: 'fenix:gaul0_faostat3_3857',
+                        joincolumn: 'faost_code',
+                        joincolumnlabel: 'areanamef'
+                    },
+                    'es': {
+                        layers: 'fenix:gaul0_faostat3_3857',
+                        joincolumn: 'faost_code',
+                        joincolumnlabel: 'areanames'
+                    }
+                },
                 faostat: {
                     'en': {
                         layers: 'fenix:gaul0_faostat_3857',
