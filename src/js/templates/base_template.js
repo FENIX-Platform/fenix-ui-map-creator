@@ -1,9 +1,11 @@
 /*global define*/
 define([
         'jquery',
-        'text!fx-m-c/html/templates/base_template.hbs'
+        'handlebars',
+        //'text!fx-m-c/html/templates/base_template.hbs'
+        'text!fx-m-c/html/templates/custom_template.hbs'
     ],
-    function ($, template) {
+    function ($, Handlebars, template) {
 
         'use strict';
 
@@ -26,7 +28,11 @@ define([
         };
 
         Base_template.prototype._injectTemplate = function () {
-            this.$container.html(template);
+            console.log(this.template);
+
+
+            var t = Handlebars.compile(template);
+            this.$container.html(t(this.template || {}));
         };
 
         Base_template.prototype._initVariable = function () {
