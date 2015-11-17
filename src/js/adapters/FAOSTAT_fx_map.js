@@ -365,7 +365,6 @@ define([
 
                 // layerTitle?
                 console.warn("layer title?");
-                console.log(layer);
                 return layer;
             } else{
                 console.error('Error JoinColumnInput not valid')
