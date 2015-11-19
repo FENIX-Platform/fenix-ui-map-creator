@@ -2,10 +2,11 @@
 define([
         'jquery',
         'handlebars',
+        'loglevel',
         //'text!fx-m-c/html/templates/base_template.hbs'
         'text!fx-m-c/html/templates/custom_template.hbs'
     ],
-    function ($, Handlebars, template) {
+    function ($, Handlebars, log, template) {
 
         'use strict';
 
@@ -28,11 +29,10 @@ define([
         };
 
         Base_template.prototype._injectTemplate = function () {
-            console.log(this.template);
-
 
             var t = Handlebars.compile(template);
             this.$container.html(t(this.template || {}));
+
         };
 
         Base_template.prototype._initVariable = function () {

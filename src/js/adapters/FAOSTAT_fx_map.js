@@ -3,10 +3,11 @@ define([
         'jquery',
         'fx-m-c/config/adapters/FAOSTAT_fx_map',
         'underscore',
+        'loglevel',
         'fenix-ui-map',
         'amplify'
     ],
-    function ($, baseConfig, _) {
+    function ($, baseConfig, _, log) {
 
         'use strict';
 
@@ -157,11 +158,11 @@ define([
 
             // WMS Server
             if (model.hasOwnProperty("datasource")) {
-                console.warn("TODO: IMPORTAT! check which datasource and the right url from D3S!");
+                log.warn("TODO: IMPORTAT! check which datasource and the right url from D3S!");
                 // TODO: IMPORTAT! check which datasource and the right url from D3S!
             }
             else {
-                console.warn("'datasource' propery not found in model. Using the default wms server: " + this.config.url.wms);
+                log.warn("'datasource' propery not found in model. Using the default wms server: " + this.config.url.wms);
                 layer.urlWMS = this.config.url.wms;
             }
 
@@ -209,7 +210,7 @@ define([
                 this.fenixMap.zoomTo(zoomlayer, layer.joincolumn, codes);
                 return layer;
             } else {
-                console.error(this.errors);
+                log.error(this.errors);
                 throw new Error("FENIX Map creator has not a valid JOIN configuration");
             }
         };
@@ -274,7 +275,7 @@ define([
 
                 return layer;
             } else{
-                console.error('Error JoinColumnInput not valid')
+                log.error('Error JoinColumnInput not valid')
             }
         };
 
@@ -316,7 +317,7 @@ define([
                 this.fenixMap.zoomTo(zoomlayer, layer.joincolumn, codes);
                 return layer;
             } else {
-                console.error(this.errors);
+                log.error(this.errors);
                 throw new Error("FENIX Map creator has not a valid JOIN configuration");
             }
         };
@@ -364,10 +365,10 @@ define([
                 layer.legendtitle = layer.measurementunit;
 
                 // layerTitle?
-                console.warn("layer title?");
+                log.warn("layer title?");
                 return layer;
             } else{
-                console.error('Error JoinColumnInput not valid')
+                log.error('Error JoinColumnInput not valid')
             }
         };
 
