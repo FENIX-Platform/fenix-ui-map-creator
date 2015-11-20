@@ -80,6 +80,10 @@ define([
             return true;
         };
 
+        MapCreator.prototype.getContainer = function () {
+            return this.template.container;
+        };
+
         // Handle Layers
         MapCreator.prototype.addLayer = function (model, layerOptions, modelOptions) {
             return this.adapter.addLayer(model, layerOptions, modelOptions);
