@@ -134,6 +134,8 @@ define([
                 layer = $.extend(true, {}, layer, layerOptions);
             }
 
+            //layer.layertitle = 'Country Boundadsdassaddsaaries',
+
             layer = new FM.layer(layer);
             this.fenixMap.addLayer(layer);
             return layer;
@@ -189,6 +191,8 @@ define([
                     layer.layertitle = model['metadata']['uid'];
                 }
 
+                log.info(model)
+
                 // create popup
                 // TODO: Handle more dinamically from the model 'geo' codelist.
                 layer.customgfi = {
@@ -224,6 +228,7 @@ define([
             columns.forEach(_.bind(function (column, index) {
                 if (column.subject === this.o.geoSubject || column.id === this.o.geoSubject ) {
                     geoColumn = column;
+                    geoColumn.index = index;
                     geoColumn.index = index;
                 }
                 if (column.subject === this.o.valueSubject) {
@@ -286,21 +291,12 @@ define([
                 var layer = this.getJoinLayerFaostat(model, modelOptions);
                 $.extend(true, layer, this.o.join.style);
 
-                // Layer title TODO: Add title if exist (check in the validator)
-                if (model['metadata'].hasOwnProperty("title")) {
-                    if (model['metadata']['title'][this.o.lang] !== null) {
-                        layer.layertitle = model['metadata']['title'][this.o.lang];
-                    }
-                }
-                else {
-                    layer.layertitle = model['metadata']['uid'];
-                }
-
                 // create popup
                 // TODO: Handle more dinamically from the model 'geo' codelist.
                 layer.customgfi = {
                     content: {
-                        EN: "<div class='fm-popup'>{{"+ layer.joincolumnlabel +"}}<div class='fm-popup-join-content'>{{{"+ layer.joincolumn + "}}} {{measurementunit}}</div></div>"
+                        EN: "<div class='fm-popup'>{{"+ layer.joincolumnlabel +"}}<div class='fm-popup-join-content'>{{{"+ layer.joincolumn + "}}}</div></div>"
+                        //EN: "<div class='fm-popup'>{{"+ layer.joincolumnlabel +"}}<div class='fm-popup-join-content'>{{{"+ layer.joincolumn + "}}} {{measurementunit}}</div></div>"
                     },
                     showpopup: true
                 };
@@ -323,6 +319,7 @@ define([
         };
 
         FAOSTAT_FX_MAP_Adapter.prototype.getJoinLayerFaostat = function (model, modelOptions) {
+
             var metadata = model['metadata'];
             var columns = metadata['dsd'];
             var dimensions = modelOptions['dimensions'];
@@ -359,13 +356,15 @@ define([
                 layer.joindata = this.getJoinData(data, geoColumn.key, valueColumn.key);
 
                 // TODO: check on the column index
-                layer.measurementunit = data[0][muColumn.index];
+                layer.measurementunit = data[0][muColumn.key] || "";
 
                 // TODO: check if is the right legendtitle
-                layer.legendtitle = layer.measurementunit;
+                //layer.legendtitle = layer.measurementunit;
 
-                // layerTitle?
-                log.warn("layer title?");
+                // TODO: handle the tiitle in a better way
+                layer.layertitle = layer.measurementunit;
+
+
                 return layer;
             } else{
                 log.error('Error JoinColumnInput not valid')
