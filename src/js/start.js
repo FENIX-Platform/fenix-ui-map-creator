@@ -112,13 +112,13 @@ define(['require',
 
         MapCreator.prototype.bindEventListeners = function () {
 
-            amplify.subscribe('fx.m.c.invalidateSize', this, this.invalidateSize);
+            //amplify.subscribe('fx.m.c.invalidateSize', this, this.invalidateSize);
 
         };
 
         MapCreator.prototype.unbindEventListeners = function () {
 
-            amplify.unsubscribe('fx.m.c.invalidateSize',this.invalidateSize);
+            //amplify.unsubscribe('fx.m.c.invalidateSize',this.invalidateSize);
 
         };
 
