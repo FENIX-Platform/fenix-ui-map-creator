@@ -1,12 +1,13 @@
 /*global define*/
-define([
-        'require',
+define(['require',
         'jquery',
+        'loglevel',
+        'q',
         'fx-m-c/templates/base_template',
         'fx-m-c/adapters/FENIX_fx_map',
         'fx-m-c/adapters/FAOSTAT_fx_map'
     ],
-    function (RequireJS, $) {
+    function (RequireJS, $, log, Q) {
 
         'use strict';
 
@@ -20,16 +21,20 @@ define([
         }
 
         MapCreator.prototype.render = function (config) {
+            this.deferred = Q.defer();
 
-            var self = this;
             try {
                 if (this._validateInput(config)) {
                     this.preloadResources(config);
+
+                    this.bindEventListeners();
+
                 }
             }catch(e) {
-                self.onError(e);
+                this.onError(e);
             }
 
+            return this.deferred.promise;
         };
 
         MapCreator.prototype.preloadResources = function ( config ) {
@@ -53,6 +58,8 @@ define([
                 if (typeof config.onReady === 'function') {
                     config.onReady(self);
                 }
+
+                self.deferred.resolve(self);
             });
         };
 
@@ -98,7 +105,27 @@ define([
         };
 
         MapCreator.prototype.invalidateSize = function () {
+            log.info('invalidateSize')
+            // dirty fix for invalidate size
             return this.adapter.invalidateSize();
+        };
+
+        MapCreator.prototype.bindEventListeners = function () {
+
+            amplify.subscribe('fx.m.c.invalidateSize', this, this.invalidateSize);
+
+        };
+
+        MapCreator.prototype.unbindEventListeners = function () {
+
+            amplify.unsubscribe('fx.m.c.invalidateSize',this.invalidateSize);
+
+        };
+
+        MapCreator.prototype.destroy = function () {
+
+            this.unbindEventListeners();
+
         };
 
         return MapCreator;
