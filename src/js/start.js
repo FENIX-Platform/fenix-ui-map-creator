@@ -3,11 +3,13 @@ define(['require',
         'jquery',
         'loglevel',
         'q',
+        'fx-m-c/config/events',
         'fx-m-c/templates/base_template',
         'fx-m-c/adapters/FENIX_fx_map',
-        'fx-m-c/adapters/FAOSTAT_fx_map'
+        'fx-m-c/adapters/FAOSTAT_fx_map',
+        'amplify'
     ],
-    function (RequireJS, $, log, Q) {
+    function (RequireJS, $, log, Q, E) {
 
         'use strict';
 
@@ -91,6 +93,10 @@ define(['require',
             return this.template.container;
         };
 
+        MapCreator.prototype.addBaseLayer = function (layer) {
+            return this.adapter.addBaseLayer(layer);
+        };
+
         // Handle Layers
         MapCreator.prototype.addLayer = function (model, layerOptions, modelOptions) {
             return this.adapter.addLayer(model, layerOptions, modelOptions);
@@ -105,20 +111,22 @@ define(['require',
         };
 
         MapCreator.prototype.invalidateSize = function () {
-            log.info('invalidateSize')
+
+            log.info('invalidateSize');
             // dirty fix for invalidate size
             return this.adapter.invalidateSize();
+
         };
 
         MapCreator.prototype.bindEventListeners = function () {
 
-            //amplify.subscribe('fx.m.c.invalidateSize', this, this.invalidateSize);
+            amplify.subscribe(E.MAP_REFRESH, this, this.invalidateSize);
 
         };
 
         MapCreator.prototype.unbindEventListeners = function () {
 
-            //amplify.unsubscribe('fx.m.c.invalidateSize',this.invalidateSize);
+            amplify.unsubscribe(E.MAP_REFRESH, this.invalidateSize);
 
         };
 
