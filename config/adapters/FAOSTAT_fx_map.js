@@ -16,11 +16,11 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
             },
             guiController: {
                 overlay: false,
-                baselayer: true,
+                baselayer: false,
                 wmsLoader: false
             },
             gui: {
-                disclaimerfao: true
+                disclaimerfao: false
             }
         },
         leaflet: {
