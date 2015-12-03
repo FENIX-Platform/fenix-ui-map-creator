@@ -107,8 +107,9 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
                 openlegend: true,
                 lang: 'EN',
                 opacity: '0.8',
-                //colorramp: 'Blues',
-                colorramp: 'YlGnBu',
+                colorramp: 'Blues',
+                //colorramp: 'PuBu',
+                //colorramp: 'YlGnBu',
                 decimalvalues: 2,
                 intervals: 5
             }
