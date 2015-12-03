@@ -33,14 +33,15 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
                 layers: 'fenix:gaul0_line_3857',
                 layertitle: 'Country Boundaries',
                 // TODO: remove the url to wms
-                urlWMS: ( C.SERVER || DC.SERVER ) + '/geoserver-demo',
-                opacity: '0.9',
+                urlWMS: ( C.WMS_URL || DC.WMS_URL ),
+                styles: 'gaul0_line_white',
+                opacity: '0.7',
                 lang: 'en'
             },
             gaul0: {
                 layers: 'fenix:gaul0_faostat_3857',
                 // TODO: remove the url to wms
-                urlWMS: ( C.SERVER || DC.SERVER ) + '/geoserver-demo',
+                urlWMS: ( C.WMS_URL || DC.WMS_URL ),
                 opacity: '0.9',
                 joincolumn: 'adm0_code',
                 joincolumnlabel: 'areanamee',
@@ -105,8 +106,9 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
                 defaultgfi: true,
                 openlegend: true,
                 lang: 'EN',
-                opacity: '0.7',
-                colorramp: 'Blues',
+                opacity: '0.8',
+                //colorramp: 'Blues',
+                colorramp: 'YlGnBu',
                 decimalvalues: 2,
                 intervals: 5
             }
