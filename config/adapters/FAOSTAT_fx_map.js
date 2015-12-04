@@ -25,7 +25,7 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
         },
         leaflet: {
             zoomControl: false,
-            attributionControl: false,
+            attributionControl: true,
             minZoom: 1
         },
         layers: {
