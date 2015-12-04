@@ -8,8 +8,8 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
         fenix_ui_map: {
 
             plugins: {
-                disclaimerfao: true,
-                geosearch: true,
+                disclaimerfao: false,
+                geosearch: false,
                 mouseposition: false,
                 controlloading : true,
                 zoomcontrol: 'bottomright'
@@ -107,7 +107,8 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
                 openlegend: true,
                 lang: 'EN',
                 opacity: '0.8',
-                colorramp: 'Blues',
+                colorramp: 'Greens',
+                //colorramp: 'Blues',
                 //colorramp: 'PuBu',
                 //colorramp: 'YlGnBu',
                 decimalvalues: 2,

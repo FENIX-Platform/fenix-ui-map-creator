@@ -310,6 +310,7 @@ define([
                 });
                 var zoomlayer = layer.layers.split(":");
                 zoomlayer = zoomlayer.length > 1? zoomlayer[1]: zoomlayer[0];
+                //log.info(zoomlayer, layer.joincolumn, codes)
                 this.fenixMap.zoomTo(zoomlayer, layer.joincolumn, codes);
                 return layer;
             } else {
