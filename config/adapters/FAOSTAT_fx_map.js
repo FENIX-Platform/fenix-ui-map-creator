@@ -34,8 +34,8 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
                 layertitle: 'Country Boundaries',
                 // TODO: remove the url to wms
                 urlWMS: ( C.WMS_URL || DC.WMS_URL ),
-                styles: 'gaul0_line_white',
-                opacity: '0.7',
+                //styles: 'gaul0_line_white',
+                opacity: '0.2',
                 lang: 'en'
             },
             gaul0: {
@@ -106,7 +106,7 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
                 defaultgfi: true,
                 openlegend: true,
                 lang: 'EN',
-                opacity: '0.8',
+                opacity: '0.75',
                 colorramp: 'Greens',
                 //colorramp: 'Blues',
                 //colorramp: 'PuBu',
