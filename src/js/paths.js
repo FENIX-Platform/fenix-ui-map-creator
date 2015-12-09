@@ -26,8 +26,8 @@ define(function () {
             'jquery.i18n.properties': '{FENIX_CDN}/js/jquery/1.0.9/jquery.i18n.properties-min',
             'jquery.hoverIntent': '{FENIX_CDN}/js/jquery.hoverIntent/1.8.0/jquery.hoverIntent.min',
 
-            'fenix-ui-map': '{FENIX_CDN}/js/fenix-ui-map/0.1.0/fenix-ui-map.min',
-            'fenix-ui-map-config': '{FENIX_CDN}/js/fenix-ui-map/0.1.0/fenix-ui-map-config'
+            //'fenix-ui-map': '{FENIX_CDN}/js/fenix-ui-map/0.1.0/fenix-ui-map.min',
+            //'fenix-ui-map-config': '{FENIX_CDN}/js/fenix-ui-map/0.1.0/fenix-ui-map-config'
         },
 
         shim: {
