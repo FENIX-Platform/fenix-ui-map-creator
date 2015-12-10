@@ -118,6 +118,6 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
         }
 
         // TODO: add boundaries option
-        
+
     };
 });
