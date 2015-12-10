@@ -162,6 +162,27 @@ define([
             return layer;
         };
 
+        FENIX_FX_MAP_Adapter.prototype.addLayerByName = function(layerName, layerTitle) {
+            
+            var layer = new FM.layer({
+                layers: layerName,
+                layertitle: layerTitle,
+                urlWMS: this.config.url.wms,
+                opacity: '1',
+                lang: 'EN',
+                openlegend: true,
+                defaultgfi: true,
+                customgfi: {
+                    content: {
+                        EN: "{{GRAY_INDEX}}"
+                    },
+                    showpopup: false
+                }
+            });
+            this.fenixMap.addLayer(layer);
+            return layer;
+        };
+
         FENIX_FX_MAP_Adapter.prototype.createLayerFenix = function (model, options) {
             var metadata = model.metadata;
             var layer = {};

@@ -74,6 +74,11 @@ define([
             return this.adapter.addLayer(model, options);
         };
 
+        // Handle Layers
+        MapCreator.prototype.addLayerByName = function (layerName, layerTitle) {
+            return this.adapter.addLayerByName(layerName, layerTitle);
+        };
+
         MapCreator.prototype.removeLayer = function (layer) {
             return this.adapter.removeLayer(layer);
         };
