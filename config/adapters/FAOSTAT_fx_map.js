@@ -12,7 +12,8 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
                 geosearch: false,
                 mouseposition: false,
                 controlloading : true,
-                zoomcontrol: 'bottomright'
+                zoomcontrol: 'bottomright',
+                scalecontrol: false
             },
             guiController: {
                 overlay: false,
