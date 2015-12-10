@@ -22,6 +22,14 @@ define([
                 muSubject: 'um',
                 fenix_ui_map: {
                     DEFAULT_WMS_SERVER: 'http://fenix.fao.org/demo/fenix/geoserver',
+                    guiController: {
+                        overlay: true,
+                        baselayer: true,
+                        wmsLoader: false
+                    },
+                    gui: {
+                        disclaimerfao: false
+                    }
                 }
             },
             e = {
@@ -69,54 +77,6 @@ define([
 
         FENIX_FX_MAP_Adapter.prototype._validateInput = function () {
             this.errors = {};
-
-            ////Container
-            //if (!this.hasOwnProperty("container")) {
-            //    this.errors['container'] = "'container' attribute not present.";
-            //}
-            //
-            //if ($(this.container).find(this.s.CONTENT) === 0) {
-            //    this.errors['container'] = "'container' is not a valid HTML element.";
-            //}
-            //
-            ////Model
-            //if (!this.hasOwnProperty("model")) {
-            //    this.errors['model'] = "'model' attribute not present.";
-            //}
-            //
-            //if (typeof this.model !== 'object') {
-            //    this.errors['model'] = "'model' is not an object.";
-            //}
-            //
-            ////Metadata
-            //if (!this.model.hasOwnProperty("metadata")) {
-            //    this.errors['metadata'] = "Model does not container 'metadata' attribute.";
-            //}
-            //
-            ////DSD
-            //if (!this.model.metadata.hasOwnProperty("dsd")) {
-            //    this.errors['dsd'] = "Metadata does not container 'dsd' attribute.";
-            //}
-            //
-            ////Columns
-            //if (!Array.isArray(this.model.metadata.dsd.columns)) {
-            //    this.errors['columns'] = "DSD does not container a valid 'columns' attribute.";
-            //}
-            //
-            ////Option
-            //if (this.options && typeof this.options !== 'object') {
-            //    this.errors['options'] = "'options' is not an object.";
-            //}
-            //
-            ////Data
-            //if (!this.model.hasOwnProperty("data")) {
-            //    this.errors['data'] = "Model does not container 'data' attribute.";
-            //}
-            //
-            //// seriesSubject
-            //if (!Array.isArray(this.seriesSubject)) {
-            //    this.errors['seriesSubject'] = "SeriesSubject is not an Array element";
-            //}
             return (Object.keys(this.errors).length === 0);
         };
 
@@ -146,45 +106,18 @@ define([
                 throw new Error("FENIX Map creator has not a valid configuration");
             }
 
-            // Handle layers from FENIX (D3S)
-            if (!model.hasOwnProperty("data")) {
-                // standard layer
+            if (!model.hasOwnProperty("data"))
                 layer = this.createLayerFenix(model);
-            }
-            else {
-                // Create Join data layer
+            else
                 layer = this.createLayerFenixJoin(model);
-
-            }
-            if (options !== null) {
-                layer = $.extend(true, {}, layer, options);
-            }
-            layer = new FM.layer(layer);
-            this.fenixMap.addLayer(layer);
-            return layer;
-        };
-
-        FENIX_FX_MAP_Adapter.prototype.addLayerByName = function(layerName, layerTitle) {
             
-            console.log('addLayerByName',this.o.fenix_ui_map)
+            if (options !== null)
+                layer = $.extend(true, {}, layer, options);
+            
+            layer = new FM.layer(layer);
 
-            var layer = new FM.layer({
-                layers: layerName,
-                layertitle: layerTitle,
-                urlWMS: this.o.fenix_ui_map.DEFAULT_WMS_SERVER,
-                opacity: '1',
-                lang: 'EN',
-                openlegend: true,
-                defaultgfi: true,
-                customgfi: {
-                    content: {
-                        EN: "{{GRAY_INDEX}}"
-                    },
-                    showpopup: false
-                }
-            });
             this.fenixMap.addLayer(layer);
-            this.fenixMap.map.invalidateSize();
+
             return layer;
         };
 
@@ -195,9 +128,9 @@ define([
             // Define the layer
             if (metadata.hasOwnProperty("dsd")) {
                 layer.layers = "";
-                if (metadata.dsd.hasOwnProperty("workspace")) {
+                if (metadata.dsd.hasOwnProperty("workspace"))
                     layer.layers += metadata.dsd.workspace + ":";
-                }
+                
                 layer.layers += metadata.dsd.layerName;
             }
             else {
@@ -205,19 +138,14 @@ define([
                 throw new Error("FENIX Map creator has not a valid configuration");
             }
 
-            // WMS Server
-            if (model.hasOwnProperty("datasource")) {
-                console.warn("TODO: IMPORTAT! check which datasource and the right url from D3S!");
-                // TODO: IMPORTAT! check which datasource and the right url from D3S!
-            }
-            else {
-                console.warn("'datasource' propery not found in model. Using the default wms server: " + this.config.url.wms);
-                layer.urlWMS = this.config.url.wms;
-            }
-
-            // Options
-            layer.layertitle =  metadata["title"][this.lang];
+            //TODO
+            //if (model.hasOwnProperty("datasource"))
+            //  layer.urlWMS = metadata["datasource"];
+            
+            layer.urlWMS = this.o.fenix_ui_map.DEFAULT_WMS_SERVER;
+            layer.layertitle = 'Data Layer';
             layer.opacity = '0.9';
+
             return layer;
         };
 
