@@ -16,11 +16,13 @@ define([
                     CONTENT: '[data-role="content"]'
                 },
                 //type: 'timeseries', //[custom, scatter, pie]
-
                 geoSubject: 'geo',
                 valueSubject: 'value',
                 // measurement unit
-                muSubject: 'um'
+                muSubject: 'um',
+                fenix_ui_map: {
+                    DEFAULT_WMS_SERVER: 'http://fenix.fao.org/demo/fenix/geoserver',
+                }
             },
             e = {
                 DESTROY: 'fx.component.map.destroy',
@@ -164,10 +166,12 @@ define([
 
         FENIX_FX_MAP_Adapter.prototype.addLayerByName = function(layerName, layerTitle) {
             
+            console.log('addLayerByName',this.o.fenix_ui_map)
+
             var layer = new FM.layer({
                 layers: layerName,
                 layertitle: layerTitle,
-                urlWMS: this.config.url.wms,
+                urlWMS: this.o.fenix_ui_map.DEFAULT_WMS_SERVER,
                 opacity: '1',
                 lang: 'EN',
                 openlegend: true,
@@ -180,6 +184,7 @@ define([
                 }
             });
             this.fenixMap.addLayer(layer);
+            this.fenixMap.map.invalidateSize();
             return layer;
         };
 
