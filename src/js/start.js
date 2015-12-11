@@ -112,7 +112,7 @@ define(['require',
 
         MapCreator.prototype.invalidateSize = function () {
 
-            log.info('invalidateSize');
+            log.info('invalidateSize', this.template.template.title)
             // dirty fix for invalidate size
             return this.adapter.invalidateSize();
 
@@ -120,17 +120,19 @@ define(['require',
 
         MapCreator.prototype.bindEventListeners = function () {
 
-            amplify.subscribe(E.MAP_REFRESH, this, this.invalidateSize);
+            amplify.subscribe(E.WINDOW_RESIZE, this, this.invalidateSize);
 
         };
 
         MapCreator.prototype.unbindEventListeners = function () {
 
-            amplify.unsubscribe(E.MAP_REFRESH, this.invalidateSize);
+            amplify.unsubscribe(E.WINDOW_RESIZE, this, this.invalidateSize);
 
         };
 
         MapCreator.prototype.destroy = function () {
+
+            log.info('Map creator destroy ', this.template.template.title)
 
             this.unbindEventListeners();
 

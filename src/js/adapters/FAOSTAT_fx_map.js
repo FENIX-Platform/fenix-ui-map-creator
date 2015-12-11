@@ -462,7 +462,11 @@ define([
         };
 
         FAOSTAT_FX_MAP_Adapter.prototype.invalidateSize = function () {
-            this.fenixMap.map.invalidateSize();
+            if (this.fenixMap) {
+                if (this.fenixMap.map) {
+                    this.fenixMap.map.invalidateSize();
+                }
+            }
         };
 
         return FAOSTAT_FX_MAP_Adapter;

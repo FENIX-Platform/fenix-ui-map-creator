@@ -5,7 +5,7 @@ define(function () {
 
     return {
 
-        MAP_REFRESH: 'fs.map.invalidate_size.event'
+        WINDOW_RESIZE: 'fs.window.resize.event'
 
     };
 });
