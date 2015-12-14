@@ -36,6 +36,7 @@ requirejs(['../../src/js/paths','../utils'], function (paths, Utils) {
 
                 mapCreator.addLayer(model, { colorramp: 'Greens' });
                 mapCreator.addCountryBoundaries();
+                mapCreator.addCountryLabels();
             });
 
         });

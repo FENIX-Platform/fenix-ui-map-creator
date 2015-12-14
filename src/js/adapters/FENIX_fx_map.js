@@ -328,13 +328,25 @@ define([
             return (Object.keys(this.errors).length === 0);
         };
 
-        FENIX_FX_MAP_Adapter.prototype.addCountryBoundaries = function (layer) {
+        FENIX_FX_MAP_Adapter.prototype.addCountryBoundaries = function (opts) {
             // if add boundaries by default
-            if (layer !== null && layer !== undefined) {
-                this.o.layers.boundary = $.extend(true, {}, layer, this.o.layers.boundary);
+            if (opts !== null && opts !== undefined) {
+                this.o.layers.boundary = $.extend(true, {}, opts, this.o.layers.boundary);
             }
             this.fenixMap.addLayer(new FM.layer(this.o.layers.boundary));
         };
+
+        FENIX_FX_MAP_Adapter.prototype.addCountryLabels = function (opts) {
+            if (opts !== null && opts !== undefined) {
+                this.o.layers.labels = $.extend(true, {}, opts, this.o.layers.labels);
+            }
+            var tlayer = new L.TileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png', {
+                //attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+                subdomains: 'abcd',
+                maxZoom: 19
+            });
+            this.fenixMap.map.addLayer(tlayer);
+        };        
 
         FENIX_FX_MAP_Adapter.prototype.removeLayer = function (layer) {
             this.fenixMap.removeLayer(layer);

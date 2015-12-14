@@ -82,6 +82,10 @@ define([
             return this.adapter.addCountryBoundaries();
         };
 
+        MapCreator.prototype.addCountryLabels = function () {
+            return this.adapter.addCountryLabels();
+        };
+
         MapCreator.prototype.invalidateSize = function () {
             return this.adapter.invalidateSize();
         };
