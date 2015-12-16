@@ -36,7 +36,7 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
                 // TODO: remove the url to wms
                 urlWMS: ( C.WMS_URL || DC.WMS_URL ),
                 //styles: 'gaul0_line_white',
-                opacity: '0.2',
+                opacity: '0.3',
                 lang: 'en'
             },
             gaul0: {
