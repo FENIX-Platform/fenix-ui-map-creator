@@ -111,7 +111,9 @@ define(['require',
 
         MapCreator.prototype.invalidateSize = function () {
 
+/*
             log.info('invalidateSize', this.template.template.title)
+*/
             // dirty fix for invalidate size
             return this.adapter.invalidateSize();
 
