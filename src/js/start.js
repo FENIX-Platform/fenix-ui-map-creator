@@ -3,14 +3,13 @@ define(['require',
         'jquery',
         'loglevel',
         'q',
-       // 'fx-m-c/config/events',
+        'fx-m-c/config/events',
         'fx-m-c/templates/base_template',
         'fx-m-c/adapters/FENIX_fx_map',
+        'fx-m-c/adapters/FAOSTAT_fx_map',
         'amplify'
     ],
-    function (RequireJS, $, log, Q)
-             // E)
-    {
+    function (RequireJS, $, log, Q, E) {
 
         'use strict';
 
@@ -72,7 +71,9 @@ define(['require',
                 switch (adapterType.toLocaleLowerCase()) {
                     case 'fenix':
                         return this.adapterUrl ? this.adapterUrl : 'fx-m-c/adapters/FENIX_fx_map';
-              }
+                    case 'faostat':
+                        return this.adapterUrl ? this.adapterUrl : 'fx-m-c/adapters/FAOSTAT_fx_map';
+                }
             }
             else {
                 return this.adapterUrl ? this.adapterUrl : 'fx-m-c/adapters/FENIX_fx_map';
@@ -111,9 +112,7 @@ define(['require',
 
         MapCreator.prototype.invalidateSize = function () {
 
-/*
             log.info('invalidateSize', this.template.template.title)
-*/
             // dirty fix for invalidate size
             return this.adapter.invalidateSize();
 
@@ -121,23 +120,24 @@ define(['require',
 
         MapCreator.prototype.bindEventListeners = function () {
 
-            // amplify.subscribe(E.WINDOW_RESIZE, this, this.invalidateSize);
+            amplify.subscribe(E.WINDOW_RESIZE, this, this.invalidateSize);
 
         };
 
         MapCreator.prototype.unbindEventListeners = function () {
 
-            // amplify.unsubscribe(E.WINDOW_RESIZE, this, this.invalidateSize);
+            amplify.unsubscribe(E.WINDOW_RESIZE, this, this.invalidateSize);
 
         };
 
         MapCreator.prototype.destroy = function () {
 
-            //log.info('Map creator destroy ', this.template.template.title)
+            log.info('Map creator destroy ', this.template.template.title)
 
             this.unbindEventListeners();
 
         };
 
         return MapCreator;
+
     });

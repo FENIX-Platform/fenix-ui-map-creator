@@ -5,8 +5,10 @@ define(function () {
 
     return {
 
-        WMS_URL: "http://lprapp16.fao.org/d3s_fenix/msd",
-        SERVER : "http://fenixapps2.fao.org"
+        WMS_URL:  "http://fenix.fao.org/geoserver",
+        //WMS_URL : "http://lprapp16.fao.org:15100/geoserver/wms"
+        SERVER : "http://fenix.fao.org/geoserver"
+        //SERVER : "http://lprapp16.fao.org:15100/geoserver/wms"
 
     };
 });
