@@ -15,8 +15,8 @@ define(function () {
             jquery: '{FENIX_CDN}/js/jquery/2.1.1/jquery.min',
             underscore: '{FENIX_CDN}/js/underscore/1.7.0/underscore.min',
             amplify: '{FENIX_CDN}/js/amplify/1.1.2/amplify.min',
-            'handlebars': '{FENIX_CDN}/js/handlebars/2.0.0/handlebars',
-            'chosen': '{FENIX_CDN}/js/chosen/1.2.0/chosen.jquery.min',
+            handlebars: '{FENIX_CDN}/js/handlebars/2.0.0/handlebars',
+            chosen: '{FENIX_CDN}/js/chosen/1.2.0/chosen.jquery.min',
 
             // fenix-ui-map-js
             'import-dependencies':'{FENIX_CDN}/js/FENIX/utils/import-dependencies-1.0',
@@ -26,32 +26,31 @@ define(function () {
             'jquery.i18n.properties': '{FENIX_CDN}/js/jquery/1.0.9/jquery.i18n.properties-min',
             'jquery.hoverIntent': '{FENIX_CDN}/js/jquery.hoverIntent/1.8.0/jquery.hoverIntent.min',
 
+            'leaflet-wfst': '{FENIX_CDN}/js/leaflet/plugins/leaflet-wfst/1.0.0/dist/Leaflet-WFST.min.js',
+
             'fenix-ui-map': '{FENIX_CDN}/js/fenix-ui-map/0.1.0/fenix-ui-map.min',
             'fenix-ui-map-config': '{FENIX_CDN}/js/fenix-ui-map/0.1.0/fenix-ui-map-config'
         },
 
         shim: {
+            'chosen': ['jquery'],   
+            'amplify': ["jquery"],
             'jquery-ui': ['jquery'],
             'jquery.power.tip': ['jquery'],
-            'jquery.i18n.properties': ['jquery'],
-            'chosen': ['jquery'],
             'jquery.hoverIntent': ['jquery'],
-            'fenix-ui-map': {
-                deps: [
-                    'jquery',
-                    'jquery-ui',
-                    'leaflet',
-                    'fenix-ui-map-config',
-                    'jquery.power.tip',
-                    'jquery.i18n.properties',
-                    'import-dependencies',
-                    'jquery.hoverIntent',
-                    'chosen'
-                ]
-            },
-            "amplify": {
-                "deps": ["jquery"]
-            }
+            'jquery.i18n.properties': ['jquery'],
+            'leaflet-wfst': ['leaflet'],
+            'fenix-ui-map': [
+                'jquery',
+                'jquery-ui',
+                'leaflet',
+                'fenix-ui-map-config',
+                'jquery.power.tip',
+                'jquery.i18n.properties',
+                'import-dependencies',
+                'jquery.hoverIntent',
+                'chosen'
+            ]
         }
     };
 
