@@ -34,7 +34,7 @@ define(function () {
 
         shim: {
             'chosen': ['jquery'],   
-            'amplify': ["jquery"],
+            'amplify': ['jquery'],
             'jquery-ui': ['jquery'],
             'jquery.power.tip': ['jquery'],
             'jquery.hoverIntent': ['jquery'],

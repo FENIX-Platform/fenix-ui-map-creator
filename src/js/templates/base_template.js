@@ -3,8 +3,8 @@ define([
         'jquery',
         'handlebars',
         'loglevel',
-        //'text!fx-m-c/html/templates/base_template.hbs'
-        'text!fx-m-c/html/templates/custom_template.hbs'
+        'text!fx-m-c/html/templates/base_template.hbs'
+        //'text!fx-m-c/html/templates/custom_template.hbs'
     ],
     function ($, Handlebars, log, template) {
 
