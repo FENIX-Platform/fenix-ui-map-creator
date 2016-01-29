@@ -6,7 +6,7 @@ define(['require',
         'fx-m-c/config/events',
         'fx-m-c/templates/base_template',
         'fx-m-c/adapters/FENIX_fx_map',
-        'fx-m-c/adapters/FAOSTAT_fx_map',
+        //'fx-m-c/adapters/FAOSTAT_fx_map',
         'amplify'
     ],
     function (RequireJS, $, log, Q, E) {
