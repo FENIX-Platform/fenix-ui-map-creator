@@ -166,6 +166,11 @@ define([
                     layer.layertitle = model['metadata']['uid'];
                 }
 
+                // getting a title from the options
+                if ( this.o.hasOwnProperty('layer') && this.o.layer.hasOwnProperty('layertitle')) {
+                    layer.layertitle = this.o.layer.layertitle;
+                }
+
                 // create popup
                 // TODO: Handle more dinamically from the model 'geo' codelist.
                 layer.customgfi = {
@@ -208,6 +213,14 @@ define([
                     valueColumn.index = index;
                 }
                 if (column.subject === this.o.muSubject) {
+                    muColumn = column;
+                    muColumn.index = index;
+                }
+            }, this));
+
+            // getting the right measurement unit if the new label exists
+            columns.forEach(_.bind(function (column, index) {
+                if (muColumn.id + '_' + this.o.lang) {
                     muColumn = column;
                     muColumn.index = index;
                 }
