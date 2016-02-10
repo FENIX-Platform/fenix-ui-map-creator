@@ -156,6 +156,11 @@ define([
                 var layer = this.getJoinLayer(model);
                 $.extend(true, layer, this.o.join.style);
 
+                var defPopupBuilder = "<div class='fm-popup'>{{"+ layer.joincolumnlabel +"}}"+
+                    "<div class='fm-popup-join-content'>{{{"+ layer.joincolumn + "}}} "+
+                    "{{measurementunit}}"+
+                    "</div></div>";
+
                 // Layer title TODO: Add title if exist (check in the validator)
                 if (model['metadata'].hasOwnProperty("title")) {
                     if (model['metadata']['title'][this.o.lang] !== null) {
@@ -170,14 +175,12 @@ define([
                 if ( this.o.hasOwnProperty('layer') && this.o.layer.hasOwnProperty('layertitle')) {
                     layer.layertitle = this.o.layer.layertitle;
                 }
-
-                // create popup
-                // TODO: Handle more dinamically from the model 'geo' codelist.
+    
                 layer.customgfi = {
+                    showpopup: true,
                     content: {
-                        EN: "<div class='fm-popup'>{{"+ layer.joincolumnlabel +"}}<div class='fm-popup-join-content'>{{{"+ layer.joincolumn + "}}} {{measurementunit}}</div></div>"
-                    },
-                    showpopup: true
+                        EN: _.isFunction(layer.popupBuilder) ? layer.popupBuilder(layer.joincolumnlabel, layer.joincolumn) : defPopupTmpl
+                    }
                 };
 
                 // TODO: add check on the zoomto data (move it to a function)
