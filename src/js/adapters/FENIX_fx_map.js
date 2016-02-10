@@ -175,7 +175,13 @@ define([
                 if ( this.o.hasOwnProperty('layer') && this.o.layer.hasOwnProperty('layertitle')) {
                     layer.layertitle = this.o.layer.layertitle;
                 }
-    
+
+                if ( this.o.hasOwnProperty('layer') && this.o.layer.hasOwnProperty('popupBuilder')) {
+                    layer.popupBuilder = this.o.layer.popupBuilder;
+                }
+
+                //console.log(layer);
+
                 layer.customgfi = {
                     showpopup: true,
                     content: {
@@ -211,7 +217,7 @@ define([
                     geoColumn = column;
                     geoColumn.index = index;
                 }
-                if (column.subject === this.o.valueSubject) {
+                if (column.subject === this.o.valueSubject || column.id === this.o.valueSubject ) {
                     valueColumn = column;
                     valueColumn.index = index;
                 }
