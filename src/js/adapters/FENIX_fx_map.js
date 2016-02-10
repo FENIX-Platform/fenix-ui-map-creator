@@ -179,7 +179,7 @@ define([
                 layer.customgfi = {
                     showpopup: true,
                     content: {
-                        EN: _.isFunction(layer.popupBuilder) ? layer.popupBuilder(layer.joincolumnlabel, layer.joincolumn) : defPopupTmpl
+                        EN: _.isFunction(layer.popupBuilder) ? layer.popupBuilder(layer.joincolumnlabel, layer.joincolumn) : defPopupBuilder
                     }
                 };
 
