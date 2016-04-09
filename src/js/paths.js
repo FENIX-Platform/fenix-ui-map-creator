@@ -17,6 +17,8 @@ define(function () {
             amplify: '{FENIX_CDN}/js/amplify/1.1.2/amplify.min',
             handlebars: '{FENIX_CDN}/js/handlebars/2.0.0/handlebars',
             chosen: '{FENIX_CDN}/js/chosen/1.2.0/chosen.jquery.min',
+            loglevel: '{FENIX_CDN}/js/loglevel/1.4.0/loglevel',
+            q: '{FENIX_CDN}/js/q/1.1.2/q',
 
             // fenix-ui-map-js
             'import-dependencies':'{FENIX_CDN}/js/FENIX/utils/import-dependencies-1.0',
@@ -30,6 +32,8 @@ define(function () {
 
             'fenix-ui-map': '{FENIX_CDN}/fenix/fenix-ui-map/0.1.0/dist/fenix-ui-map.min',
             'fenix-ui-map-config': '{FENIX_CDN}/fenix/fenix-ui-map/0.1.0/dist/fenix-ui-map-config'
+            //'fenix-ui-map': '../submodules/fenix-ui-map/dist/fenix-ui-map.src',
+            //'fenix-ui-map-config': '../submodules/fenix-ui-map/dist/fenix-ui-map-config'            
         },
 
         shim: {
