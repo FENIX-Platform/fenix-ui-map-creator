@@ -30,10 +30,10 @@ define(function () {
 
             'leaflet-wfst': '{FENIX_CDN}/js/leaflet/plugins/leaflet-wfst/1.0.0/dist/Leaflet-WFST.min.js',
 
-            'fenix-ui-map': '{FENIX_CDN}/fenix/fenix-ui-map/0.1.0/dist/fenix-ui-map.min',
-            'fenix-ui-map-config': '{FENIX_CDN}/fenix/fenix-ui-map/0.1.0/dist/fenix-ui-map-config'
-            //'fenix-ui-map': '../submodules/fenix-ui-map/dist/fenix-ui-map.src',
-            //'fenix-ui-map-config': '../submodules/fenix-ui-map/dist/fenix-ui-map-config'            
+            //'fenix-ui-map': '{FENIX_CDN}/fenix/fenix-ui-map/0.1.0/dist/fenix-ui-map.min',
+            //'fenix-ui-map-config': '{FENIX_CDN}/fenix/fenix-ui-map/0.1.0/dist/fenix-ui-map-config'
+            'fenix-ui-map': '../../../fenix-ui-map/dist/fenix-ui-map.src',
+            'fenix-ui-map-config': '../../../fenix-ui-map/dist/fenix-ui-map-config'            
         },
 
         shim: {
