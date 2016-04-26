@@ -12,12 +12,29 @@
     <link rel="stylesheet" href="//fenixrepo.fao.org/cdn/js/chosen/1.2.0/chosen.min.css" />
 
     <!-- Fenix UI Map -->
-    <link rel="stylesheet" href="//fenixrepo.fao.org/cdn/js/fenix-ui-map/0.1.0/fenix-ui-map.min.css" />
+    <link rel="stylesheet" href="../../../fenix-ui-map/dist/fenix-ui-map.min.css" />
+
+<style type="text/css">
+#toolbar {
+    margin: 0 20px;
+    width: 1000px;
+    min-height: 100px;
+    border: 1px solid blue;
+    display: block;
+}
+.fx-toolbar-map-holder {
+    background: #eee;
+    margin: 4px;
+}
+</style>
 </head>
 
 <body>
 
+<div id="toolbar"></div>
+
 <div class="content"></div>
+
 
 <script data-main="main" src="//fenixrepo.fao.org/cdn/js/requirejs/2.1.15/require.min.js"></script>
 </body>

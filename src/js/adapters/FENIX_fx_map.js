@@ -349,15 +349,7 @@ define([
 
             return (Object.keys(this.errors).length === 0);
         };
-
-        FENIX_FX_MAP_Adapter.prototype.addCountryBoundaries = function (opts) {
-            // if add boundaries by default
-            if (opts !== null && opts !== undefined) {
-                this.o.layers.boundary = $.extend(true, {}, opts, this.o.layers.boundary);
-            }
-            this.fenixMap.addLayer(new FM.layer(this.o.layers.boundary));
-        };
-
+        
         FENIX_FX_MAP_Adapter.prototype.addCountryLabels = function (opts) {
             if (opts !== null && opts !== undefined) {
                 this.o.layers.labels = $.extend(true, {}, opts, this.o.layers.labels);

@@ -29,19 +29,6 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
             minZoom: 1
         },
         layers: {
-            boundary: {
-                layers: 'fenix:gaul0_line_3857',
-                layertitle: 'Country Boundaries',
-                // TODO: remove the url to wms
-                urlWMS: ( C.SERVER || DC.SERVER ) + '/geoserver-demo',
-                opacity: '0.9',
-                lang: 'en'
-            },
-            labels: {
-                urlTMS: 'http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png',
-                opacity: '0.9',
-                lang: 'en'
-            },
             gaul0: {
                 layers: 'fenix:gaul0_faostat_3857',
                 // TODO: remove the url to wms

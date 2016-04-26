@@ -106,10 +106,6 @@ define(['require',
             return this.adapter.removeLayer(layer);
         };
 
-        MapCreator.prototype.addCountryBoundaries = function () {
-            return this.adapter.addCountryBoundaries();
-        };
-
         MapCreator.prototype.invalidateSize = function () {
 
             log.info('invalidateSize', this.template.template.title)

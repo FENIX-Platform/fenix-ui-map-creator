@@ -17,7 +17,27 @@ requirejs(['../../src/js/paths','../utils'], function (paths, Utils) {
         var mapCreator = new MapCreator();
 
         mapCreator.render({
-            container: '.content'
+            container: '.content',
+            fenix_ui_map: {
+                guiController: {
+                    container: '#toolbar',
+                },
+                baselayers: {
+                    "cartodb": {
+                        title_en: "CartoDB light",
+                        url: 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',
+                        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+                        subdomains: 'abcd',
+                        maxZoom: 19
+                    },            
+                    "esri_grayscale": {
+                        url: "http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+                        title_en: "Esri WorldGrayCanvas",
+                        attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+                        maxZoom: 16
+                    }
+                }                
+            }
         });
 
         // TODO: add map to existing map
@@ -25,18 +45,9 @@ requirejs(['../../src/js/paths','../utils'], function (paths, Utils) {
         // TODO: add JOIN from catalog to the map
         amplify.subscribe('fx.component.map.ready', function () {
 
-/*            $.get('http://fenix.fao.org/d3s/msd/resources/uid/FAOSTAT_fertilizer_test?full=true&dsd=true', function (model) {
-
-                mapCreator.addLayer(model, { colorramp: 'Greens' });
-                mapCreator.addCountryBoundaries();
-            });*/
-
-
             $.get('dataset/bangkok.json', function (model) {
 
                 mapCreator.addLayer(model, { colorramp: 'Greens' });
-                mapCreator.addCountryBoundaries();
-                //mapCreator.addCountryLabels();
             });
 
         });
