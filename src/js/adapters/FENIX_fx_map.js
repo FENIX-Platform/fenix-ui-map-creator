@@ -40,6 +40,7 @@ define([
 
         function FENIX_FX_MAP_Adapter() {
             this.o = $.extend(true, {}, defaultOptions);
+            this.mapRendered = false;
         }
 
         FENIX_FX_MAP_Adapter.prototype.render = function (config) {
@@ -82,7 +83,6 @@ define([
         };
 
         FENIX_FX_MAP_Adapter.prototype._onValidateDataSuccess = function () {
-            this.$mapRendered = true;
             this._createConfiguration();
             this._renderMap();
         };
@@ -94,6 +94,9 @@ define([
         FENIX_FX_MAP_Adapter.prototype._renderMap = function () {
             this.fenixMap = new FM.Map(this.$map, this.o.fenix_ui_map, this.o.leaflet);
             this.fenixMap.createMap();
+            this.mapRendered = true;
+
+            console.log('_renderMap', this.o)
             // Map Ready event
             amplify.publish(e.READY, this);
             if(_.isFunction(this.o.onReady))
