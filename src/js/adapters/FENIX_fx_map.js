@@ -99,8 +99,6 @@ define([
             console.log('_renderMap', this.o)
             // Map Ready event
             amplify.publish(e.READY, this);
-            if(_.isFunction(this.o.onReady))
-                this.o.onReady.call(this);
         };
 
         FENIX_FX_MAP_Adapter.prototype.addLayer = function (model, options) {
