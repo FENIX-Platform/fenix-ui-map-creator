@@ -72,6 +72,11 @@ define([
      * Add a layer to map
      */
     MapCreator.prototype.addLayer = function (model, layerOptions, modelOptions) {
+
+        if (this.status.ready !== true) {
+            return;
+        }
+
         return this._addLayer(model, layerOptions, modelOptions);
     };
 
@@ -79,6 +84,11 @@ define([
      * Remove a layer from map
      */
     MapCreator.prototype.removeLayer = function (layer) {
+
+        if (this.status.ready !== true) {
+            return;
+        }
+
         return this._removeLayer(layer);
     };
 
@@ -86,6 +96,10 @@ define([
      * Invalidate map size
      */
     MapCreator.prototype.invalidateSize = function () {
+
+        if (this.status.ready !== true) {
+            return;
+        }
 
         return this._invalidateSize();
     };
@@ -176,11 +190,13 @@ define([
 
         //this.map = new Map(model) ...
 
-        this.status.ready = true;
+        this.status.ready = true;  //To be set on map ready event
 
         this._trigger("ready");
 
     };
+
+    // map methods
 
     MapCreator.prototype._removeLayer = function (layer) {
         return this.map.removeLayer(layer);
@@ -201,7 +217,7 @@ define([
 
     };
 
-    //utils
+    // utils
 
     MapCreator.prototype._trigger = function (channel) {
 
@@ -223,7 +239,7 @@ define([
 
     };
 
-    //disposition
+    // disposition
 
     MapCreator.prototype._unbindEventListeners = function () {
 
@@ -232,10 +248,12 @@ define([
 
     MapCreator.prototype.dispose = function () {
 
-        this.map.dispose();
-
         //unbind event listeners
         this._unbindEventListeners();
+
+        if (this.status.ready === true) {
+            this.map.dispose();
+        }
 
     };
 
