@@ -1,5 +1,5 @@
 /*global define*/
-define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) {
+define(['fx-m-c/config/config', 'fx-m-c/config/config-default'], function (C, DC) {
 
     'use strict';
 
@@ -11,7 +11,7 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
                 disclaimerfao: true,
                 geosearch: true,
                 mouseposition: false,
-                controlloading : true,
+                controlloading: true,
                 zoomcontrol: 'bottomright'
             },
             guiController: {
@@ -45,7 +45,7 @@ define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) 
             }
         },
         url: {
-            wms: C.WMS_URL ||  DC.WMS_URL
+            wms: C.WMS_URL || DC.WMS_URL
         },
         geoSubject: 'geo',
         valueSubject: 'value',

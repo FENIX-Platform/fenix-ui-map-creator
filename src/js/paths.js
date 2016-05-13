@@ -5,11 +5,12 @@ define(function () {
     var config = {
 
         paths : {
-            'fx-m-c/start' : './start',
-            'fx-m-c/html' : '../html',
+            'fx-m-c/start' : './map',
+            'fx-m-c/html' : '../../html',
             'fx-m-c/config' : '../../config',
             'fx-m-c/adapters' : './adapters',
             'fx-m-c/templates' : './templates',
+
             // third party libs
             text: '{FENIX_CDN}/js/requirejs/plugins/text/2.0.12/text',
             jquery: '{FENIX_CDN}/js/jquery/2.1.1/jquery.min',
