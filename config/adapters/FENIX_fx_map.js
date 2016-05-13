@@ -1,12 +1,15 @@
 /*global define*/
-define(['fx-m-c/config/config', 'fx-m-c/config/config-default'],function (C,DC) {
+define([
+    'fx-m-c/config/config',
+    'fx-m-c/config/config-default'
+    ],function (C, DC) {
 
     'use strict';
 
     return {
 
         fenix_ui_map: {
-
+            DEFAULT_WMS_SERVER: C.DEFAULT_WMS_SERVER,
             plugins: {
                 disclaimerfao: true,
                 geosearch: true,

@@ -21,7 +21,6 @@ define([
                 // measurement unit
                 muSubject: 'um',
                 fenix_ui_map: {
-                    DEFAULT_WMS_SERVER: 'http://fenix.fao.org/demo/fenix/geoserver',
                     guiController: {
                         overlay: true,
                         baselayer: true,
