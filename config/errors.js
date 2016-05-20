@@ -5,7 +5,7 @@ define(function () {
 
     return {
 
-        WINDOW_RESIZE: 'fs.window.resize.event'
+        MISSING_CONTAINER: 'missing_container'
 
     };
 });
