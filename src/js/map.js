@@ -8,7 +8,7 @@ define([
     'fx-m-c/config/events',
     'fx-m-c/config/config',
     'fx-m-c/config/config-default',
-    'fenix-map',
+    'fx-m-c/start',
     'fx-common/pivotator/start',
     'amplify'
 ], function ($, require, _, log, ERR, EVT, C, CD, Map, Pivotator) {
@@ -18,7 +18,7 @@ define([
     function MapCreator(o) {
         log.info("FENIX MapCreator");
         log.info(o);
-
+console.log("init")
         $.extend(true, this, CD, C, {initial: o});
 
         this._parseInput(o);
@@ -111,7 +111,6 @@ define([
         this.id = this.initial.id;
         this.$el = $(this.initial.el);
         this.model = this.initial.model;
-        this.fenix_ui_map = this.initial.fenix_ui_map;
 
         //pivotator config
         var pc = {};
@@ -180,17 +179,16 @@ define([
     };
 
     MapCreator.prototype._renderMap = function () {
+console.log("this",this)
+        var model = this.pivotator.pivot(this.model, this.pivotatorConfig);
 
-        //TODO uncomment after pivotator integration
-        //var model = this.pivotator.pivot(this.model, this.pivotatorConfig);
-
-        var config = $.extend(true, {}, this.fenix_ui_map, {
+        var config = $.extend(true, {}, {
             el: this.$el,
-            model: {}, //change to model
+            model: model,
             lang: this.lang
         });
 
-        this.map = new FM.Map(config);
+        //this.map = new Map(model) ...
 
         this.status.ready = true;  //To be set on map ready event
 
