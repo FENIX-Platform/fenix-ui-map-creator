@@ -181,16 +181,14 @@ define([
 
     MapCreator.prototype._renderMap = function () {
 
+        //TODO uncomment after pivotator integration
         //var model = this.pivotator.pivot(this.model, this.pivotatorConfig);
 
         var config = $.extend(true, {}, this.fenix_ui_map, {
             el: this.$el,
-            model: {},
+            model: {}, //change to model
             lang: this.lang
         });
-
-        console.log("----------------------")
-        console.log( this.$el.length)
 
         this.map = new FM.Map(config);
 
