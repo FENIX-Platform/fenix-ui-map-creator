@@ -195,6 +195,7 @@ define([
         });
 
         this.map = new FM.Map(this.$el, this.fenix_ui_mapConfig);
+        this.map.createMap();
 
         this.status.ready = true;  //To be set on map ready event
 
