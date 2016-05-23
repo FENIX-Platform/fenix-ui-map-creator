@@ -44,7 +44,7 @@ define([
             fenix_ui_map: {
                 guiController: {
                     container: s.TOOLBAR,
-                    wmsloader:false
+                    wmsLoader:false
                 },
                 baselayers: {
                     "cartodb": {
