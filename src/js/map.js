@@ -185,7 +185,8 @@ define([
 
     MapCreator.prototype._renderMap = function () {
 
-        var model = this.pivotator.pivot(this.model, this.pivotatorConfig);
+        //var model = this.pivotator.pivot(this.model, this.pivotatorConfig);
+        var model = this.model;
 
         var config = $.extend(true, {}, {
             el: this.$el,
