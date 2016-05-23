@@ -18,7 +18,7 @@ define([
     function MapCreator(o) {
         log.info("FENIX MapCreator");
         log.info(o);
-console.log("init")
+
         $.extend(true, this, CD, C, {initial: o});
 
         this._parseInput(o);
