@@ -10,10 +10,12 @@ define([
     'fx-m-c/config/config-default',
     'fenix-ui-map',
     'fx-common/pivotator/start',
+    'fx-common/pivotator/fenixtool',
     'amplify'
 ], function ($, require, _, log, ERR, EVT, C, CD,
     FMMap, 
-    Pivotator
+    Pivotator,
+    fenixtool
     ) {
 
     'use strict';
@@ -175,7 +177,7 @@ define([
         this.status.ready = false;
 
         this.pivotator = new Pivotator();
-
+        this.fenixTool = new fenixtool();
     };
 
     MapCreator.prototype._bindEventListeners = function () {
@@ -184,7 +186,8 @@ define([
     };
 
     MapCreator.prototype._renderMap = function () {
-
+        
+        //var myPivotatorConfig=this.fenixTool.parseInut(this.initial.model.metadata.dsd, this.pivotatorConfig);
         //var model = this.pivotator.pivot(this.model, this.pivotatorConfig);
         var model = this.model;
 
@@ -194,7 +197,7 @@ define([
             lang: this.lang
         });
 
-        this.map = new FM.Map(this.$el, this.fenix_ui_mapConfig);
+        this.map = new FM.Map(config.el, this.fenix_ui_mapConfig);
         this.map.createMap();
 
         this.status.ready = true;  //To be set on map ready event

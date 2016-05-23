@@ -3,23 +3,24 @@ define([
     'jquery',
     'underscore',
     'fx-m-c/start',
-    
-    'text!test/models/UNECA_Population.json'
-
-], function (log, $, _, MapCreator, Model) {
+    'text!test/models/UNECA_Population.json',
+    'text!test/models/UNECA_Population_pivotated.json'
+], function (log, $, _, MapCreator, ModelFenix, ModelPivotData) {
 
     'use strict';
+    
+    //ModelFenix = JSON.parse(ModelFenix);
 
-    var Model = JSON.parse(Model);
+    var Model = {};
+    Model.data = JSON.parse(ModelPivotData);
 
     var s = {
-            STANDARD: "#standard"
-            //TODO TOOLBAR
+            STANDARD: "#standard",
+            TOOLBAR: "#toolbar"
         },
         instances = [];
 
-    function Test() {
-    }
+    function Test() {}
 
     Test.prototype.start = function () {
 
@@ -37,13 +38,14 @@ define([
 
     Test.prototype._renderStandard = function () {
 
-        var map = this.createInstance({
+        var map = new MapCreator({
             el : s.STANDARD,
             model : Model,
             fenix_ui_map: {
-                /*guiController: {
+                guiController: {
                     container: s.TOOLBAR,
-                },*/
+                    wmsloader:false
+                },
                 baselayers: {
                     "cartodb": {
                         title_en: "CartoDB light",
@@ -60,19 +62,19 @@ define([
                     }
                 }                
             }
+        });
+
+        map.on('ready', function() {
+
+            console.log('MapCreator ready', map)
+
+            map.map.addLayer( new L.TileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png', {
+                subdomains: 'abcd',
+                maxZoom: 19
+            }) );
+
         })
 
-    };
-
-    //Utils
-
-    Test.prototype.createInstance = function (params) {
-
-        var instance = new MapCreator(params);
-
-        instances.push(instance);
-
-        return instance;
     };
 
     return new Test();

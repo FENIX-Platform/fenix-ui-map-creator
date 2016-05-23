@@ -368,7 +368,7 @@ define([
                 maxZoom: 19
             });
             this.fenixMap.map.addLayer(tlayer);
-        };        
+        };
 
         FENIX_FX_MAP_Adapter.prototype.removeLayer = function (layer) {
             this.fenixMap.removeLayer(layer);
