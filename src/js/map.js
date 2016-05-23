@@ -179,7 +179,7 @@ define([
     };
 
     MapCreator.prototype._renderMap = function () {
-console.log("this",this)
+
         var model = this.pivotator.pivot(this.model, this.pivotatorConfig);
 
         var config = $.extend(true, {}, {
@@ -188,7 +188,7 @@ console.log("this",this)
             lang: this.lang
         });
 
-        //this.map = new Map(model) ...
+        this.map = new Map(model);
 
         this.status.ready = true;  //To be set on map ready event
 
