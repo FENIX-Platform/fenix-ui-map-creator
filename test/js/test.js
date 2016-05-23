@@ -10,7 +10,7 @@ define([
 
     'use strict';
 
-    var Model = JSON.parse(Model)
+    var Model = JSON.parse(Model);
 
     var s = {
             STANDARD: "#standard"
@@ -41,9 +41,9 @@ define([
             el : s.STANDARD,
             model : Model,
             fenix_ui_map: {
-                guiController: {
-                    //container: s.TOOLBAR,
-                },
+                /*guiController: {
+                    container: s.TOOLBAR,
+                },*/
                 baselayers: {
                     "cartodb": {
                         title_en: "CartoDB light",
