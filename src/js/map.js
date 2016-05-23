@@ -8,10 +8,14 @@ define([
     'fx-m-c/config/events',
     'fx-m-c/config/config',
     'fx-m-c/config/config-default',
-    'fx-m-c/start',
+    'fenix-ui-map',
+    'fenix-ui-map-config',
     'fx-common/pivotator/start',
     'amplify'
-], function ($, require, _, log, ERR, EVT, C, CD, Map, Pivotator) {
+], function ($, require, _, log, ERR, EVT, C, CD,
+    FMMap, FMMapConfig,
+    Pivotator
+    ) {
 
     'use strict';
 
@@ -22,6 +26,8 @@ define([
         $.extend(true, this, CD, C, {initial: o});
 
         this._parseInput(o);
+
+        this.fenix_ui_mapConfig = o.fenix_ui_map;
 
         var valid = this._validateInput();
 
@@ -188,7 +194,7 @@ define([
             lang: this.lang
         });
 
-        this.map = new Map(model);
+        this.map = new FM.Map(this.$el, this.fenix_ui_mapConfig);
 
         this.status.ready = true;  //To be set on map ready event
 

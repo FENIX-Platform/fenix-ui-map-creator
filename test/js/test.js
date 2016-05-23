@@ -4,12 +4,13 @@ define([
     'underscore',
     'fx-m-c/start',
     'test/models/Model1'
-], function (log, $, _, Map, Model) {
+], function (log, $, _, MapCreator, Model) {
 
     'use strict';
 
     var s = {
             STANDARD: "#standard"
+            //TODO TOOLBAR
         },
         instances = [];
 
@@ -31,14 +32,30 @@ define([
     };
 
     Test.prototype._renderStandard = function () {
-        console.log(Model)
-        console.log(Map)
-
-        return;
 
         var map = this.createInstance({
             el : s.STANDARD,
-            model : Model
+            model : Model,
+            fenix_ui_map: {
+                guiController: {
+                    //container: s.TOOLBAR,
+                },
+                baselayers: {
+                    "cartodb": {
+                        title_en: "CartoDB light",
+                        url: 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',
+                        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+                        subdomains: 'abcd',
+                        maxZoom: 19
+                    },
+                    "esri_grayscale": {
+                        url: "http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+                        title_en: "Esri WorldGrayCanvas",
+                        attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+                        maxZoom: 16
+                    }
+                }                
+            }
         })
 
     };
@@ -47,7 +64,7 @@ define([
 
     Test.prototype.createInstance = function (params) {
 
-        var instance = new Map(params);
+        var instance = new MapCreator(params);
 
         instances.push(instance);
 
