@@ -9,11 +9,10 @@ define([
     'fx-m-c/config/config',
     'fx-m-c/config/config-default',
     'fenix-ui-map',
-    'fenix-ui-map-config',
     'fx-common/pivotator/start',
     'amplify'
 ], function ($, require, _, log, ERR, EVT, C, CD,
-    FMMap, FMMapConfig,
+    FMMap, 
     Pivotator
     ) {
 
