@@ -3,10 +3,14 @@ define([
     'jquery',
     'underscore',
     'fx-m-c/start',
-    'test/models/Model1'
+    
+    'text!test/models/UNECA_Population.json'
+
 ], function (log, $, _, MapCreator, Model) {
 
     'use strict';
+
+    var Model = JSON.parse(Model)
 
     var s = {
             STANDARD: "#standard"
