@@ -73,7 +73,7 @@ define([
  
             $.get('dataset/bangkok.json', function (model) {
                 
-                console.log('dataset/bangkok.json', mapCreator)
+                console.log('dataset/bangkok.json', model)
 
                 mapCreator.addLayer(model, { colorramp: 'Reds' });
             });
