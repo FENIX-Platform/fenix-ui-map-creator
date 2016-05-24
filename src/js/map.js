@@ -223,11 +223,13 @@ define([
         this.fenixMap = new FM.Map(config.el, this.fenix_ui_mapConfig);
         this.fenixMap.createMap();
 
-        //TODO whenReady
+         //TODO whenReady
         this.status.ready = true;  //To be set on map ready event
 
-        this._trigger('ready');
-
+        //
+        window.setTimeout(_.bind(function () {
+            this._trigger('ready');
+        }, this), 10);
     };
 
     MapCreator.prototype._trigger = function (channel) {
