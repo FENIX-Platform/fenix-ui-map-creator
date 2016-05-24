@@ -44,7 +44,7 @@ define([
             fenix_ui_map: {
                 guiController: {
                     container: s.TOOLBAR,
-                    wmsLoader:false
+                    wmsLoader: false
                 },
                 baselayers: {
                     "cartodb": {
@@ -66,15 +66,16 @@ define([
 
         mapCreator.on('ready', _.bind(function() {
 
-            console.log('MapCreator ready', mapCreator)
-
-            mapCreator.map.addLayer( new L.TileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png', {
+            mapCreator.addLayer( new L.TileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png', {
                 subdomains: 'abcd',
                 maxZoom: 19
             }) );
  
             $.get('dataset/bangkok.json', function (model) {
-                mapCreator.addLayer(model, { colorramp: 'Greens' });
+                
+                console.log('dataset/bangkok.json', mapCreator)
+
+                mapCreator.addLayer(model, { colorramp: 'Reds' });
             });
 
         }, this));

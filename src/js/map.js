@@ -12,7 +12,8 @@ define([
     'fx-common/pivotator/start',
     'fx-common/pivotator/fenixtool',
     'amplify'
-], function ($, require, _, log, ERR, EVT, C, CD,
+], function ($, require, _, log, ERR, EVT,
+    C, CD,
     FMMap, 
     Pivotator,
     Fenixtool
@@ -25,7 +26,7 @@ define([
         log.info("FENIX MapCreator");
         log.info(o);
 
-        $.extend(true, this, CD, C, {initial: o});
+        _.extend(this, CD, C, {initial: o});
 
         this._parseInput(o);
 
@@ -87,6 +88,11 @@ define([
             return;
         }
 
+        if(model instanceof L.TileLayer)    //support leaflet layer
+        {
+            return this.fenixMap.map.addLayer(model);
+        }
+
         var layer = null;
         // TODO: switch to check if it's a fenix layer
         if (!model.hasOwnProperty("metadata")) {
@@ -99,8 +105,8 @@ define([
         else
             layer = this.createLayerFenixJoin(model);
         
-        if (layerOptions !== null)
-            layer = _.extend({}, layer, layerOptions);
+        if (layerOptions)
+            layer = _.extend(layer, layerOptions);
         
         layer = new FM.layer(layer);
 
@@ -210,26 +216,27 @@ define([
 
     MapCreator.prototype._renderMap = function () {
         
+        var self = this,
+            model = self.model;
+
         //var myPivotatorConfig=this.fenixTool.parseInut(this.initial.model.metadata.dsd, this.pivotatorConfig);
         //var model = this.pivotator.pivot(this.model, this.pivotatorConfig);
-        var model = this.model;
 
         var config = $.extend(true, {}, {
-            el: this.$el,
+            el: self.$el,
             model: model,
-            lang: this.lang
+            lang: self.lang
         });
 
-        this.fenixMap = new FM.Map(config.el, this.fenix_ui_mapConfig);
-        this.fenixMap.createMap();
+        self.fenixMap = new FM.Map(config.el, self.fenix_ui_mapConfig);
+        self.fenixMap.createMap();
 
-         //TODO whenReady
-        this.status.ready = true;  //To be set on map ready event
+         //TODO bind to Leaflet whenReady
+        self.status.ready = true;  //To be set on map ready event
 
-        //
-        window.setTimeout(_.bind(function () {
-            this._trigger('ready');
-        }, this), 10);
+        setTimeout(_.bind(function () {
+            self._trigger('ready');
+        }, self), 0);
     };
 
     MapCreator.prototype._trigger = function (channel) {
@@ -289,7 +296,7 @@ define([
         //if (model.hasOwnProperty("datasource"))
         //  layer.urlWMS = metadata["datasource"];
         
-        layer.urlWMS = this.o.fenix_ui_map.DEFAULT_WMS_SERVER;
+        layer.urlWMS = this.fenix_ui_map.DEFAULT_WMS_SERVER;
         layer.layertitle = 'Data Layer';
         layer.opacity = '0.9';
 
@@ -301,7 +308,7 @@ define([
         if (this._validateJoinInput(model) === true) {
             // create the join layer
             var layer = this.getJoinLayer(model);
-            $.extend(true, layer, this.o.join.style);
+            $.extend(true, layer, this.join.style);
 
             var defPopupBuilder = "<div class='fm-popup'>{{"+ layer.joincolumnlabel +"}}"+
                 "<div class='fm-popup-join-content'>{{{"+ layer.joincolumn + "}}} "+
@@ -310,8 +317,8 @@ define([
 
             // Layer title TODO: Add title if exist (check in the validator)
             if (model['metadata'].hasOwnProperty("title")) {
-                if (model['metadata']['title'][this.o.lang] !== null) {
-                    layer.layertitle = model['metadata']['title'][this.o.lang];
+                if (model['metadata']['title'][this.lang] !== null) {
+                    layer.layertitle = model['metadata']['title'][this.lang];
                 }
             }
             else {
@@ -319,12 +326,12 @@ define([
             }
 
             // getting a title from the options
-            if ( this.o.hasOwnProperty('layer') && this.o.layer.hasOwnProperty('layertitle')) {
-                layer.layertitle = this.o.layer.layertitle;
+            if ( this.hasOwnProperty('layer') && this.layer.hasOwnProperty('layertitle')) {
+                layer.layertitle = this.layer.layertitle;
             }
 
-            if ( this.o.hasOwnProperty('layer') && this.o.layer.hasOwnProperty('popupBuilder')) {
-                layer.popupBuilder = this.o.layer.popupBuilder;
+            if ( this.hasOwnProperty('layer') && this.layer.hasOwnProperty('popupBuilder')) {
+                layer.popupBuilder = this.layer.popupBuilder;
             }
 
             //console.log(layer);
@@ -360,15 +367,15 @@ define([
         var valueColumn = {};
         var muColumn = {};
         columns.forEach(_.bind(function (column, index) {
-            if (column.subject === this.o.geoSubject || column.id === this.o.geoSubject ) {
+            if (column.subject === this.geoSubject || column.id === this.geoSubject ) {
                 geoColumn = column;
                 geoColumn.index = index;
             }
-            if (column.subject === this.o.valueSubject || column.id === this.o.valueSubject ) {
+            if (column.subject === this.valueSubject || column.id === this.valueSubject ) {
                 valueColumn = column;
                 valueColumn.index = index;
             }
-            if (column.subject === this.o.muSubject) {
+            if (column.subject === this.muSubject) {
                 muColumn = column;
                 muColumn.index = index;
             }
@@ -376,7 +383,7 @@ define([
 
         // getting the right measurement unit if the new label exists
         columns.forEach(_.bind(function (column, index) {
-            if (muColumn.id + '_' + this.o.lang) {
+            if (muColumn.id + '_' + this.lang) {
                 muColumn = column;
                 muColumn.index = index;
             }
@@ -384,14 +391,11 @@ define([
 
 
         if (this._validateJoinColumnInput(geoColumn)) {
-            // TODO: check reference area and if exist the variable geoColumn['domain']['codes'][0].idCodeList
-            //var layer = this.join.layerMapping[geoColumn['domain']['codes'][0].idCodeList.toLowerCase()];
             var layer = null;
             var codelist = geoColumn['domain']['codes'][0].idCodeList.toLowerCase();
 
-            // if codelist has a mapping with the join.layerMapping then use it.
-            if (this.o.join.layerMapping[codelist]) {
-                layer = this.o.join.layerMapping[codelist];
+            if (this.join.layerMapping[codelist]) {
+                layer = this.join.layerMapping[codelist];
             }
 
             // else check with the referenceArea the right correspondacy
@@ -399,7 +403,7 @@ define([
                 geoColumn['domain']['codes'][0].idCodeList.toLowerCase();
                 // TODO: Handle reference Area
                 var referenceArea = metadata["meContent"]["seReferencePopulation"]["referenceArea"]['codes'][0].code.toLowerCase();
-                layer = this.o.join.layerMapping[codelist + "_" + referenceArea];
+                layer = this.join.layerMapping[codelist + "_" + referenceArea];
             }
 
             // data model to be mapped
