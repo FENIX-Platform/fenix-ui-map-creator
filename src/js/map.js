@@ -15,12 +15,13 @@ define([
 ], function ($, require, _, log, ERR, EVT, C, CD,
     FMMap, 
     Pivotator,
-    fenixtool
+    Fenixtool
     ) {
 
     'use strict';
 
     function MapCreator(o) {
+
         log.info("FENIX MapCreator");
         log.info(o);
 
@@ -72,7 +73,9 @@ define([
             return;
         }
 
-        return this._addBaseLayer(layer);
+        this._addBaseLayer(layer);
+
+        return this;
     };
 
     /**
@@ -84,9 +87,27 @@ define([
             return;
         }
 
-        return this._addLayer(model, layerOptions, modelOptions);
-    };
+        var layer = null;
+        // TODO: switch to check if it's a fenix layer
+        if (!model.hasOwnProperty("metadata")) {
+            this.errors.metadata = "Model does not contain 'metadata' attribute.";
+            throw new Error("FENIX Map creator has not a valid configuration");
+        }
 
+        if (!model.hasOwnProperty("data"))
+            layer = this.createLayerFenix(model);
+        else
+            layer = this.createLayerFenixJoin(model);
+        
+        if (layerOptions !== null)
+            layer = _.extend({}, layer, layerOptions);
+        
+        layer = new FM.layer(layer);
+
+        this.fenixMap.addLayer(layer);
+
+        return layer;
+    };
     /**
      * Remove a layer from map
      */
@@ -96,7 +117,7 @@ define([
             return;
         }
 
-        return this._removeLayer(layer);
+        return this;
     };
 
     /**
@@ -108,7 +129,9 @@ define([
             return;
         }
 
-        return this._invalidateSize();
+        this.fenixMap.invalidateSize()
+
+        return this;
     };
 
     // end API
@@ -177,7 +200,7 @@ define([
         this.status.ready = false;
 
         this.pivotator = new Pivotator();
-        this.fenixTool = new fenixtool();
+        this.fenixTool = new Fenixtool();
     };
 
     MapCreator.prototype._bindEventListeners = function () {
@@ -197,37 +220,15 @@ define([
             lang: this.lang
         });
 
-        this.map = new FM.Map(config.el, this.fenix_ui_mapConfig);
-        this.map.createMap();
+        this.fenixMap = new FM.Map(config.el, this.fenix_ui_mapConfig);
+        this.fenixMap.createMap();
 
+        //TODO whenReady
         this.status.ready = true;  //To be set on map ready event
 
-        this._trigger("ready");
+        this._trigger('ready');
 
     };
-
-    // map methods
-
-    MapCreator.prototype._removeLayer = function (layer) {
-        return this.map.removeLayer(layer);
-    };
-
-    MapCreator.prototype._addBaseLayer = function (layer) {
-
-        return this.map.addBaseLayer(layer);
-    };
-
-    MapCreator.prototype._addLayer = function (model, layerOptions, modelOptions) {
-        return this.map.addLayer(model, layerOptions, modelOptions);
-    };
-
-    MapCreator.prototype._invalidateSize = function () {
-
-        return this.map.invalidateSize();
-
-    };
-
-    // utils
 
     MapCreator.prototype._trigger = function (channel) {
 
@@ -249,8 +250,6 @@ define([
 
     };
 
-    // disposition
-
     MapCreator.prototype._unbindEventListeners = function () {
 
         amplify.unsubscribe(this._getEventName(EVT.WINDOW_RESIZE), this.invalidateSize);
@@ -262,9 +261,232 @@ define([
         this._unbindEventListeners();
 
         if (this.status.ready === true) {
-            this.map.dispose();
+            this.fenixMap.dispose();
         }
 
+    };
+
+    MapCreator.prototype.createLayerFenix = function (model, options) {
+        var metadata = model.metadata;
+        var layer = {};
+
+        // Define the layer
+        if (metadata.hasOwnProperty("dsd")) {
+            layer.layers = "";
+            if (metadata.dsd.hasOwnProperty("workspace"))
+                layer.layers += metadata.dsd.workspace + ":";
+            
+            layer.layers += metadata.dsd.layerName;
+        }
+        else {
+            this.errors['dsd'] = "Model['metadata'] does not contain 'dsd' attribute.";
+            throw new Error("FENIX Map creator has not a valid configuration");
+        }
+
+        //TODO
+        //if (model.hasOwnProperty("datasource"))
+        //  layer.urlWMS = metadata["datasource"];
+        
+        layer.urlWMS = this.o.fenix_ui_map.DEFAULT_WMS_SERVER;
+        layer.layertitle = 'Data Layer';
+        layer.opacity = '0.9';
+
+        return layer;
+    };
+
+    // JOIN
+    MapCreator.prototype.createLayerFenixJoin = function (model) {
+        if (this._validateJoinInput(model) === true) {
+            // create the join layer
+            var layer = this.getJoinLayer(model);
+            $.extend(true, layer, this.o.join.style);
+
+            var defPopupBuilder = "<div class='fm-popup'>{{"+ layer.joincolumnlabel +"}}"+
+                "<div class='fm-popup-join-content'>{{{"+ layer.joincolumn + "}}} "+
+                "{{measurementunit}}"+
+                "</div></div>";
+
+            // Layer title TODO: Add title if exist (check in the validator)
+            if (model['metadata'].hasOwnProperty("title")) {
+                if (model['metadata']['title'][this.o.lang] !== null) {
+                    layer.layertitle = model['metadata']['title'][this.o.lang];
+                }
+            }
+            else {
+                layer.layertitle = model['metadata']['uid'];
+            }
+
+            // getting a title from the options
+            if ( this.o.hasOwnProperty('layer') && this.o.layer.hasOwnProperty('layertitle')) {
+                layer.layertitle = this.o.layer.layertitle;
+            }
+
+            if ( this.o.hasOwnProperty('layer') && this.o.layer.hasOwnProperty('popupBuilder')) {
+                layer.popupBuilder = this.o.layer.popupBuilder;
+            }
+
+            //console.log(layer);
+
+            layer.customgfi = {
+                showpopup: true,
+                content: {
+                    EN: _.isFunction(layer.popupBuilder) ? layer.popupBuilder(layer.joincolumnlabel, layer.joincolumn) : defPopupBuilder
+                }
+            };
+
+            // TODO: add check on the zoomto data (move it to a function)
+            var codes = []
+            layer.joindata.forEach(function (code) {
+                _.keys(code).forEach(function (key) {
+                    codes.push(key);
+                });
+            });
+            var zoomlayer = layer.layers.split(":");
+            zoomlayer = zoomlayer.length > 1? zoomlayer[1]: zoomlayer[0];
+            this.fenixMap.zoomTo(zoomlayer, layer.joincolumn, codes);
+            return layer;
+        } else {
+            console.error(this.errors);
+            throw new Error("FENIX Map creator has not a valid JOIN configuration");
+        }
+    };
+
+    MapCreator.prototype.getJoinLayer = function (model) {
+        var metadata = model['metadata'];
+        var columns = metadata['dsd']['columns'];
+        var geoColumn = {};
+        var valueColumn = {};
+        var muColumn = {};
+        columns.forEach(_.bind(function (column, index) {
+            if (column.subject === this.o.geoSubject || column.id === this.o.geoSubject ) {
+                geoColumn = column;
+                geoColumn.index = index;
+            }
+            if (column.subject === this.o.valueSubject || column.id === this.o.valueSubject ) {
+                valueColumn = column;
+                valueColumn.index = index;
+            }
+            if (column.subject === this.o.muSubject) {
+                muColumn = column;
+                muColumn.index = index;
+            }
+        }, this));
+
+        // getting the right measurement unit if the new label exists
+        columns.forEach(_.bind(function (column, index) {
+            if (muColumn.id + '_' + this.o.lang) {
+                muColumn = column;
+                muColumn.index = index;
+            }
+        }, this));
+
+
+        if (this._validateJoinColumnInput(geoColumn)) {
+            // TODO: check reference area and if exist the variable geoColumn['domain']['codes'][0].idCodeList
+            //var layer = this.join.layerMapping[geoColumn['domain']['codes'][0].idCodeList.toLowerCase()];
+            var layer = null;
+            var codelist = geoColumn['domain']['codes'][0].idCodeList.toLowerCase();
+
+            // if codelist has a mapping with the join.layerMapping then use it.
+            if (this.o.join.layerMapping[codelist]) {
+                layer = this.o.join.layerMapping[codelist];
+            }
+
+            // else check with the referenceArea the right correspondacy
+            else {
+                geoColumn['domain']['codes'][0].idCodeList.toLowerCase();
+                // TODO: Handle reference Area
+                var referenceArea = metadata["meContent"]["seReferencePopulation"]["referenceArea"]['codes'][0].code.toLowerCase();
+                layer = this.o.join.layerMapping[codelist + "_" + referenceArea];
+            }
+
+            // data model to be mapped
+            var data = model.data;
+
+
+            // check measurementunit
+            // TODO: Add measurement unit to the layer definition (using label column of the mu)
+            //
+
+            // get joinData
+            layer.joindata = this.getJoinData(data, geoColumn.index, valueColumn.index);
+
+            // TODO: check on the column index
+            layer.measurementunit = data[0][muColumn.index];
+
+            // TODO: check if is the right legendtitle
+            layer.legendtitle = layer.measurementunit;
+
+            return layer;
+        } else{
+            console.error('Error JoinColumnInput not valid')
+        }
+    };
+
+    MapCreator.prototype.getJoinData = function (data, geoColumnIndex, valueColumnIhdex) {
+        var joindata = [];
+
+        // TODO: remove cachedValues on final version. Check on join data consistency?
+        var cachedValues = {}
+        // TODO: add on check
+        data.forEach(_.bind(function (row) {
+            var obj = {}
+            var code = row[geoColumnIndex];
+            var value = row[valueColumnIhdex];
+            if (code && value) {
+                obj[code] = value ;
+                if (!cachedValues.hasOwnProperty(code)) {
+                    // check null values
+                    cachedValues[code] = true;
+                    joindata.push(obj);
+                }
+            }
+        }, this));
+
+        return joindata;
+    };
+
+    MapCreator.prototype._validateJoinInput = function (model) {
+        this.errors = {};
+
+        //Metadata TODO: add all metadata checks
+        if (!model.hasOwnProperty("metadata")) {
+            this.errors.metadata = "'metadata' attribute not present.";
+        }
+
+        //Data
+        if (!model.hasOwnProperty("data")) {
+            this.errors.data = "'data' attribute not present.";
+        }
+
+        return (Object.keys(this.errors).length === 0);
+    };
+
+    MapCreator.prototype._validateJoinColumnInput = function (column) {
+        this.errors = {};
+
+        //Metadata TODO: add all metadata checks
+        if (!column.hasOwnProperty('key')) {
+            this.errors.column = "'key' attribute not present.";
+        }
+        else {
+            if (column.key !== true) {
+                this.errors.column = "'key' is not true.";
+            }
+        }
+
+        if (!column.hasOwnProperty('dataType')) {
+            this.errors.column = "'dataType' attribute not present.";
+        }
+        else {
+            if (column.dataType !== 'code') {
+                this.errors.column = "'dataType' attribute is not a coding system.";
+            }
+        }
+
+        // TODO: check domain and referencearea if needed
+
+        return (Object.keys(this.errors).length === 0);
     };
 
     return MapCreator;

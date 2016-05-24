@@ -43,7 +43,7 @@ requirejs(['../../src/js/paths','../utils'], function (paths, Utils) {
         // TODO: add map to existing map
 
         // TODO: add JOIN from catalog to the map
-        amplify.subscribe('fx.component.map.ready', function () {
+        amplify.subscribe('ready', function () {
 
             $.get('dataset/bangkok.json', function (model) {
 

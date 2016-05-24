@@ -38,7 +38,7 @@ define([
 
     Test.prototype._renderStandard = function () {
 
-        var map = new MapCreator({
+        var mapCreator = new MapCreator({
             el : s.STANDARD,
             model : Model,
             fenix_ui_map: {
@@ -64,16 +64,20 @@ define([
             }
         });
 
-        map.on('ready', function() {
+        mapCreator.on('ready', _.bind(function() {
 
-            console.log('MapCreator ready', map)
+            console.log('MapCreator ready', mapCreator)
 
-            map.map.addLayer( new L.TileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png', {
+            mapCreator.map.addLayer( new L.TileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png', {
                 subdomains: 'abcd',
                 maxZoom: 19
             }) );
+ 
+            $.get('dataset/bangkok.json', function (model) {
+                mapCreator.addLayer(model, { colorramp: 'Greens' });
+            });
 
-        })
+        }, this));
 
     };
 
