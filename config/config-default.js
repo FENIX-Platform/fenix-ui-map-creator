@@ -106,8 +106,13 @@ define(function () {
                     layers: 'fenix:gaul1_3857',
                     joincolumn: 'adm1_code',
                     joincolumnlabel: 'adm1_name'
-                },
+                },        
                 iso3: {
+                    layers: 'fenix:gaul0_faostat3_3857',
+                    joincolumn: 'iso3',
+                    joincolumnlabel: 'areanamee'
+                },
+                uneca_iso3: {
                     layers: 'fenix:gaul0_faostat3_3857',
                     joincolumn: 'iso3',
                     joincolumnlabel: 'areanamee'

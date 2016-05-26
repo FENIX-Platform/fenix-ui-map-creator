@@ -70,11 +70,7 @@ define([
      */
     MapCreator.prototype.addBaseLayer = function (layer) {
 
-        if (this.status.ready !== true) {
-            return;
-        }
-
-        this._addBaseLayer(layer);
+        this.fenixMap.addTileLayer(layer, true);
 
         return this;
     };
@@ -82,32 +78,26 @@ define([
     /**
      * Add a layer to map
      */
-    MapCreator.prototype.addLayer = function (model, layerOptions, modelOptions) {
+    MapCreator.prototype.addLayer = function (model) {
 
-        if (this.status.ready !== true) {
-            return;
-        }
+        var layer;
 
-        if(model instanceof L.TileLayer)    //support leaflet layer
-        {
+        //support simple Leaflet layer
+        if(model instanceof L.TileLayer)
             return this.fenixMap.map.addLayer(model);
-        }
 
-        var layer = null;
         // TODO: switch to check if it's a fenix layer
         if (!model.hasOwnProperty("metadata")) {
             this.errors.metadata = "Model does not contain 'metadata' attribute.";
             throw new Error("FENIX Map creator has not a valid configuration");
         }
 
-        if (!model.hasOwnProperty("data"))
-            layer = this.createLayerFenix(model);
-        else
+        if (model.hasOwnProperty('data'))
             layer = this.createLayerFenixJoin(model);
-        
-        if (layerOptions)
-            layer = _.extend(layer, layerOptions);
-        
+        else
+            layer = this.createLayerFenix(model);
+    
+
         layer = new FM.layer(layer);
 
         this.fenixMap.addLayer(layer);
@@ -216,20 +206,15 @@ define([
 
     MapCreator.prototype._renderMap = function () {
         
-        var self = this,
-            model = self.model;
+        var self = this;
 
         //var myPivotatorConfig=this.fenixTool.parseInut(this.initial.model.metadata.dsd, this.pivotatorConfig);
         //var model = this.pivotator.pivot(this.model, this.pivotatorConfig);
 
-        var config = $.extend(true, {}, {
-            el: self.$el,
-            model: model,
-            lang: self.lang
-        });
-
-        self.fenixMap = new FM.Map(config.el, self.fenix_ui_mapConfig);
+        self.fenixMap = new FM.Map(self.$el, self.fenix_ui_mapConfig);
         self.fenixMap.createMap();
+
+        self.addLayer(this.model)
 
          //TODO bind to Leaflet whenReady
         self.status.ready = true;  //To be set on map ready event
@@ -278,7 +263,6 @@ define([
     MapCreator.prototype.createLayerFenix = function (model, options) {
         var metadata = model.metadata;
         var layer = {};
-
         // Define the layer
         if (metadata.hasOwnProperty("dsd")) {
             layer.layers = "";
@@ -306,9 +290,11 @@ define([
     // JOIN
     MapCreator.prototype.createLayerFenixJoin = function (model) {
         if (this._validateJoinInput(model) === true) {
+            
             // create the join layer
             var layer = this.getJoinLayer(model);
-            $.extend(true, layer, this.join.style);
+
+            _.extend(layer, this.join.style);
 
             var defPopupBuilder = "<div class='fm-popup'>{{"+ layer.joincolumnlabel +"}}"+
                 "<div class='fm-popup-join-content'>{{{"+ layer.joincolumn + "}}} "+
@@ -333,8 +319,6 @@ define([
             if ( this.hasOwnProperty('layer') && this.layer.hasOwnProperty('popupBuilder')) {
                 layer.popupBuilder = this.layer.popupBuilder;
             }
-
-            //console.log(layer);
 
             layer.customgfi = {
                 showpopup: true,
@@ -361,28 +345,29 @@ define([
     };
 
     MapCreator.prototype.getJoinLayer = function (model) {
-        var metadata = model['metadata'];
-        var columns = metadata['dsd']['columns'];
-        var geoColumn = {};
-        var valueColumn = {};
-        var muColumn = {};
-        columns.forEach(_.bind(function (column, index) {
-            if (column.subject === this.geoSubject || column.id === this.geoSubject ) {
-                geoColumn = column;
+        
+        var metadata = model['metadata'],
+            geoColumn = {},
+            valueColumn = {},
+            muColumn = {};
+
+        metadata['dsd']['columns'].forEach(_.bind(function (col, index) {
+            if (col.subject === this.geoSubject || col.id === this.geoSubject ) {
+                geoColumn = col;
                 geoColumn.index = index;
             }
-            if (column.subject === this.valueSubject || column.id === this.valueSubject ) {
-                valueColumn = column;
+            if (col.subject === this.valueSubject || col.id === this.valueSubject ) {
+                valueColumn = col;
                 valueColumn.index = index;
             }
-            if (column.subject === this.muSubject) {
-                muColumn = column;
+            if (col.subject === this.muSubject) {
+                muColumn = col;
                 muColumn.index = index;
             }
         }, this));
 
         // getting the right measurement unit if the new label exists
-        columns.forEach(_.bind(function (column, index) {
+        metadata['dsd']['columns'].forEach(_.bind(function (column, index) {
             if (muColumn.id + '_' + this.lang) {
                 muColumn = column;
                 muColumn.index = index;
@@ -391,14 +376,16 @@ define([
 
 
         if (this._validateJoinColumnInput(geoColumn)) {
+            
+
             var layer = null;
-            var codelist = geoColumn['domain']['codes'][0].idCodeList.toLowerCase();
+            var codelist = geoColumn['domain']['codes'][0]['idCodeList'].toLowerCase();
+
+console.log('getJoinLayer',geoColumn, this.join.layerMapping)
 
             if (this.join.layerMapping[codelist]) {
                 layer = this.join.layerMapping[codelist];
             }
-
-            // else check with the referenceArea the right correspondacy
             else {
                 geoColumn['domain']['codes'][0].idCodeList.toLowerCase();
                 // TODO: Handle reference Area
@@ -406,24 +393,21 @@ define([
                 layer = this.join.layerMapping[codelist + "_" + referenceArea];
             }
 
-            // data model to be mapped
-            var data = model.data;
-
-
             // check measurementunit
             // TODO: Add measurement unit to the layer definition (using label column of the mu)
             //
 
             // get joinData
-            layer.joindata = this.getJoinData(data, geoColumn.index, valueColumn.index);
+            layer.joindata = this.getJoinData(model['data'], geoColumn.index, valueColumn.index);
 
             // TODO: check on the column index
-            layer.measurementunit = data[0][muColumn.index];
+            layer.measurementunit = model['data'][0][muColumn.index];
 
             // TODO: check if is the right legendtitle
             layer.legendtitle = layer.measurementunit;
 
             return layer;
+
         } else{
             console.error('Error JoinColumnInput not valid')
         }
@@ -465,7 +449,7 @@ define([
             this.errors.data = "'data' attribute not present.";
         }
 
-        return (Object.keys(this.errors).length === 0);
+        return (_.keys(this.errors).length === 0);
     };
 
     MapCreator.prototype._validateJoinColumnInput = function (column) {

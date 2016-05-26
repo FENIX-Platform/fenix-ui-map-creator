@@ -154,7 +154,8 @@ define([
             if (this._validateJoinInput(model) === true) {
                 // create the join layer
                 var layer = this.getJoinLayer(model);
-                $.extend(true, layer, this.o.join.style);
+                
+                _.extend(layer, this.o.join.style);
 
                 var defPopupBuilder = "<div class='fm-popup'>{{"+ layer.joincolumnlabel +"}}"+
                     "<div class='fm-popup-join-content'>{{{"+ layer.joincolumn + "}}} "+
