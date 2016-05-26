@@ -255,7 +255,7 @@ define([
         this._unbindEventListeners();
 
         if (this.status.ready === true) {
-            //this.fenixMap.dispose();
+            this.fenixMap.destroyMap();
         }
 
     };
