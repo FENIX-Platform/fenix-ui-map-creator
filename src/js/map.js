@@ -381,8 +381,6 @@ define([
             var layer = null;
             var codelist = geoColumn['domain']['codes'][0]['idCodeList'].toLowerCase();
 
-console.log('getJoinLayer',geoColumn, this.join.layerMapping)
-
             if (this.join.layerMapping[codelist]) {
                 layer = this.join.layerMapping[codelist];
             }
