@@ -297,15 +297,17 @@ define([
 
             _.extend(layer, this.join.style);
 
-            var defPopupBuilder = "<div class='fm-popup'>{{"+ layer.joincolumnlabel +"}}"+
+            var defPopup = "<div class='fm-popup'>{{"+ layer.joincolumnlabel +"}}"+
                 "<div class='fm-popup-join-content'>{{{"+ layer.joincolumn + "}}} "+
                 "{{measurementunit}}"+
                 "</div></div>";
 
+
             // Layer title TODO: Add title if exist (check in the validator)
             if (model['metadata'].hasOwnProperty("title")) {
-                if (model['metadata']['title'][this.lang] !== null) {
+                if (model['metadata']['title'][this.lang]) {
                     layer.layertitle = model['metadata']['title'][this.lang];
+                    console.log('title',this.lang, layer.layertitle)
                 }
             }
             else {
@@ -324,20 +326,24 @@ define([
             layer.customgfi = {
                 showpopup: true,
                 content: {
-                    EN: _.isFunction(layer.popupBuilder) ? layer.popupBuilder(layer.joincolumnlabel, layer.joincolumn) : defPopupBuilder
+                    EN: _.isFunction(layer.popupBuilder) ? layer.popupBuilder(layer.joincolumnlabel, layer.joincolumn) : defPopup
                 }
             };
 
             // TODO: add check on the zoomto data (move it to a function)
-            var codes = []
+            var codes = [];
             layer.joindata.forEach(function (code) {
                 _.keys(code).forEach(function (key) {
                     codes.push(key);
                 });
             });
+            
             var zoomlayer = layer.layers.split(":");
+            
             zoomlayer = zoomlayer.length > 1? zoomlayer[1]: zoomlayer[0];
+            
             this.fenixMap.zoomTo(zoomlayer, layer.joincolumn, codes);
+
             return layer;
         } else {
             console.error(this.errors);
