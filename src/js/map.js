@@ -281,9 +281,10 @@ define([
         //  layer.urlWMS = metadata["datasource"];
         
         layer.urlWMS = this.fenix_ui_map.DEFAULT_WMS_SERVER;
-        layer.layertitle = 'Data Layer';
+        layer.layertitle = {
+            en: 'Data Layer'
+        };
         layer.opacity = '0.9';
-
         return layer;
     };
 
