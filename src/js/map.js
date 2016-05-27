@@ -100,7 +100,7 @@ define([
 
         layer = new FM.layer(layer);
         
-        layer.layer.layertitle = model['metadata']['title'][this.initial.lang];
+        layer.layer.layertitle = model['metadata']['title']['EN'];
         
         this.fenixMap.addLayer(layer);
 
