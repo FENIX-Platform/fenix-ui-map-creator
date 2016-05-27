@@ -22,7 +22,7 @@ define([
 
     Test.prototype.start = function () {
 
-        var mapCreator = new MapCreator({
+        window.mapCreator = new MapCreator({
             el: s.STANDARD,
             model: Model,
             fenix_ui_map: {

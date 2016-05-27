@@ -23,7 +23,7 @@ define(function () {
 
             // fenix-ui-map-js
             'import-dependencies':'{FENIX_CDN}/js/FENIX/utils/import-dependencies-1.0',
-            'leaflet': '{FENIX_CDN}/js/leaflet/0.7.7/leaflet',
+            'leaflet': '{FENIX_CDN}/js/leaflet/0.7.7/leaflet-src',
             'jquery.power.tip': '{FENIX_CDN}/js/jquery.power.tip/1.2.0/jquery.powertip.min',
             'jquery-ui': '{FENIX_CDN}/js/jquery-ui/1.10.3/jquery-ui-1.10.3.custom.min',
             'jquery.i18n.properties': '{FENIX_CDN}/js/jquery.i18n.properties/1.0.9/jquery.i18n.properties-min',
