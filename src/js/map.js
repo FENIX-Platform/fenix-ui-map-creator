@@ -99,6 +99,8 @@ define([
     
 
         layer = new FM.layer(layer);
+        
+        layer.layer.layertitle = model['metadata']['title'][this.initial.lang];
 
         this.fenixMap.addLayer(layer);
 
