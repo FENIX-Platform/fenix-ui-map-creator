@@ -107,6 +107,7 @@ define([
 
         return layer;
     };
+    
     /**
      * Remove a layer from map
      */
