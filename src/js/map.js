@@ -218,6 +218,8 @@ define([
         self.fenixMap = new FM.Map(self.$el, self.fenix_ui_mapConfig);
         self.fenixMap.createMap();
 
+        self.leafletMap = self.fenixMap.map;
+
         self.addLayer(this.model)
 
          //TODO bind to Leaflet whenReady
