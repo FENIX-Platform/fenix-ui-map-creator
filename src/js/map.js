@@ -264,6 +264,8 @@ define([
             this.fenixMap.destroyMap();
         }
 
+        this.$el.empty();
+
     };
 
     MapCreator.prototype.createLayerFenix = function (model, options) {
