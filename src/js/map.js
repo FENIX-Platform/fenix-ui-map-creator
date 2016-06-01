@@ -74,16 +74,12 @@ define([
 
         return this;
     };
-
     /**
      * Add a layer to map
      */
     MapCreator.prototype.addLayer = function (model) {
 
         var layer;
-
-
-//console.log('MapCreator addLayer', model);
 
         if(!model)
             return false;
@@ -93,19 +89,23 @@ define([
             return this.fenixMap.map.addLayer(model);
 
         // TODO: switch to check if it's a fenix layer
-        if (!model || !model.hasOwnProperty("metadata")) {
+        if (this.errors && (!model || !model.hasOwnProperty("metadata") ))
             this.errors.metadata = "Model does not contain 'metadata' attribute.";
-            throw new Error("FENIX Map creator has not a valid configuration");
-        }
 
-        if (model.hasOwnProperty('data'))
+        if (typeof model === 'string')
+            layer = this.createLayerFenixUid(model);
+
+        else if (model.hasOwnProperty('data'))
             layer = this.createLayerFenixJoin(model);
+
         else
             layer = this.createLayerFenix(model);
 
+    console.log('addLayer',layer)
+
         layer = new FM.layer(layer);
         
-        if(model['metadata'] && model['metadata']['title'] && model['metadata']['title']['EN'])
+        if(typeof model === 'object' && model['metadata'] && model['metadata']['title'] && model['metadata']['title']['EN'])
             layer.layer.layertitle = model['metadata']['title']['EN'];
         
         this.fenixMap.addLayer(layer);
@@ -225,7 +225,14 @@ define([
 
         self.leafletMap = self.fenixMap.map;
 
-        self.addLayer(self.model)
+        if(self.model) {
+            self.addLayer(self.model);
+        }
+        else if(this.initial.uid) {
+            self.addLayer(this.initial.uid);
+        }
+
+
 
          //TODO bind to Leaflet whenReady
         self.status.ready = true;  //To be set on map ready event
@@ -298,6 +305,18 @@ define([
             en: 'Data Layer'
         };
         layer.opacity = '0.9';
+        return layer;
+    };
+
+    MapCreator.prototype.createLayerFenixUid = function (uid) {
+        var layer = {
+            urlWMS: this.DEFAULT_WMS_SERVER,
+            layertitle: {
+                en: 'Data Layer'
+            },
+            opacity: '0.9',
+            layers: uid
+        };
         return layer;
     };
 
