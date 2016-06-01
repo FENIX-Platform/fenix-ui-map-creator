@@ -82,12 +82,15 @@ define([
 
         var layer;
 
+
+console.log('MapCreator addLayer', model);
+
         //support simple Leaflet layer
         if(model instanceof L.TileLayer)
             return this.fenixMap.map.addLayer(model);
 
         // TODO: switch to check if it's a fenix layer
-        if (!model.hasOwnProperty("metadata")) {
+        if (!model || !model.hasOwnProperty("metadata")) {
             this.errors.metadata = "Model does not contain 'metadata' attribute.";
             throw new Error("FENIX Map creator has not a valid configuration");
         }
@@ -96,7 +99,6 @@ define([
             layer = this.createLayerFenixJoin(model);
         else
             layer = this.createLayerFenix(model);
-    
 
         layer = new FM.layer(layer);
         
@@ -465,7 +467,7 @@ define([
             maxFeatures: 50,
             outputFormat: 'text/javascript',
             format_options: 'callback: getJson',
-            srsName: 'EPSG:4326',
+            //srsName: 'EPSG:3857',
             viewparams: 'iso3_code:'+code
         };
 
@@ -476,8 +478,6 @@ define([
             dataType: 'jsonp',
             jsonpCallback: 'getJson',
             success: function(json) {
-                
-                //console.log('iso3Boundaries',json);
 
                 var gLayer = L.geoJson(json, {
                     style: function (feature) {
