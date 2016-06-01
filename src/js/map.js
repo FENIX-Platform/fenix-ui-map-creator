@@ -451,50 +451,6 @@ console.log('MapCreator addLayer', model);
         return joindata;
     };
 
-    MapCreator.prototype.iso3Boundaries = function(code) {
-        var self = this;
-            /*geoUrl = "http://fenix.fao.org:20200/geoserver/fenix/ows"+
-                "?service=WFS&version=1.0.0&request=GetFeature&typeName=fenix:gaul0_bounds&maxFeatures=50&outputFormat=application/json&"+
-                "viewparams=iso3_code:"+code;
-        */
-        var rootUrl = "http://fenix.fao.org:20200/geoserver/fenix/ows";
-
-        var defaultParameters = {
-            service: 'WFS',
-            version: '1.0.0',
-            request: 'GetFeature',
-            typeName: 'fenix:gaul0_bounds',
-            maxFeatures: 50,
-            outputFormat: 'text/javascript',
-            format_options: 'callback: getJson',
-            //srsName: 'EPSG:3857',
-            viewparams: 'iso3_code:'+code
-        };
-
-        var parameters = L.Util.extend(defaultParameters);
-
-        $.ajax({
-            url: rootUrl + L.Util.getParamString(parameters),
-            dataType: 'jsonp',
-            jsonpCallback: 'getJson',
-            success: function(json) {
-
-                var gLayer = L.geoJson(json, {
-                    style: function (feature) {
-                        return {
-                            color: '#f00',
-                            fillColor: '#f00'
-                        };
-                    }
-                });
-                self.fenixMap.map.addLayer( gLayer );
-
-                self.fenixMap.map.fitBounds( gLayer.getBounds() );
-
-            }
-        });
-    };
-
     MapCreator.prototype._validateJoinInput = function (model) {
         this.errors = {};
 
