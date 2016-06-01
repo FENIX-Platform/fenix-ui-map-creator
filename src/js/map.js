@@ -83,7 +83,7 @@ define([
         var layer;
 
 
-console.log('MapCreator addLayer', model);
+//console.log('MapCreator addLayer', model);
 
         if(!model)
             return false;
