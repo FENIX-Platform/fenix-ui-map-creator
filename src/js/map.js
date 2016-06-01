@@ -85,6 +85,9 @@ define([
 
 console.log('MapCreator addLayer', model);
 
+        if(!model)
+            return false;
+        
         //support simple Leaflet layer
         if(model instanceof L.TileLayer)
             return this.fenixMap.map.addLayer(model);
