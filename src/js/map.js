@@ -476,7 +476,9 @@ define([
             dataType: 'jsonp',
             jsonpCallback: 'getJson',
             success: function(json) {
-                console.log('iso3Boundaries',json);
+                
+                //console.log('iso3Boundaries',json);
+
                 var gLayer = L.geoJson(json, {
                     style: function (feature) {
                         return {
