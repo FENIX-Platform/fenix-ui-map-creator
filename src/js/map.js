@@ -220,7 +220,7 @@ define([
 
         self.leafletMap = self.fenixMap.map;
 
-        self.addLayer(this.model)
+        self.addLayer(self.model)
 
          //TODO bind to Leaflet whenReady
         self.status.ready = true;  //To be set on map ready event
