@@ -101,8 +101,6 @@ define([
         else
             layer = this.createLayerFenix(model);
 
-    console.log('addLayer',layer)
-
         layer = new FM.layer(layer);
         
         if(typeof model === 'object' && model['metadata'] && model['metadata']['title'] && model['metadata']['title']['EN'])
