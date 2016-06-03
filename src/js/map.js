@@ -377,7 +377,7 @@ define([
 
             return layer;
         } else {
-            console.error(this.errors);
+            //console.error(this.errors);
             //throw new Error("FENIX Map creator has not a valid JOIN configuration");
         }
     };
