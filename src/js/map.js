@@ -320,6 +320,7 @@ define([
 
     // JOIN
     MapCreator.prototype.createLayerFenixJoin = function (model) {
+        
         if (this._validateJoinInput(model) === true) {
             
             // create the join layer
@@ -377,7 +378,7 @@ define([
             return layer;
         } else {
             console.error(this.errors);
-            throw new Error("FENIX Map creator has not a valid JOIN configuration");
+            //throw new Error("FENIX Map creator has not a valid JOIN configuration");
         }
     };
 
