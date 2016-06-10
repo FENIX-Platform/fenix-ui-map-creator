@@ -7,13 +7,12 @@ define([
     'fx-m-c/config/errors',
     'fx-m-c/config/events',
     'fx-m-c/config/config',
-    'fx-m-c/config/config-default',
     'fenix-ui-map',
     'fx-common/pivotator/start',
     'fx-common/pivotator/fenixtool',
     'amplify'
 ], function ($, require, _, log, ERR, EVT,
-    C, CD,
+    C,
     FMMap, 
     Pivotator,
     Fenixtool
@@ -26,7 +25,7 @@ define([
         log.info("FENIX MapCreator");
         log.info(o);
 
-        _.extend(this, CD, C, {initial: o});
+        _.extend(this, C, {initial: o});
 
         this._parseInput(o);
 
