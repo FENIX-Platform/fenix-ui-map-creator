@@ -54,13 +54,14 @@ define([
 
     /**
      * pub/sub
-     * @return {Object} MapCreator instance
+     * @return {Object} component instance
      */
-    MapCreator.prototype.on = function (channel, fn) {
+    MapCreator.prototype.on = function (channel, fn, context) {
+        var _context = context || this;
         if (!this.channels[channel]) {
             this.channels[channel] = [];
         }
-        this.channels[channel].push({context: this, callback: fn});
+        this.channels[channel].push({context: _context, callback: fn});
         return this;
     };
 
