@@ -4,7 +4,7 @@ define(function () {
     'use strict';
 
     return {
-        WMS_URL: "http://fenix.fao.org/geoserver",
+        WMS_URL: "http://fenix.fao.org/demo/fenix/geoserver",
         DEFAULT_WMS_SERVER: "http://fenix.fao.org/demo/fenix/geoserver",
         fenix_ui_map: {
             plugins: {
@@ -30,8 +30,8 @@ define(function () {
         },
         layers: {
             gaul0: {
-                layers: 'fenix:gaul0_faostat_3857',
-                urlWMS: 'http://fenix.fao.org/demo/fenix/geoserver/geoserver-demo',
+                layers: 'fenix:gaul0_3857',
+                urlWMS: 'http://fenix.fao.org/demo/fenix/geoserver',
                 opacity: '0.9',
                 joincolumn: 'adm0_code',
                 joincolumnlabel: 'areanamee',
@@ -44,7 +44,7 @@ define(function () {
             }
         },
         url: {
-            wms: "http://fenix.fao.org/geoserver"
+            wms: "http://fenix.fao.org/demo/fenix/geoserver"
         },
         geoSubject: 'geo',
         valueSubject: 'value',
