@@ -44,7 +44,9 @@ define([
                         attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
                         maxZoom: 16
                     }
-                }
+                },
+                labels: true,
+                highlightCountry: ['TCD','MLI','NER']
             }
         });
 
