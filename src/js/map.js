@@ -365,10 +365,11 @@ define([
             var codes = [];
             layer.joindata.forEach(function (code) {
                 _.keys(code).forEach(function (key) {
-                    codes.push(key);
+                    if(_.isNumber(parseInt(key)))
+                        codes.push(key);
                 });
             });
-            
+
             var zoomlayer = layer.layers.split(":");
             
             zoomlayer = zoomlayer.length > 1? zoomlayer[1]: zoomlayer[0];
