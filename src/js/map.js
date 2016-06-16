@@ -338,7 +338,7 @@ define([
             if (model['metadata'].hasOwnProperty("title")) {
                 if (model['metadata']['title'][this.lang]) {
                     layer.layertitle = model['metadata']['title'][this.lang];
-                    console.log('title',this.lang, layer.layertitle)
+                    //console.log('title',this.lang, layer.layertitle)
                 }
             }
             else {
