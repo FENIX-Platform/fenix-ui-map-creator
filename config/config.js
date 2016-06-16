@@ -6,6 +6,9 @@ define(function () {
     return {
         WMS_URL: "http://fenix.fao.org/demo/fenix/geoserver",
         DEFAULT_WMS_SERVER: "http://fenix.fao.org/demo/fenix/geoserver",
+        url: {
+            wms: "http://fenix.fao.org/demo/fenix/geoserver"
+        },        
         fenix_ui_map: {
             plugins: {
                 disclaimerfao: true,
@@ -43,9 +46,6 @@ define(function () {
                 lang: 'en'
             }
         },
-        url: {
-            wms: "http://fenix.fao.org/demo/fenix/geoserver"
-        },
         geoSubject: 'geo',
         valueSubject: 'value',
         // measurement unit
@@ -53,7 +53,16 @@ define(function () {
 
         // Mapping with the
         join: {
-
+            style: {
+                layertype: 'JOIN',
+                jointype: 'shaded',
+                defaultgfi: true,
+                openlegend: true,
+                lang: 'EN',
+                opacity: '0.7',
+                colorramp: 'Greens',
+                decimalvalues: 2
+            },
             layerMapping: {
                 escap_area: {
                     layers: 'fenix:gaul0_3857',
@@ -117,16 +126,6 @@ define(function () {
                     joincolumn: 'iso3',
                     joincolumnlabel: 'areanamee'
                 }
-            },
-            style: {
-                layertype: 'JOIN',
-                jointype: 'shaded',
-                defaultgfi: true,
-                openlegend: true,
-                lang: 'EN',
-                opacity: '0.7',
-                colorramp: 'Greens',
-                decimalvalues: 2
             }
         }
         // TODO: add boundaries option

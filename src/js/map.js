@@ -376,7 +376,11 @@ define([
             
             this.fenixMap.zoomTo(zoomlayer, layer.joincolumn, codes);
 
+            if(this.initial.colorRamp)
+                layer.colorramp = this.initial.colorRamp;
+
             return layer;
+
         } else {
             //console.error(this.errors);
             //throw new Error("FENIX Map creator has not a valid JOIN configuration");
@@ -432,7 +436,6 @@ define([
 
             // check measurementunit
             // TODO: Add measurement unit to the layer definition (using label column of the mu)
-            //
 
             // get joinData
             layer.joindata = this.getJoinData(model['data'], geoColumn.index, valueColumn.index);
