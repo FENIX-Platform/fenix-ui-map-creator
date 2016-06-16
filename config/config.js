@@ -47,9 +47,9 @@ define(function () {
             }
         },
         geoSubject: 'geo',
-        colorRamp: 'Reds',  //Blues, Greens, 
+        colorRamp: 'Reds',  //Blues, Greens,
         //colorRamp values: http://fenixrepo.fao.org/cdn/fenix/fenix-ui-map-datasets/colorramp.png        
-        
+
         valueSubject: 'value',
         // measurement unit
         muSubject: null,
