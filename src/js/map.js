@@ -105,7 +105,10 @@ define([
         
         if(typeof model === 'object' && model['metadata'] && model['metadata']['title'] && model['metadata']['title']['EN'])
             layer.layer.layertitle = model['metadata']['title']['EN'];
-        
+
+        if(this.initial.legendtitle)
+            layer.layer.layertitle = this.initial.legendtitle;
+
         this.fenixMap.addLayer(layer);
 
         return layer;
@@ -425,7 +428,7 @@ define([
             var codelist = geoColumn['domain']['codes'][0]['idCodeList'].toLowerCase();
 
             if (this.join.layerMapping[codelist]) {
-                layer = this.join.layerMapping[codelist];
+                layer = this.join.layerMapping[ codelist ];
             }
             else {
                 geoColumn['domain']['codes'][0].idCodeList.toLowerCase();
@@ -445,6 +448,9 @@ define([
 
             // TODO: check if is the right legendtitle
             layer.legendtitle = layer.measurementunit;
+
+            layer.layertitle = 'OCD';
+            //layer.legendtitle = 'ODA';
 
             return layer;
 
