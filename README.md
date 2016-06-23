@@ -8,9 +8,7 @@ var mapCreator = new MapCreator({
 
    geoSubject: 'gaul0',
 
-   colorRamp: 'GnBu',  //Blues, Greens,
-
-   //colorRamp values: http://fenixrepo.fao.org/cdn/fenix/fenix-ui-map-datasets/colorramp.png
+   colorRamp: 'GnBu',  //Blues, Greens. colorRamp values: http://fenixrepo.fao.org/cdn/fenix/fenix-ui-map-datasets/colorramp.png
 
    legendtitle: 'ODA',
 
@@ -36,7 +34,9 @@ var mapCreator = new MapCreator({
          }
       },
       labels: true,
-      boundaries: true
+      boundaries: true,
+      zoomToCountry: ["DZA"],
+      highlightCountry: ["DZA"]
    }
 });
 ```
