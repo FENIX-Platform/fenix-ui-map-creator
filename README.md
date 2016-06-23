@@ -221,7 +221,7 @@ var mapCreator = new MapCreator({
     </tr>
     <tr>
       <td>addLayer</td>
-      <td>Object: Fenix Model | String: Fenix Uid | Object: Leaflet Layer</td>
+      <td>Object: Fenix Model | Leaflet Layer</td>
       <td>Append more Fenix Layers in the same map</td>
     </tr>
     <tr>
