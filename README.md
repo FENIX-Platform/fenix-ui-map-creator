@@ -22,9 +22,7 @@ var mapCreator = new MapCreator({
          }
       },
       labels: true,
-      boundaries: true,
-      zoomToCountry: ["DZA"],
-      highlightCountry: ["DZA"]
+      boundaries: true
    }
 });
 ```
@@ -54,6 +52,21 @@ var mapCreator = new MapCreator({
       <td> - </td>
       <td>Fenix Resource Object</td>
     </tr>
+   <td>fenix_ui_map</td>
+      <td>Object of Objects</td>
+      <td> - </td>
+      <td>
+      ```javascript
+      guiController: {
+         overlay: false,
+         baselayer: false,
+         wmsLoader: false
+      },
+      ...
+      ```
+      </td>
+      <td>Pass options to Fenix ui Map Options</td>
+    </tr>    
    <td>WMS_URL</td>
       <td>string</td>
       <td>"http://fenix.fao.org/demo/fenix/geoserver"</td>
