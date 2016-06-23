@@ -102,41 +102,73 @@ var mapCreator = new MapCreator({
       <td>Measurement unit displayed in map popup and legend</td>
     </tr>
      <tr>
-          <td>face</td>
-          <td>string</td>
-          <td>"front"</td>
-          <td>"back"</td>
-          <td>Box displayed face</td>
-        </tr>
-    <tr>
-        <td>faces</td>
-        <td>Array of string</td>
-        <td>["front", "back"]</td>
-        <td>["front"]</td>
-        <td>Box faces to render</td>
-      </tr>
-      
-        <tr>
-              <td>layers</td>
-              <td>Object of Objects</td>
-              <td>-</td>
-              <td>{
-            gaul0: {
-                layers: 'fenix:gaul0_3857',
-                urlWMS: 'http://fenix.fao.org/demo/fenix/geoserver',
-                opacity: '0.9',
-                joincolumn: 'adm0_code',
-                joincolumnlabel: 'areanamee',
+          <td>join.style</td>
+          <td>Object</td>
+          <td>{
                 layertype: 'JOIN',
                 jointype: 'shaded',
-                openlegend: true,
                 defaultgfi: true,
-                colorramp: 'YlGn',
-                lang: 'en'
-            }
+                openlegend: true,
+                lang: 'EN',
+                opacity: '0.7',
+                colorramp: 'Greens',
+                decimalvalues: 2
+            }</td>
+          <td> - </td>
+          <td>Style rules for Join Map</td>
+        </tr>
+     <tr>
+          <td>join.layerMapping</td>
+          <td>Object of Objects</td>
+          <td>{
+                gaul0: {
+                    layers: 'fenix:gaul0_3857',
+                    joincolumn: 'adm0_code',
+                    joincolumnlabel: 'adm0_name'
+                },
+                gaul1: {
+                    layers: 'fenix:gaul1_3857',
+                    joincolumn: 'adm1_code',
+                    joincolumnlabel: 'adm1_name'
+                },
+                iso3: {
+                    layers: 'fenix:gaul0_faostat3_3857',
+                    joincolumn: 'iso3',
+                    joincolumnlabel: 'areanamee'
+                },
+                uneca_iso3: {
+                    layers: 'fenix:gaul0_faostat3_3857',
+                    joincolumn: 'iso3',
+                    joincolumnlabel: 'areanamee'
+                },
+                ...
+            }</td>
+          <td> - </td>
+          <td>Geoserver Layers correspondence for geoSubject in Join operations </td>
+        </tr>      
+        <tr>
+           <td>layers</td>
+           <td>Object of Objects</td>
+           <td>-</td>
+           <td>{
+         gaul0: {
+             layers: 'fenix:gaul0_3857',
+             urlWMS: 'http://fenix.fao.org/demo/fenix/geoserver',
+             opacity: '0.9',
+             joincolumn: 'adm0_code',
+             joincolumnlabel: 'areanamee',
+             layertype: 'JOIN',
+             jointype: 'shaded',
+             openlegend: true,
+             defaultgfi: true,
+             colorramp: 'YlGn',
+             lang: 'en'
+         }, ...
         }</td>
-              <td>Top left menu configuration</td>
+         <td>Layers preloaded in the map</td>
          </tr>
+         
+         
   </tbody>
 </table>
 
