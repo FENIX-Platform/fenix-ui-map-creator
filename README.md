@@ -6,6 +6,8 @@
 var MapCreator = require('fx-dashboard/start');
 
 var mapCreator = new MapCreator({
+   el: '#map-creator',
+   model: {},
    geoSubject: 'gaul0',
    colorRamp: 'GnBu',  //Blues, Greens. colorRamp values http://fenixrepo.fao.org/cdn/fenix/fenix-ui-map-datasets/colorramp.png
    legendtitle: 'Example Override Legend Title',
