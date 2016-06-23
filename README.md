@@ -53,7 +53,7 @@ var mapCreator = new MapCreator({
       <td>Fenix Resource Object</td>
     </tr>
    <td>fenix_ui_map</td>
-      <td>Object of Objects</td>
+      <td>Object</td>
       <td> - </td>
       <td>
       ```javascript
@@ -141,7 +141,7 @@ var mapCreator = new MapCreator({
         </tr>
      <tr>
           <td>join.layerMapping</td>
-          <td>Object of Objects</td>
+          <td>Object</td>
           <td>
           
           ```javascript
@@ -175,7 +175,7 @@ var mapCreator = new MapCreator({
         </tr>      
         <tr>
            <td>layers</td>
-           <td>Object of Objects</td>
+           <td>Object</td>
            <td>-</td>
            <td>
            
