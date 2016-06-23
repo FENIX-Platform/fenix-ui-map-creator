@@ -70,7 +70,7 @@ var mapCreator = new MapCreator({
    <td>WMS_URL</td>
       <td>string</td>
       <td>"http://fenix.fao.org/demo/fenix/geoserver"</td>
-      <td>'adm0_code'</td>
+      <td>"http://fenix.fao.org/geoserver" (production URI) </td>
       <td>URI for Geoserver Services, WMS/WFS Layers and others</td>
     </tr>
    <td>leaflet</td>
