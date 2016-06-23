@@ -18,14 +18,7 @@ var mapCreator = new MapCreator({
       baselayers: {
          "cartodb": {
              title_en: "CartoDB light",
-             url: 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-             subdomains: 'abcd',
-             maxZoom: 19
-             // title_en: "Baselayer",
-             // url: 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',
-             // subdomains: 'abcd',
-             // maxZoom: 19
+             url: 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'
          }
       },
       labels: true,
@@ -198,9 +191,53 @@ var mapCreator = new MapCreator({
   </tbody>
 </table>
 
-# Events
-
-ready
 # Methods
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>invalidateSize</td>
+      <td> - </td>
+      <td>Update Map dimensions after container is resized</td>
+    </tr>
+    <tr>
+      <td>addLayer</td>
+      <td>Object: Fenix Model | String: Fenix Uid | Object: Leaflet Layer</td>
+      <td>Append more Fenix Layers in the same map</td>
+    </tr>
+    <tr>
+      <td>addBaseLayer</td>
+      <td>Object: Leaflet Layer</td>
+      <td>Append more Base Layers in the same map</td>
+    </tr>    
+    <tr>
+      <td>destroy</td>
+      <td>-</td>
+      <td>destroy the map</td>
+    </tr>        
+  </tbody>
+</table>
 
-.
+# Events
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ready</td>
+      <td> - </td>
+      <td>Run after Map rendered data</td>
+    </tr>
+  </tbody>
+</table>
