@@ -54,7 +54,6 @@ var mapCreator = new MapCreator({
     </tr>
    <td>fenix_ui_map</td>
       <td>Object</td>
-      <td> - </td>
       <td>
       ```javascript
       guiController: {
@@ -65,6 +64,7 @@ var mapCreator = new MapCreator({
       ...
       ```
       </td>
+      <td> - </td>      
       <td>Pass options to Fenix ui Map Options</td>
     </tr>    
    <td>WMS_URL</td>
