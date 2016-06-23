@@ -217,7 +217,7 @@ var mapCreator = new MapCreator({
       <td>Append more Base Layers in the same map</td>
     </tr>    
     <tr>
-      <td>destroy</td>
+      <td>dispose</td>
       <td>-</td>
       <td>destroy the map</td>
     </tr>        
