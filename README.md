@@ -63,11 +63,16 @@ var mapCreator = new MapCreator({
     </tr>
    <td>leaflet</td>
       <td>Object</td>
-      <td>{
+      <td>
+      
+      ```javascript
+      {
             zoomControl: false,
             attributionControl: false,
             minZoom: 1
-        }</td>
+        }
+        ```
+        </td>
       <td> - </td>
       <td>Override LeafletJs Map Options</td>
     </tr>    
@@ -104,7 +109,10 @@ var mapCreator = new MapCreator({
      <tr>
           <td>join.style</td>
           <td>Object</td>
-          <td>{
+          <td>
+          
+          ```javascript
+            {
                 layertype: 'JOIN',
                 jointype: 'shaded',
                 defaultgfi: true,
@@ -113,14 +121,19 @@ var mapCreator = new MapCreator({
                 opacity: '0.7',
                 colorramp: 'Greens',
                 decimalvalues: 2
-            }</td>
+            }
+            ```
+            </td>
           <td> - </td>
           <td>Style rules for Join Map</td>
         </tr>
      <tr>
           <td>join.layerMapping</td>
           <td>Object of Objects</td>
-          <td>{
+          <td>
+          
+          ```javascript
+          {
                 gaul0: {
                     layers: 'fenix:gaul0_3857',
                     joincolumn: 'adm0_code',
@@ -142,7 +155,9 @@ var mapCreator = new MapCreator({
                     joincolumnlabel: 'areanamee'
                 },
                 ...
-            }</td>
+            }
+            ```
+            </td>
           <td> - </td>
           <td>Geoserver Layers correspondence for geoSubject in Join operations </td>
         </tr>      
@@ -150,7 +165,10 @@ var mapCreator = new MapCreator({
            <td>layers</td>
            <td>Object of Objects</td>
            <td>-</td>
-           <td>{
+           <td>
+           
+           ```javascript
+           {
          gaul0: {
              layers: 'fenix:gaul0_3857',
              urlWMS: 'http://fenix.fao.org/demo/fenix/geoserver',
@@ -164,7 +182,9 @@ var mapCreator = new MapCreator({
              colorramp: 'YlGn',
              lang: 'en'
          }, ...
-        }</td>
+        }
+        ```
+        </td>
          <td>Layers preloaded in the map</td>
          </tr>
          
