@@ -55,6 +55,12 @@ var mapCreator = new MapCreator({
       <td>component container</td>
     </tr>
    <tr>
+   <td>model</td>
+      <td>Object</td>
+      <td> - </td>
+      <td> - </td>
+      <td>Fenix Resource Object</td>
+    </tr>
    <td>WMS_URL</td>
       <td>string</td>
       <td>"http://fenix.fao.org/demo/fenix/geoserver"</td>
