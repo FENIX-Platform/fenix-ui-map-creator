@@ -1,4 +1,4 @@
-# Fenix Map Creator
+# FENIX Map Creator
 
 # Example
 ```javascript
