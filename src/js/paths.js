@@ -8,7 +8,6 @@ define(function () {
             'fx-m-c/start' : './map',
             'fx-m-c/html' : '../../html',
             'fx-m-c/config' : '../../config',
-            'fx-m-c/adapters' : './adapters',
             'fx-m-c/templates' : './templates',
 
             // third party libs
