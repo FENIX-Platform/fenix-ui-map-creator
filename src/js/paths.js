@@ -1,4 +1,6 @@
-/*global define*/
+if (typeof define !== 'function') {
+    var define = require('amdefine')(module);
+}
 define(function () {
     'use strict';
 
@@ -6,8 +8,8 @@ define(function () {
 
         paths : {
             'fx-m-c/start' : './map',
-            'fx-m-c/html' : '../../html',
-            'fx-m-c/config' : '../../config',
+            'fx-m-c/html' : '../html',
+            'fx-m-c/config' : '../config',
             'fx-m-c/templates' : './templates',
 
             // third party libs
