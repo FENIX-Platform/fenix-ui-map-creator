@@ -1,6 +1,6 @@
 {
   "name": "fenix-ui-map-creator",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0",
   "description": "FENIX map component creator",
   "main": "src/js/map.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/FENIX-Platform/fenix-ui-map.git"
+    "url": "https://github.com/FENIX-Platform/fenix-ui-map-creator.git"
   },
   "keywords": [
     "FENIX"
@@ -16,9 +16,9 @@
   "author": "FENIX team (http://fenix.fao.org/)",
   "license": "GPL-2.0",
   "bugs": {
-    "url": "https://github.com/FENIX-Platform/fenix-ui-map/issues"
+    "url": "https://github.com/FENIX-Platform/fenix-ui-map-creator/issues"
   },
-  "homepage": "https://github.com/FENIX-Platform/fenix-ui-map",
+  "homepage": "https://github.com/FENIX-Platform/fenix-ui-map-creator",
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-cli": "~0.1.11",
