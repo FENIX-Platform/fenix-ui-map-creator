@@ -4,19 +4,17 @@ define([
     'underscore',
     '../../../src/js/index',
     'dev/src/models/UNECA_Population.json',
-    'dev/src/models/UNECA_Education.json',
-    'dev/src/models/UNECA_Population_pivotated.json'
-], function (log, $, _, MapCreator, ModelPop, ModelEdu, ModelPivotData) {
+    'dev/src/models/UNECA_Education.json'
+], function (log, $, _, MapCreator, ModelPop, ModelEdu) {
 
     'use strict';
-    
+
     var Model = ModelEdu;
-    //Model.data = JSON.parse(ModelPivotData);
 
     var s = {
-            STANDARD: "#standard",
-            TOOLBAR: "#toolbar"
-        };
+        STANDARD: "#standard",
+        TOOLBAR: "#toolbar"
+    };
 
     function Dev() {
         console.log("Dev Started");
@@ -60,7 +58,7 @@ define([
                 subdomains: 'abcd',
                 maxZoom: 19
             }) );
- 
+
             $.get('dataset/bangkok.json', function (model) {
 
                 //mapCreator.addLayer(model, { colorramp: 'Reds' });
