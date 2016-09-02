@@ -2,15 +2,15 @@ define([
     'loglevel',
     'jquery',
     'underscore',
-    'fx-m-c/start',
-    'text!test/models/UNECA_Population.json',
-    'text!test/models/UNECA_Education.json',
-    'text!test/models/UNECA_Population_pivotated.json'
+    '../../../src/js/index',
+    'dev/src/models/UNECA_Population.json',
+    'dev/src/models/UNECA_Education.json',
+    'dev/src/models/UNECA_Population_pivotated.json'
 ], function (log, $, _, MapCreator, ModelPop, ModelEdu, ModelPivotData) {
 
     'use strict';
     
-    var Model = JSON.parse(ModelEdu);
+    var Model = ModelEdu;
     //Model.data = JSON.parse(ModelPivotData);
 
     var s = {
@@ -18,9 +18,13 @@ define([
             TOOLBAR: "#toolbar"
         };
 
-    function Test() {}
+    function Dev() {
+        console.log("Dev Started");
+        log.setLevel('trace');
+        Dev.start();
+    }
 
-    Test.prototype.start = function () {
+    Dev.prototype.start = function () {
 
         window.mapCreator = new MapCreator({
             el: s.STANDARD,
@@ -66,6 +70,6 @@ define([
 
     };
 
-    return new Test();
+    return new Dev();
 
 });

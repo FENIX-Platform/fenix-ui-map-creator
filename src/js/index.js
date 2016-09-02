@@ -1,24 +1,15 @@
-if (typeof define !== 'function') {
-    var define = require('amdefine')(module);
-}
 define([
     'jquery',
-    'require',
     'underscore',
     'loglevel',
-    'fx-m-c/config/errors',
-    'fx-m-c/config/events',
-    'fx-m-c/config/config',
+    '../config/errors',
+    '../config/events',
+    '../config/config',
     'fenix-ui-map',
-    'fx-common/pivotator/start',
-    'fx-common/pivotator/fenixtool',
-    'amplify'
-], function ($, require, _, log, ERR, EVT,
-    C,
-    FMMap, 
-    Pivotator,
-    Fenixtool
-    ) {
+    'fenix-ui-pivotator',
+    'fenix-ui-pivotator-utils',
+    'amplify-pubsub'
+], function ($, _, log, ERR, EVT, C, FMMap, Pivotator, Fenixtool, amplify) {
 
     'use strict';
 
@@ -83,11 +74,11 @@ define([
 
         var layer;
 
-        if(!model)
+        if (!model)
             return false;
-        
+
         //support simple Leaflet layer
-        if(model instanceof L.TileLayer)
+        if (model instanceof L.TileLayer)
             return this.fenixMap.map.addLayer(model);
 
         // TODO: switch to check if it's a fenix layer
@@ -104,18 +95,18 @@ define([
             layer = this.createLayerFenix(model);
 
         layer = new FM.layer(layer);
-        
-        if(typeof model === 'object' && model['metadata'] && model['metadata']['title'] && model['metadata']['title']['EN'])
+
+        if (typeof model === 'object' && model['metadata'] && model['metadata']['title'] && model['metadata']['title']['EN'])
             layer.layer.layertitle = model['metadata']['title']['EN'];
 
-        if(this.initial.legendtitle)
+        if (this.initial.legendtitle)
             layer.layer.layertitle = this.initial.legendtitle;
 
         this.fenixMap.addLayer(layer);
 
         return layer;
     };
-    
+
     /**
      * Remove a layer from map
      */
@@ -217,7 +208,7 @@ define([
     };
 
     MapCreator.prototype._renderMap = function () {
-        
+
         var self = this;
 
         //var myPivotatorConfig=this.fenixTool.parseInut(this.initial.model.metadata.dsd, this.pivotatorConfig);
@@ -228,16 +219,15 @@ define([
 
         self.leafletMap = self.fenixMap.map;
 
-        if(self.model) {
+        if (self.model) {
             self.addLayer(self.model);
         }
-        else if(this.initial.uid) {
+        else if (this.initial.uid) {
             self.addLayer(this.initial.uid);
         }
 
 
-
-         //TODO bind to Leaflet whenReady
+        //TODO bind to Leaflet whenReady
         self.status.ready = true;  //To be set on map ready event
 
         setTimeout(_.bind(function () {
@@ -291,7 +281,7 @@ define([
             layer.layers = "";
             if (metadata.dsd.hasOwnProperty("workspace"))
                 layer.layers += metadata.dsd.workspace + ":";
-            
+
             layer.layers += metadata.dsd.layerName;
         }
         else {
@@ -302,7 +292,7 @@ define([
         //TODO
         //if (model.hasOwnProperty("datasource"))
         //  layer.urlWMS = metadata["datasource"];
-        
+
         layer.urlWMS = this.fenix_ui_map.DEFAULT_WMS_SERVER;
         layer.layertitle = {
             en: 'Data Layer'
@@ -325,17 +315,17 @@ define([
 
     // JOIN
     MapCreator.prototype.createLayerFenixJoin = function (model) {
-        
+
         if (this._validateJoinInput(model) === true) {
-            
+
             // create the join layer
             var layer = this.getJoinLayer(model);
 
             _.extend(layer, this.join.style);
 
-            var defPopup = "<div class='fm-popup'>{{"+ layer.joincolumnlabel +"}}"+
-                "<div class='fm-popup-join-content'>{{{"+ layer.joincolumn + "}}} "+
-                "{{measurementunit}}"+
+            var defPopup = "<div class='fm-popup'>{{" + layer.joincolumnlabel + "}}" +
+                "<div class='fm-popup-join-content'>{{{" + layer.joincolumn + "}}} " +
+                "{{measurementunit}}" +
                 "</div></div>";
 
 
@@ -351,11 +341,11 @@ define([
             }
 
             // getting a title from the options
-            if ( this.hasOwnProperty('layer') && this.layer.hasOwnProperty('layertitle')) {
+            if (this.hasOwnProperty('layer') && this.layer.hasOwnProperty('layertitle')) {
                 layer.layertitle = this.layer.layertitle;
             }
 
-            if ( this.hasOwnProperty('layer') && this.layer.hasOwnProperty('popupBuilder')) {
+            if (this.hasOwnProperty('layer') && this.layer.hasOwnProperty('popupBuilder')) {
                 layer.popupBuilder = this.layer.popupBuilder;
             }
 
@@ -370,18 +360,18 @@ define([
             var codes = [];
             layer.joindata.forEach(function (code) {
                 _.keys(code).forEach(function (key) {
-                    if(_.isNumber(parseInt(key)))
+                    if (_.isNumber(parseInt(key)))
                         codes.push(key);
                 });
             });
 
             var zoomlayer = layer.layers.split(":");
-            
-            zoomlayer = zoomlayer.length > 1? zoomlayer[1]: zoomlayer[0];
-            
+
+            zoomlayer = zoomlayer.length > 1 ? zoomlayer[1] : zoomlayer[0];
+
             this.fenixMap.zoomTo(zoomlayer, layer.joincolumn, codes);
 
-            if(this.initial.colorRamp)
+            if (this.initial.colorRamp)
                 layer.colorramp = this.initial.colorRamp;
 
             return layer;
@@ -393,18 +383,18 @@ define([
     };
 
     MapCreator.prototype.getJoinLayer = function (model) {
-        
+
         var metadata = model['metadata'],
             geoColumn = {},
             valueColumn = {},
             muColumn = {};
 
         metadata['dsd']['columns'].forEach(_.bind(function (col, index) {
-            if (col.subject === this.geoSubject || col.id === this.geoSubject ) {
+            if (col.subject === this.geoSubject || col.id === this.geoSubject) {
                 geoColumn = col;
                 geoColumn.index = index;
             }
-            if (col.subject === this.valueSubject || col.id === this.valueSubject ) {
+            if (col.subject === this.valueSubject || col.id === this.valueSubject) {
                 valueColumn = col;
                 valueColumn.index = index;
             }
@@ -424,13 +414,13 @@ define([
 
 
         if (this._validateJoinColumnInput(geoColumn)) {
-            
+
 
             var layer = null;
             var codelist = geoColumn['domain']['codes'][0]['idCodeList'].toLowerCase();
 
             if (this.join.layerMapping[codelist]) {
-                layer = this.join.layerMapping[ codelist ];
+                layer = this.join.layerMapping[codelist];
             }
             else {
                 geoColumn['domain']['codes'][0].idCodeList.toLowerCase();
@@ -456,7 +446,7 @@ define([
 
             return layer;
 
-        } else{
+        } else {
             console.error('Error JoinColumnInput not valid')
         }
     };
@@ -472,7 +462,7 @@ define([
             var code = row[geoColumnIndex];
             var value = row[valueColumnIhdex];
             if (code && value) {
-                obj[code] = value ;
+                obj[code] = value;
                 if (!cachedValues.hasOwnProperty(code)) {
                     // check null values
                     cachedValues[code] = true;
