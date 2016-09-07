@@ -19,7 +19,7 @@ define([
     function Dev() {
         console.log("Dev Started");
         log.setLevel('trace');
-        Dev.start();
+        this.start();
     }
 
     Dev.prototype.start = function () {

@@ -7,13 +7,11 @@
     "test": "NODE_ENV=test karma start ./karma.config.js",
     "build": "NODE_ENV=production webpack --display-error-details",
     "build:demo": "NODE_ENV=demo webpack --display-error-details",
-    "dev": "NODE_ENV=develop webpack-dev-server --display-error-details --progress --color --content-base dev",
-    "validate": "NODE_ENV=test webpack-validator webpack.config.js",
-    "w-test": "SET NODE_ENV=test && karma start ./karma.config.js",
-    "w-build": "SET NODE_ENV=production && webpack --display-error-details",
-    "w-build:demo": "SET NODE_ENV=demo && webpack --display-error-details",
-    "w-dev": "SET NODE_ENV=develop && webpack-dev-server --display-error-details --progress --color --content-base dev",
-    "w-validate": "SET NODE_ENV=test && webpack-validator webpack.config.js"
+    "dev": "NODE_ENV=develop webpack-dev-server --display-error-details --progress --color --content-base dev  --inline --hot",
+    "w-test": "SET NODE_ENV=test&& karma start ./karma.config.js",
+    "w-build": "SET NODE_ENV=production&& webpack --display-error-details",
+    "w-build:demo": "SET NODE_ENV=demo&& webpack --display-error-details",
+    "w-dev": "SET NODE_ENV=develop&& webpack-dev-server --display-error-details --progress --color --content-base dev  --inline --hot"
   },
   "repository": {
     "type": "git",

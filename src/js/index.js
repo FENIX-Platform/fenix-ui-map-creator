@@ -9,7 +9,7 @@ define([
     'fenix-ui-pivotator',
     'fenix-ui-pivotator-utils',
     'amplify-pubsub'
-], function ($, _, log, ERR, EVT, C, FMMap, Pivotator, Fenixtool, amplify) {
+], function ($, _, log, ERR, EVT, C, FM, Pivotator, Fenixtool, amplify) {
 
     'use strict';
 

@@ -17,6 +17,10 @@ module.exports = {
 
     output: getOutput(),
 
+    resolveLoader: {
+        packageMains: ['json-loader']
+    },
+
     resolve: {
         root: Path.resolve(__dirname),
         alias: {
