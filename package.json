@@ -1,6 +1,6 @@
 {
   "name": "fenix-ui-map-creator",
-  "version": "2.0.1-beta.1",
+  "version": "2.0.1-beta.2",
   "description": "FENIX map component creator",
   "main": "dist/fenix-ui-map-creator.min.js",
   "scripts": {
@@ -27,10 +27,10 @@
   },
   "homepage": "https://github.com/FENIX-Platform/fenix-ui-map-creator",
   "dependencies": {
-    "amplify-pubsub": "0.0.1",
-    "bootstrap": "~3.2.0",
-    "chosen-jquery": "~0.1.1",
-    "fenix-ui-map": "2.5.0",
+    "amplify-pubsub": "^0.0.1",
+    "bootstrap": "^3.2.0",
+    "chosen-jquery": "^0.1.1",
+    "fenix-ui-map": "^2.5.0",
     "fenix-ui-pivotator": "^1.0.0-beta.4",
     "fenix-ui-pivotator-utils": "^1.0.0-beta.1",
     "jquery": "^2.2.4",
@@ -43,8 +43,16 @@
     "underscore": "^1.7.0"
   },
   "devDependencies": {
+    "bootstrap-loader": "^2.0.0-beta.11",
+    "bootstrap-sass": "^3.3.7",
     "chai": "^3.5.0",
     "clean-webpack-plugin": "^0.1.10",
+    "css-loader": "^0.25.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "fenix-ui-filter": "^3.0.0-beta.7",
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.22.0",
+    "image-webpack-loader": "^2.0.0",
     "jshint": "^2.9.3",
     "jshint-loader": "^0.8.3",
     "karma": "^1.2.0",
@@ -55,6 +63,11 @@
     "karma-mocha": "^1.1.1",
     "karma-webpack": "^1.8.0",
     "mocha": "^3.0.2",
+    "node-sass": "^3.10.0",
+    "resolve-url-loader": "^1.6.0",
+    "sass-loader": "^4.0.2",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.15.1"
   }

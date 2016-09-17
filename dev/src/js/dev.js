@@ -17,8 +17,9 @@ define([
     };
 
     function Dev() {
-        console.log("Dev Started");
+        this._importThirdPartyCss();
         log.setLevel('trace');
+        log.info('Dev start');
         this.start();
     }
 
@@ -48,16 +49,16 @@ define([
                     }
                 },
                 labels: true,
-                highlightCountry: ['TCD','MLI','NER']
+                highlightCountry: ['TCD', 'MLI', 'NER']
             }
         });
 
-        mapCreator.on('ready', _.bind(function() {
+        mapCreator.on('ready', _.bind(function () {
 
-            mapCreator.addLayer( new L.TileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png', {
+            mapCreator.addLayer(new L.TileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png', {
                 subdomains: 'abcd',
                 maxZoom: 19
-            }) );
+            }));
 
             $.get('dataset/bangkok.json', function (model) {
 
@@ -67,6 +68,28 @@ define([
         }, this));
 
     };
+
+    // utils
+
+    Dev.prototype._importThirdPartyCss = function () {
+
+        //Bootstrap
+        require("bootstrap-loader");
+
+        //dropdown selector
+        require("../../../node_modules/selectize/dist/css/selectize.bootstrap3.css");
+        //tree selector
+        require("../../../node_modules/jstree/dist/themes/default/style.min.css");
+        //range selector
+        require("../../../node_modules/ion-rangeslider/css/ion.rangeSlider.skinHTML5.css");
+        //time selector
+        require("../../../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css");
+        // fenix-ui-filter
+        require("../../../node_modules/fenix-ui-filter/dist/fenix-ui-filter.min.css");
+
+
+    };
+
 
     return new Dev();
 
