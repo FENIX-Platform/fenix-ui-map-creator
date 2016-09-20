@@ -87,6 +87,9 @@ define([
         // fenix-ui-filter
         require("../../../node_modules/fenix-ui-filter/dist/fenix-ui-filter.min.css");
 
+        // fenix-ui-filter
+        require("../../../node_modules/leaflet/dist/leaflet.css");
+
 
     };
 
