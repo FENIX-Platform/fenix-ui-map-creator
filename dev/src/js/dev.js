@@ -29,10 +29,7 @@ define([
             el: s.STANDARD,
             model: Model,
             fenix_ui_map: {
-                guiController: {
-                    container: s.TOOLBAR,
-                    wmsLoader: false
-                },
+                guiController: false,
                 baselayers: {
                     cartodb: {
                         title_en: "CartoDB light",
@@ -86,6 +83,8 @@ define([
         require("../../../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css");
         // fenix-ui-filter
         require("../../../node_modules/fenix-ui-filter/dist/fenix-ui-filter.min.css");
+
+        require("../../../node_modules/fenix-ui-map/dist/fenix-ui-map.min.css");
 
         // fenix-ui-filter
         require("../../../node_modules/leaflet/dist/leaflet.css");
