@@ -57,11 +57,6 @@ define([
                 maxZoom: 19
             }));
 
-            $.get('dataset/bangkok.json', function (model) {
-
-                //mapCreator.addLayer(model, { colorramp: 'Reds' });
-            });
-
         }, this));
 
     };
