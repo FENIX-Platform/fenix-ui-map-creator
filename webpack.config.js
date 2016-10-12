@@ -36,7 +36,6 @@ module.exports = {
                 {test: /\.css$/, loader: "style-loader!css-loader"}
             ),
             {test: /\.hbs$/, loader: "handlebars-loader"},
-            {test: /\.json/, loader: "json-loader"},
             {test: /\.png$/, loader: "url-loader?limit=100000"},
             {test: /\.jpg$/, loader: "file-loader?name=[name].[ext]&limit=100000"},
             {test: /\.svg/, loader: "file-loader?name=[name].[ext]&limit=100000"},
@@ -47,7 +46,8 @@ module.exports = {
             {test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&minetype=application/font-woff"},
             {test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&minetype=application/font-woff"},
             {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&minetype=application/octet-stream"},
-            {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file"}
+            {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file"},
+            {test: /\.json(\?v=\d+\.\d+\.\d+)?$/, loader: "json"},
         ]
     },
 
