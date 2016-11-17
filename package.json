@@ -1,6 +1,6 @@
 {
   "name": "fenix-ui-map-creator",
-  "version": "2.5.0-beta.3",
+  "version": "2.5.2-beta.3",
   "description": "FENIX map component creator",
   "main": "dist/fenix-ui-map-creator.min.js",
   "scripts": {
@@ -30,7 +30,7 @@
     "amplify-pubsub": "^0.0.1",
     "bootstrap": "^3.2.0",
     "chosen-jquery": "^0.1.1",
-    "fenix-ui-map": "^2.6.2",
+    "fenix-ui-map": "^2.6.5",
     "fenix-ui-pivotator": "^1.0.0-beta.4",
     "fenix-ui-pivotator-utils": "^1.0.0-beta.1",
     "jquery": "^2.2.4",
