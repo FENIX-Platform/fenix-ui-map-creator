@@ -1,6 +1,6 @@
 {
   "name": "fenix-ui-map-creator",
-  "version": "2.5.2-beta.5",
+  "version": "2.5.2-beta.9",
   "description": "FENIX map component creator",
   "main": "dist/fenix-ui-map-creator.min.js",
   "scripts": {
@@ -30,7 +30,7 @@
     "amplify-pubsub": "^0.0.1",
     "bootstrap": "^3.2.0",
     "chosen-jquery": "^0.1.1",
-    "fenix-ui-map": "^2.6.5",
+    "fenix-ui-map": "^2.6.8",
     "fenix-ui-pivotator": "^1.0.0-beta.4",
     "fenix-ui-pivotator-utils": "^1.0.0-beta.1",
     "jquery": "^2.2.4",
@@ -42,16 +42,19 @@
     "underscore": "^1.7.0"
   },
   "devDependencies": {
+    "bootstrap": "^3.3.7",
     "bootstrap-loader": "^2.0.0-beta.11",
     "bootstrap-sass": "^3.3.7",
     "chai": "^3.5.0",
     "clean-webpack-plugin": "^0.1.10",
     "css-loader": "^0.25.0",
     "extract-text-webpack-plugin": "^1.0.1",
-    "fenix-ui-filter": "^3.0.0-beta.7",
     "file-loader": "^0.9.0",
+    "handlebars": "^4.0.5",
+    "handlebars-loader": "^1.4.0",
     "html-webpack-plugin": "^2.22.0",
     "image-webpack-loader": "^2.0.0",
+    "imports-loader": "^0.6.5",
     "jshint": "^2.9.3",
     "jshint-loader": "^0.8.3",
     "json-loader": "^0.5.4",
