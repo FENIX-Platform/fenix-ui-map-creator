@@ -1,10 +1,10 @@
 
 define([
-    "jquery","underscore","leaflet","hashmap","bootstrap",
-    "../nls/labels"
+    'jquery','underscore','leaflet','hashmap','bootstrap','ion-rangeslider',
+    '../nls/labels'
     ],
 
-function($, _, L, HashMap, Bootstrap, i18n) {
+function($, _, L, HashMap, Bootstrap, Rangeslider, i18n) {
 
 var FM = {};
 
@@ -290,7 +290,7 @@ FM.Util = {
     },
 
     FM.Util.fire = function(item , type, data){
-        var evt = document.createEvent("CustomEvent");
+        var evt = document.createEvent('CustomEvent');
         evt.initCustomEvent(type, true, true, data);
         item.dispatchEvent(evt);
     }
@@ -411,9 +411,7 @@ FM.WMSUtils = FM.Class.extend({
                 var layerPanel = FM.Util.replaceAll(FM.guiController.wmsLoaderLayer, 'REPLACE', rand);
 
                 $("#" + id).append(layerPanel);
-                $('#' + rand + '-WMSLayer-title')
-                    //.tooltip({title: layer.layertitle})
-                    .append(layer.layertitle);
+                $('#' + rand + '-WMSLayer-title').append(layer.layertitle);
 
 
                 // TODO: get bounding box with the current CRS
@@ -2752,7 +2750,15 @@ FM.MAPController = FM.Class.extend({
             if ( l.layer.opacity != null )
                 opacity = l.layer.opacity;
 
-            $(idItem+ '-opacity')
+            $(idItem+ '-opacity').ionRangeSlider({
+                min: 0.1, max: 1, step: 0.1,
+                hide_min_max: true, hide_from_to: true,
+                from: opacity,
+                onChange: function (o) {
+                    //item.layer.setOpacity(o.from);
+                    FM.LayerUtils.setLayerOpacity(l, o.from);
+                }
+            });
 /*                .slider({
                     orientation: "horizontal",
                     range: "min",

@@ -73,7 +73,9 @@ define([
         //Bootstrap
         require("bootstrap-loader");
 
-        require("../../../node_modules/ion-rangeslider/css/ion.rangeSlider.skinHTML5.css");
+        require("../../../node_modules/ion-rangeslider/css/ion.rangeSlider.css");
+        require("../../../node_modules/ion-rangeslider/css/ion.rangeSlider.skinNice.css");
+        //require("../../../node_modules/ion-rangeslider/css/ion.rangeSlider.skinHTML5.css");
 
         require("../../../node_modules/leaflet/dist/leaflet.css");
         
