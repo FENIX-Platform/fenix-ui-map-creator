@@ -272,7 +272,8 @@ FM.Util = {
     };
 
     FM.Util.replaceAll = function(text, stringToFind, stringToReplace) {
-        return text.replace(new RegExp(stringToFind, 'g'), stringToReplace);
+        if(text)
+            return text.replace(new RegExp(stringToFind, 'g'), stringToReplace);
     },
 
     FM.Util.parseLayerRequest = function(layer) {
