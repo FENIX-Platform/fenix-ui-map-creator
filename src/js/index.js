@@ -5,7 +5,7 @@ define([
     '../config/errors',
     '../config/events',
     '../config/config',
-    'fenix-ui-map',
+    './fenix-ui-map.src',
     'fenix-ui-pivotator',
     'fenix-ui-pivotator-utils',
     'amplify-pubsub'

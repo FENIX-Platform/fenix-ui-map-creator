@@ -1,0 +1,331 @@
+.leaflet-bar {
+  @include fx-noshadow;
+}
+
+.leaflet-control-zoom.leaflet-bar.leaflet-control .leaflet-control-zoom-in,
+.leaflet-control-zoom.leaflet-bar.leaflet-control .leaflet-control-zoom-out {
+  font-family: 'eldorado_stroke';
+  font-size: 0;
+  //speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  text-indent: 0;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
+.leaflet-control-zoom-out {
+  font-size: 0px;
+}
+
+.leaflet-touch .leaflet-control-zoom-in {
+  font-size: 0;
+}
+.leaflet-touch .leaflet-control-zoom-out {
+  font-size: 0;
+}
+
+.leaflet-control-zoom-in:before {
+  color: $fenix-text;
+  font-size: 24px;
+  content: "\eb2a";
+}
+
+.leaflet-control-zoom-out:before {
+  color: $fenix-text;
+  font-size: 24px;
+  content: "\eb28";
+}
+
+
+.leaflet-container .leaflet-control-attribution{
+  background: none repeat scroll 0 0 rgba(255, 255, 255, 0.3);
+}
+
+
+.leaflet-control-attribution a, .leaflet-control-attribution a:hover{
+  color: $fenix-text;
+  text-decoration: none;
+}
+
+
+.leaflet-container a, .leaflet-container a:focus, .leaflet-container a:hover, .leaflet-container a:visited, {
+  color: $fenix-text;
+  text-decoration: none;
+}
+
+
+.fm-map-box {
+  position:relative;
+  width:100%;
+  height: 100%;
+}
+
+
+
+
+
+
+.fm-controller-box-item {
+  position: relative;
+  cursor: pointer;
+  border: 1px solid white;
+  min-height: 55px;
+}
+
+
+
+/*ICONS */
+
+.fm-icon-right {
+  float:right;
+}
+
+.fm-icon-left {
+  float:left;
+}
+
+
+
+
+
+
+/** LEGEND **/
+
+.fm-box-legend {
+  padding: 10px;
+  display:none;
+  z-index: 1;
+  position: absolute;
+  background-color:white;
+  right: 10px;
+  top: 10px;
+}
+
+.fm-legend-layertitle {
+
+  position:relative;
+  display: inline-block;
+  color: $fenix-text;
+  max-width: 190px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space:nowrap;
+  margin-right: 5px;
+}
+
+
+
+/** SWIPE **/
+.fm-swipe {
+  position:absolute;
+  left:0;
+  background-color: transparent;
+  z-index:1000;
+  bottom:4px;
+}
+
+/* To be removed */
+.fm-swipe-handle {
+  position:relative;
+  background-color: transparent;
+  font-weight:bold;
+  cursor:pointer;
+  -webkit-user-select: none;
+  border-left: 4px solid black;
+  bottom:50%;
+}
+
+
+
+
+/** overlay box **/
+
+.fm-icon-layer-panel-sprite {
+  width:11px;
+  height: 11px;
+  background-image: url(#{$fx-ui-common}css/img/fx-map-sprites/layer-panel-icons-sprite.png);
+  cursor: pointer;
+  margin-left: 7px;
+}
+
+.fm-icon-panel-info {
+  background-position: 0px 0px;
+}
+
+.fm-icon-panel-info:hover {
+  background-position: 0px -11px;
+}
+
+.fm-icon-panel-remove {
+  background-position: -11px 0px;
+}
+
+.fm-icon-panel-remove:hover {
+  background-position: -11px -11px;
+}
+
+.fm-icon-down {
+  background-position: -22px 0px;
+}
+.fm-icon-down:hover {
+  background-position: -22px -11px;
+}
+.fm-icon-up {
+  background-position: -33px 0px;
+}
+.fm-icon-up:hover {
+  background-position: -33px -11px;
+}
+
+
+/* Stefano Checkbox */
+.fm-icon-enable { background-image: url(#{$fx-ui-common}css/img/fx-map-sprites/layer-on.png); width: 19px; height: 19px;}
+.fm-icon-disable { background-image: url(#{$fx-ui-common}css/img/fx-map-sprites/layer-off.png); width: 19px; height: 19px;}
+
+
+.fm-opacity-slider {
+
+}
+
+.ui-slider-horizontal{
+  height: 2px !important;
+}
+
+.ui-widget-content {
+  border: none !important;
+}
+
+.ui-widget-content {
+  background: #cccccc !important;
+}
+
+.ui-widget-header {
+  background: #428BCA !important;
+}
+
+.ui-slider-handle {
+  background: url(#{$fx-ui-common}css/img/fx-map-sprites/slider-handler.png) !important;
+  width: 29px !important;
+  height: 29px !important;
+  border: none !important;
+  cursor: pointer !important;
+  top: -12px !important;
+  outline: none !important;
+}
+
+
+/** Sub icons **/
+.fm-controller-box-subicons {
+  position: relative;
+  margin: 5px 0;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid #428BCA;
+  display: inline-block;
+  height: 26px;
+  overflow: hidden;
+}
+
+
+.fm-icon-layer-subicons-sprite {
+  width: 30px;
+  height: 25px;
+  background-image: url(#{$fx-ui-common}css/img/fx-map-sprites/fenix-map-add-sprite.png);
+  cursor: pointer;
+  display: inline-block;
+  border-left:1px solid #428BCA;
+}
+
+.fm-icon-layer-subicons-sprite:first-child {
+  border-left: none;
+}
+
+.fm-icon-layer-subicons-sprite:hover {
+  background-color: #428BCA;
+}
+
+
+.fm-icon-getlegend {
+  background-position: 0px 0px;
+}
+.fm-icon-getlegend:hover {
+  background-position: 0px -25px;
+}
+
+.fm-icon-getlegend-selected {
+  background-color: #428BCA;
+  background-position: 0px -25px;
+}
+
+
+.fm-icon-switchJoinType-shaded {
+  background-position: -120px 0px;
+}
+
+.fm-icon-switchJoinType-shaded:hover {
+  background-position: -120px -25px;
+}
+
+.fm-icon-switchJoinType-point {
+  background-position: -150px 0px;
+}
+
+.fm-icon-switchJoinType-point:hover {
+  background-position: -150px -25px;
+}
+
+.fm-icon-getfeatureinfo {
+  background-position: -30px 0px;
+}
+.fm-icon-getfeatureinfo:hover {
+  background-position: -30px -25px;
+}
+
+.fm-icon-getfeatureinfo-selected {
+  background-color: #428BCA;
+  background-position: -30px -25px;
+}
+
+.fm-icon-zoomto {
+  background-position: -60px 0px;
+}
+.fm-icon-zoomto:hover {
+  background-position: -60px -25px;
+}
+
+.fm-icon-swipe {
+  background-position: -90px 0px;
+}
+.fm-icon-swipe:hover {
+  background-position: -90px -25px;
+}
+
+.fm-icon-swipe-selected {
+  background-color: #428BCA;
+  background-position: -90px -25px;
+}
+
+
+/** close panel **/
+
+.fm-icon-close-panel-sprite {
+  background-image: url(#{$fx-ui-common}css/img/fx-map-sprites/close-panel-sprite.png);
+  width: 12px;
+  height: 12px;
+  margin-top:3px;
+  cursor: pointer;
+}
+
+.fm-icon-close {
+  background-position: 0px 0px;
+}
+
+.fm-icon-close:hover {
+  background-position: -12px 0px;
+}
+
