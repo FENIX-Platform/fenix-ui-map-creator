@@ -1864,7 +1864,7 @@ FM.Plugins = {
 				control.onAdd = function(map) {
 						var div = L.DomUtil.create('div','leaflet-control-disclaimer fm-icon-box-background'),					
 							a = L.DomUtil.create('a','fm-icon-sprite fm-icon-info', div);
-						
+
 						a.title = FM.guiMap['disclaimerfao_'+lang];
 						
 						$(a).tooltip({placement:'left'});
@@ -3384,15 +3384,13 @@ FM.guiController = {
 };;
 FM.guiMap = {
     disclaimerfao_en:
-    		'<div class="fm-disclaimerfao">'+
-            'The designations employed and the presentation of material in the maps  <br>' +
-            'do not imply the expression of any opinion whatsoever on the part of  <br>' +
-            'FAO concerning the legal or constitutional status of any country, <br>' +
-            'territory or sea area, or concerning the delimitation of frontiers.  <br>' +
-            'South Sudan declared its independence on July 9, 2011. <br>' +
-            'Due to data availability, the assessment presented in the map for Sudan  <br>' +
-            'and South Sudan reflects thesituation up to 2011 for the former Sudan.'+
-            '</div>',
+            'The designations employed and the presentation of material in the maps ' +
+            'do not imply the expression of any opinion whatsoever on the part of ' +
+            'FAO concerning the legal or constitutional status of any country,' +
+            'territory or sea area, or concerning the delimitation of frontiers. ' +
+            'South Sudan declared its independence on July 9, 2011.' +
+            'Due to data availability, the assessment presented in the map for Sudan ' +
+            'and South Sudan reflects thesituation up to 2011 for the former Sudan.',
     disclaimerfao_es: '',
     disclaimerfao_es_styled: '<div class="fm-disclaimerfao-text"></div>',
     disclaimerfao_fr: '',
