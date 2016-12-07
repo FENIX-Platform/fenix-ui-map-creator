@@ -1,6 +1,6 @@
-define(["jquery","leaflet","hashmap","bootstrap"],
+define(["jquery","underscore","leaflet","hashmap","bootstrap"],
 
-function($, L, HashMap, Bootstrap) {
+function($, _, L, HashMap, Bootstrap) {
 
 $.i18n = {
     properties: function(opts) {},
@@ -1481,6 +1481,8 @@ FM.Map = FM.Class.extend({
 
         for(var c in codes) {
 
+            var cbName = _.uniqueId('getJson');
+
             var defaultParameters = {
                 service: 'WFS',
                 version: '1.0.0',
@@ -1488,7 +1490,7 @@ FM.Map = FM.Class.extend({
                 typeName: 'fenix:gaul0_bounds',
                 maxFeatures: 50,
                 outputFormat: 'text/javascript',
-                format_options: 'callback: getJson',
+                format_options: 'callback: '+cbName,
                 viewparams: codif+':'+codes[c]
             };
 
@@ -1498,7 +1500,7 @@ FM.Map = FM.Class.extend({
             $.ajax({
                 url: url,
                 dataType: 'jsonp',
-                jsonpCallback: 'getJson',
+                jsonpCallback: cbName,
                 success: function(json) {
                     //console.log('JSONP',url, json)
                     self.highlightLayer.addData(json);

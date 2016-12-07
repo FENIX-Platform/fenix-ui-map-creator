@@ -9,7 +9,9 @@ define([
 
     'use strict';
 
-    var Model = ModelEdu;
+    var MODEL = ModelEdu;
+
+    var LANG = 'en';
 
     var s = {
         STANDARD: "#standard",
@@ -27,7 +29,8 @@ define([
 
         window.mapCreator = new MapCreator({
             el: s.STANDARD,
-            model: Model,
+            lang: LANG,
+            model: MODEL,
             fenix_ui_map: {
                 guiController: {
                     container: '#toolbar',
@@ -57,10 +60,7 @@ define([
 
         mapCreator.on('ready', _.bind(function () {
 
-            mapCreator.addLayer(new L.TileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png', {
-                subdomains: 'abcd',
-                maxZoom: 19
-            }));
+            mapCreator.addLayer(L.tileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png'));
 
         }, this));
 
