@@ -1,16 +1,14 @@
-define(["jquery","underscore","leaflet","hashmap","bootstrap"],
 
-function($, _, L, HashMap, Bootstrap) {
+define([
+    "jquery","underscore","leaflet","hashmap","bootstrap",
+    "../nls/labels"
+    ],
 
-$.i18n = {
-    properties: function(opts) {},
-    prop: function(p) {return p}
-};
+function($, _, L, HashMap, Bootstrap, i18n) {
 
 var FM = {};
 
 FM.CONFIG = {
-	BASEURL_LANG: 'http://fenixrepo.fao.org/cdn/js/fenix-ui-map/0.1.4/i18n/',
 
 	MAP_SERVICE_SHADED: 'http://fenix.fao.org/test/geo/fenix/mapclassify/join/',
 	DEFAULT_WMS_SERVER: 'http://fenix.fao.org/demo/fenix/geoserver',
@@ -103,18 +101,14 @@ FM.Class.extend = function (props) {
 
     return NewClass;
 };
-
-
 // method for adding properties to prototype
 FM.Class.include = function (props) {
     FM.extend(this.prototype, props);
 };
-
 // merge new default options to the Class
 FM.Class.mergeOptions = function (options) {
     FM.extend(this.prototype.options, options);
 };
-
 // add a constructor hook
 FM.Class.addInitHook = function (fn) { // (Function) || (String, args...)
     var args = Array.prototype.slice.call(arguments, 1);
@@ -125,29 +119,8 @@ FM.Class.addInitHook = function (fn) { // (Function) || (String, args...)
 
     this.prototype._initHooks = this.prototype._initHooks || [];
     this.prototype._initHooks.push(init);
-};;
+};
 FM.Util = {
-
-    initializeLangProperties: function(lang) {
-        var I18NLang = '';
-
-        //TODO swith to requirejs i18n
-        //TODO lowercase lang code
-
-        switch (lang) {
-            case 'FR' : I18NLang = 'fr'; break;
-            case 'ES' : I18NLang = 'es'; break;
-            default: I18NLang = 'en'; break;
-        }
-        var path = FMCONFIG.BASEURL_LANG;
-
-        $.i18n.properties({
-            name: 'I18N',
-            path: path,
-            mode: 'both',
-            language: I18NLang
-        });
-    },
 
     extend: function (dest) { // (Object[, Object, ...]) ->
         var sources = Array.prototype.slice.call(arguments, 1),
@@ -334,20 +307,17 @@ FM.bind = FM.Util.bind;
 FM.stamp = FM.Util.stamp;
 FM.setOptions = FM.Util.setOptions;
 FM.loadModuleLibs = FM.Util.loadModuleLibs;
-FM.initializeLangProperties = FM.Util.initializeLangProperties;;
 
 FM.UIUtils = {
-
     loadingPanel: function (id, height) {
         var h = '25px';
-        if ( height ) document.getElementById(id).innerHTML = "<div class='fm-loadingPanel' style='height:"+ h +"'></div>";
-        else document.getElementById(id).innerHTML = "<div class='fm-loadingPanel'></div>";
-//        document.getElementById(id).innerHTML = "<div class='fm-loadingPanel' style='height:"+ h +"'><img src='"+ FMCONFIG.BASEURL +'/images/loading.gif' +"'></div>";
+        if (height)
+            document.getElementById(id).innerHTML = "<div class='fm-loadingPanel' style='height:"+ h +"'></div>";
+        else
+            document.getElementById(id).innerHTML = "<div class='fm-loadingPanel'></div>";
     }
-
 };
 
-;
 FM.WMSUtils = FM.Class.extend({
 
     _divID:'',
@@ -372,7 +342,7 @@ FM.WMSUtils = FM.Class.extend({
 
     _createWMSDropDown: function(wmsServers, divID, dropdowndID, outputID, fenixmap) {
         // TODO: dynamic width
-        var html = '<select id="'+ dropdowndID+'" style="width:200px;" data-placeholder="'+ $.i18n.prop('_selectaWMSServer') +'" class="">';
+        var html = '<select id="'+ dropdowndID+'" style="width:200px;" data-placeholder="" class="">';
         html += '<option value=""></option>';
         for(var i=0; i < wmsServers.length; i++)
             html += '<option value="'+ wmsServers[i].url + '">'+wmsServers[i].label +'</option>';
@@ -392,16 +362,6 @@ FM.WMSUtils = FM.Class.extend({
         });
     },
 
-    /**
-     * Create Layers's List
-     *
-     * @param id
-     * @param fenixmap
-     * @param wmsServerURL
-     * @param urlOptions
-     * @private
-     */
-     /** TODO: urlOptions (urlParameters) non e' usato!!! **/
     _createWMSOutputRequest: function(id, fenixmap, wmsServerURL) {
         $("#" + id).empty();
         FM.UIUtils.loadingPanel(id, '30px');
@@ -942,9 +902,6 @@ FM.Map = FM.Class.extend({
         // extent if exist FM.CONFIG
         if (FMCONFIG)
             this.options.url = $.extend(true, {}, FMCONFIG, options && options.url );
-
-        // setting up the lang properties
-        FM.initializeLangProperties(this.options.lang);
 
         var suffix = FM.Util.randomID();
         var mapContainerID =  suffix + '-container-map';
@@ -1722,7 +1679,7 @@ FM.Legend = {
 
     _nolegend: function(id) {
         /** TODO: getLegendURl http://gis.stackexchange.com/questions/21912/how-to-get-wms-legendgraphics-using-geoserver-and-geowebcache **/
-        var html = '<div class="fm-legend-layertitle">'+ $.i18n.prop('_nolegendavailable')+ '</div>';
+        var html = '<div class="fm-legend-layertitle">no legend available</div>';
         $('#'+id+'-content').append(html);
     }
     
@@ -2646,7 +2603,6 @@ FM.MAPController = FM.Class.extend({
         }
         
         var $boxIcon = $(FM.Util.replaceAll(FM.guiController[guiIcon], 'REPLACE', this.suffix));
-        //$boxIcon.tooltip({title: $.i18n.prop('_' + toLoad) });
 
         $boxIcon.appendTo(this.$boxIcons);
 
@@ -2787,7 +2743,6 @@ FM.MAPController = FM.Class.extend({
 
             // Enable/Disable layer
             $(idItem+ '-enabledisable')
-                //.tooltip({title: $.i18n.prop('_enabledisablelayer') })
                 .on('click', {id:l.id}, function(event) {
                     self.showHide(event.data.id)
                 });
@@ -2798,7 +2753,6 @@ FM.MAPController = FM.Class.extend({
                 opacity = l.layer.opacity;
 
             $(idItem+ '-opacity')
-                //.tooltip({title: $.i18n.prop('_layeropacity') })
 /*                .slider({
                     orientation: "horizontal",
                     range: "min",
@@ -2834,8 +2788,6 @@ FM.MAPController = FM.Class.extend({
                         l.layer.defaultgfi = true;
                     }
                 });
-                
-                //$layergfi.tooltip({title: $.i18n.prop('_getfeatureinfo') });
 
                 if ( l.layer.defaultgfi ) {
                     // TODO: set default gfi style on the layer
@@ -2857,17 +2809,13 @@ FM.MAPController = FM.Class.extend({
                 });
             }
             
-            $getlegend
-                //.tooltip({title: $.i18n.prop('_showhidelegend') })
-                .css("display","inline-block");
+            $getlegend.css("display","inline-block");
 
             // Switch JoinType (From shaded to Point Layer)
             if (l.layer.layertype ) {
                 if (l.layer.layertype == 'JOIN' ) {
                     if (l.layer.switchjointype == null || l.layer.switchjointype ) {
-                        $(idItem+ '-switchjointype')
-                        //.tooltip({title: $.i18n.prop('_switchto'+ l.layer.jointype.toLowerCase()) })
-                        .css("display","inline-block")
+                        $(idItem+ '-switchjointype').css("display","inline-block")
                         .on('click', {id:l.id}, function(event) {
                             self.switchJoinType(event.data.id);
                         })
@@ -2895,7 +2843,6 @@ FM.MAPController = FM.Class.extend({
             var $zoomtolayer = $(idItem+ '-zoomtolayer');
             if ( l.layer.zoomToBBOX ) {
                 $zoomtolayer.css("display","inline-block");
-                $zoomtolayer.attr( "title", $.i18n.prop('_zoomtolayer'));
                 $zoomtolayer.on('click', {id:l.id}, function(event) {
                     var l = self.layersMap.get( event.data.id);
                     FM.LayerUtils.zoomToLayer(self._map, l.layer)
@@ -2903,7 +2850,6 @@ FM.MAPController = FM.Class.extend({
             }
             if (l.layer.zoomTo ) {
                 $zoomtolayer.css("display","inline-block");
-                $zoomtolayer.attr( "title", $.i18n.prop('_zoomtolayer'));
                 $zoomtolayer.on('click', {id:l.id}, function(event) {
                     var l = self.layersMap.get( event.data.id);
                     FM.LayerUtils.zoomToLayer(self._map, l.layer)
@@ -3094,15 +3040,12 @@ FM.MAPController = FM.Class.extend({
 
         if (  l.layer.jointype.toLowerCase() == 'point') {
             // alert('point')
-            $('#' + l.id + '-controller-item-switchjointype').attr( "title", $.i18n.prop('_switchtopoint'));
             this.switchToShaded(id);
         }
         else if ( l.layer.jointype.toLowerCase() == 'shaded') {
             // alert('shaded')
-            $('#' + l.id + '-controller-item-switchjointype').attr( "title", $.i18n.prop('_switchtoshaded'));
             this.switchToPoint(id);
         }
-        //$("#" + l.id +  "-controller-item-switchjointype").tooltip({title: $.i18n.prop('_switchtoshaded') });
     },
 
     /*
