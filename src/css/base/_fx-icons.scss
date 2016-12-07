@@ -1,0 +1,18 @@
+/* Fenix Icons */
+
+.fx-icon{
+  height: 15px;
+  width: 15px;
+  display: inline-block;
+  background-image:  url("img/fenix-catalog-sprite-small.svg");
+  background-repeat: no-repeat;
+  background-size: 150px 30px;
+}
+
+
+
+
+
+.fx-icon-close{
+  background-position:  0 -15px;
+}

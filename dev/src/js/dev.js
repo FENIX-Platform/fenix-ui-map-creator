@@ -80,7 +80,7 @@ define([
         require("../../../node_modules/leaflet/dist/leaflet.css");
         
         require("../../../src/css/fenix-ui-leaflet.css");
-        require("../../../src/css/fenix-ui-map.css");
+        require("../../../src/css/fenix-ui-map-creator.css");
 
     };
 
