@@ -29,7 +29,12 @@ define([
             el: s.STANDARD,
             model: Model,
             fenix_ui_map: {
-                guiController: false,
+                guiController: {
+                    container: '#toolbar',
+                    overlay: true,
+                    baselayer: true,
+                    wmsLoader: false
+                },
                 baselayers: {
                     cartodb: {
                         title_en: "CartoDB light",

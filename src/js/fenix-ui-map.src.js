@@ -1,4 +1,3 @@
-
 define(["jquery","leaflet","hashmap","bootstrap"],
 
 function($, L, HashMap, Bootstrap) {
@@ -15,18 +14,14 @@ FM.CONFIG = {
 
 	MAP_SERVICE_SHADED: 'http://fenix.fao.org/test/geo/fenix/mapclassify/join/',
 	DEFAULT_WMS_SERVER: 'http://fenix.fao.org/demo/fenix/geoserver',
-	MAP_SERVICE_GFI_JOIN: 'http://fenix.fao.org/test/geo/fenix/mapclassify/request/',
+
 	MAP_SERVICE_GFI_STANDARD: 'http://fenix.fao.org/test/geo/fenix/mapclassify/request/',
 
-	// ZOOM TO BBOX
 	ZOOM_TO_BBOX: 'http://fenix.fao.org/geo/fenix/spatialquery/db/spatial/bbox/layer/',
 
-	CSS_TO_SLD: 'http://fenixapps2.fao.org/geoservices/CSS2SLD',
-
 	BASEURL_MAPS: 'http://fenixapps2.fao.org/maps-demo',
-	MAP_SERVICE_ZOOM_TO_BOUNDARY: '/rest/service/bbox',
-	MAP_SERVICE_WMS_GET_CAPABILITIES: '/rest/service/request',
-	MAP_SERVICE_PROXY: '/rest/service/request',
+
+	MAP_SERVICE_WMS_GET_CAPABILITIES: 'http://fenixapps2.fao.org/maps-demo/rest/service/request',
 
 	LAYER_BOUNDARIES: 'fenix:gaul0_line_3857',
 	LAYER_LABELS: 'http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png',
@@ -355,8 +350,6 @@ FM.UIUtils = {
 ;
 FM.WMSUtils = FM.Class.extend({
 
-    /** TODO: implement WFS **/
-
     _divID:'',
     _dropdowndID: '',
     _outputID: '',
@@ -413,7 +406,7 @@ FM.WMSUtils = FM.Class.extend({
         $("#" + id).empty();
         FM.UIUtils.loadingPanel(id, '30px');
 
-        var url = FMCONFIG.BASEURL_MAPS  + FMCONFIG.MAP_SERVICE_WMS_GET_CAPABILITIES;
+        var url = FMCONFIG.MAP_SERVICE_WMS_GET_CAPABILITIES;
         url += (url.indexOf('?') > 0)? "&": "?";
         url += 'SERVICE=WMS';
         url += '&VERSION=1.1.1';
@@ -511,7 +504,7 @@ FM.WMSUtils = FM.Class.extend({
 
     _WMSCapabilities: function(id, fenixmap, wmsServerURL) {
         // TODO: check it because in theory it shouldn't be needed
-        var url = FMCONFIG.BASEURL_MAPS  + FMCONFIG.MAP_SERVICE_WMS_GET_CAPABILITIES;
+        var url = FMCONFIG.MAP_SERVICE_WMS_GET_CAPABILITIES;
         url += (url.indexOf('?') > 0)? "&": "?";
         url += 'SERVICE=WMS';
         url += '&VERSION=1.1.1';
@@ -558,7 +551,7 @@ FM.WMSUtils = FM.Class.extend({
 
 
     WFSCapabilities: function(id, fenixmap, wmsServerURL) {
-        var url = FMCONFIG.BASEURL_MAPS  + FMCONFIG.MAP_SERVICE_WMS_GET_CAPABILITIES;
+        var url = FMCONFIG.MAP_SERVICE_WMS_GET_CAPABILITIES;
         url += (url.indexOf('?') > 0)? "&": "?";
         url += 'SERVICE=WFS';
         url += '&VERSION=1.0.0';
@@ -680,95 +673,7 @@ FM.WMSUtils = FM.Class.extend({
     // export api
     window.fullScreenApi = fullScreenApi;
 })();;
-FM.DEPENDENCIES = {
 
-    FENIX_REPOSITORY: "fenixrepo.fao.org/cdn/js",
-
-    fenixmap: {
-        js: [
-            // change with library
-            "js/FENIXMap.js",
-            "js/core/Class.js",
-            "js/core/Util.js",
-            "js/core/hashmap.js",
-            "js/map/config/CONFIG.js",
-            "js/map/config/DEPENDENCIES.js",
-            "js/map/Map.js",
-            "js/map/controller/MapController.js",
-            "js/map/layer/Layer.js",
-            "js/map/layer/TileLayer.js",
-            "js/map/constants/TILELAYER.js",
-            "js/map/gui/gui-controller.js",
-            "js/map/gui/gui-map.js",
-            "js/core/fullscreen.js",
-            "js/core/UIUtils.js"
-
-        ],
-        css: [
-//            "<link rel=\"stylesheet\" href=\"http://cdn.leafletjs.com/leaflet-0.6.4/leaflet-custom.css\" /><!--[if lte IE 8]><link rel=\"stylesheet\" href=\"http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css\" /><![endif]-->"
-            "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css",
-            "http://fenixrepo.fao.org/cdn/js/jquery.power.tip/1.2.0/css/jquery.powertip.css",
-            "http://hqlprfenixapp2.hq.un.fao.org:13000/repository/js/jquery.pageslide/2.0/jquery.pageslide.min.css",
-            "css/fenix-map.css"
-        ]
-    },
-
-    geocoder : {
-        js : [
-            "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.geocoder/1.0/Control.OSMGeocoder.js"
-        ],
-        css : [
-            "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.geocoder/1.0/Control.OSMGeocoder.css"
-        ]
-    },
-
-    geosearch: {
-        js : [
-            "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.geosearch/1.0/l.control.geosearch.js",
-            "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.geosearch/1.0/l.geosearch.provider.openstreetmap.js"
-        ],
-        css : [
-            "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.geosearch/1.0/l.geosearch.css"
-        ]
-    },
-
-    mouseposition: {
-        js : [
-            "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.mouseposition/1.0/L.Control.MousePosition.js"
-        ],
-        css : [
-            "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.mouseposition/1.0/L.Control.MousePosition.css"
-        ]
-    },
-
-    drawcontrol: {
-        js : [
-            "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.draw/1.0/leaflet.draw.js"
-        ],
-        css : [
-            "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.draw/1.0/leaflet.draw.css"
-        ]
-    },
-
-    exportplugin: {
-        js : [
-            "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.export/1.0/export.js"
-        ],
-        css : [
-            "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.export/1.0/export.css"
-        ]
-    },
-
-    controlloading: {
-        js : [
-            "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.control.loading/1.0/Control.Loading.js"
-        ],
-        css : [
-            "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.control.loading/1.0/Control.Loading.css"
-        ]
-    }
-};
-;
 FMDEFAULTLAYER = {
 
     getLayer: function(layertype, isjoin, measurementunit) {
@@ -1288,7 +1193,6 @@ FM.Map = FM.Class.extend({
             $('#'+ l.id + '-controller-item-opacity').css('display', 'block');
         }
         var _this = this;
-        //var url = FMCONFIG.BASEURL_MAPS + FMCONFIG.MAP_SERVICE_SHADED;
         var url = this.options.url.MAP_SERVICE_SHADED;
         $.ajax({
             type: "POST",
@@ -1459,7 +1363,7 @@ FM.Map = FM.Class.extend({
                 FM.SpatialQuery.getFeatureInfoJoin(l, e.layerPoint, e.latlng, fenixMap);
             }
             else {
-               FM.SpatialQuery.getFeatureInfoStandard(l, e.layerPoint, e.latlng, fenixMap);
+                FM.SpatialQuery.getFeatureInfoStandard(l, e.layerPoint, e.latlng, fenixMap);
             }
         }
     },
@@ -1547,10 +1451,6 @@ FM.Map = FM.Class.extend({
         FM.MapUtils.zoomToCountry(this, column, codes)
     },
 
-    getSLDfromCSS: function(layername, css) {
-        FM.MapUtils.getSLDfromCSS(layername, css, this.options.url.CSS_TO_SLD);
-    },
-
     labelsShow: function() {
         this.layerLabels.addTo(this.map).bringToFront();
     },
@@ -1612,146 +1512,7 @@ FM.Map = FM.Class.extend({
 FM.map = function (id, options, mapOptions) {
     return new FM.Map(id, options, mapOptions);
 };
-;
-FM.WCS = function() {
 
-    // TODO: config are the map.config (to be passed)
-    var config = {
-        url: {}
-    }
-
-    // PROXY used to load the requests
-    var PROXY = (config.url.MAP_SERVICE_PROXY)? config.url.MAP_SERVICE_PROXY: 'http://fenixapps2.fao.org/maps/rest/service/request'
-
-    // current version
-    var VERSION = '1.1.1';
-
-    // this variable is used to manage the WFS Version in 2.0 typeName became typeNames
-    var IDENTIFIERS = {
-        '1.1.1' : 'identifiers',
-        '2.0'   : 'identifiers'
-    }
-
-    /**
-     * Return the description of the columns
-     * @param obj
-     * @param callback call back function
-     * var obj = {url: '', layername: '', version: '' // in case it's not 1.1.0'}
-     */
-    var getDescription = function(obj, callback) {
-        var request = PROXY;
-        request += '?service=wcs';
-        request += ( obj.version )? '&version=' + obj.version: '&version=' + VERSION;
-        request += '&request=DescribeCoverage';
-        request += '&' + IDENTIFIERS[VERSION] +'=' + obj.layername;
-        request += '&urlWMS=' + obj.url; //TODO: on the service change name to refrect just a url and not urlWMS
-        $.ajax({
-            type: 'GET',
-            url: request,
-            success: function(response) { parseXML(response, callback) },
-            error: function() { console.log('WCS error getDescription() REQUEST'); }
-        });
-    }
-
-    var parseXML = function(xml, callback) {
-        var result = 'TODO: parse XML if there are useful information'
-        if ( callback) callback(result)
-    }
-
-    return {
-        getDescription: getDescription,
-        getVersion: function() { return VERSION }
-    }
-}();
-
-;
-FM.WFS = function(config) {
-
-    // TODO: config are the map.config (to be passed)
-    var config = {
-        url: {}
-    }
-
-    // PROXY used to load the requests
-    var PROXY = (config.url.BASEURL_MAPS)? config.url.MAP_SERVICE_PROXY: 'http://fenixapps2.fao.org/maps/rest/service/request'
-
-    // current WFS version
-    var VERSION = '1.1.0';
-
-    // this variable is used to manage the WFS Version in 2.0 typeName became typeNames
-    var TYPENAME = {
-        '1.1.0' : 'typeName',
-        '2.0'   : 'typeNames'
-    }
-
-    /**
-     * Return the description of the columns
-     * @param obj
-     * @param callback call back function
-     * var obj = {url: '', layername: '', version: '' // in case it's not 1.1.0'}
-     */
-    var getFields = function(obj, callback) {
-        var request = PROXY;
-        request += '?SERVICE=WFS';
-        request += (obj.version)? '&VERSION=' + obj.version: '&VERSION=' + VERSION;
-        request += '&request=DescribeFeatureType';
-        request += '&' + TYPENAME[VERSION] +'=' + obj.layername;
-        request += '&urlWMS=' + obj.url; //TODO: on the service change name to refrect just a url and not urlWMS
-        $.ajax({
-            type: 'GET',
-            url: request,
-            success: function(response) { parseXML(response, callback) },
-            error: function() { console.log('WFS error getDescription() REQUEST'); }
-        });
-    }
-
-    var parseXML = function(xml, callback) {
-        var xmlResponse = $.parseXML(xml), $xml = $( xmlResponse );
-        var result = []
-        $xml.find('xsd\\:sequence xsd\\:element').each(function() {
-            // creating the json with the names and type of the fields
-            result.push({ name: $(this).attr('name'), type: $(this).attr('type')} )
-        });
-        if ( callback)
-            callback(result)
-    }
-
-    /**
-     * Return the description of the columns
-     * @param obj
-     * @param callback call back function
-     * var obj = {url: '', layername: '', propertyname: '' //attribute1,attribute2, sortby: '' // attribute+D attribute+A, version: '' // in case it's not 1.1.0' }
-     */
-    //http://hqlprfenixapp1.hq.un.fao.org:10090/geoserver/wfs?service=wfs&version=2.0.0&request=GetFeature&typeName=fenix:gaul1_3857_2&propertyName=adm0_code,faost_n&sortBy=faost_n
-    var getFieldsValues = function(obj, callback) {
-        var request = PROXY;
-        request += '?SERVICE=WFS';
-        request += (obj.version)? '&VERSION=' + obj.version: '&VERSION=' + VERSION;
-        request += '&request=GetFeature';
-        request += '&' + TYPENAME[VERSION] +'=' + obj.layername;
-        request += (obj.propertyname)? '&propertyname=' + obj.propertyname: '';
-        request += (obj.sortby)? '&sortby=' + obj.sortby: '';
-        request += '&outputFormat=json';
-        request += '&urlWMS=' + obj.url; //TODO: on the service change name to refrect just a url and not urlWMS
-        $.ajax({
-            type: 'GET',
-            url: request,
-            success: function(response) { if(callback) callback(response) },
-            error: function() { console.log('WFS error getDescription() REQUEST');  }
-        });
-    }
-
-    var getFieldValueMin = function(obj, callback) {}
-    var getFieldValueMax = function(obj, callback) {}
-
-    return {
-        getFields: getFields,
-        getFieldsValues: getFieldsValues,
-        getVersion: function() { return VERSION }
-    }
-}();
-
-;
 FM.LayerUtils = {
 
     setLayerOpacity: function(l, opacity) {
@@ -2002,24 +1763,6 @@ FM.MapUtils = function() {
         zoomTo(m, "country", column, codes);
     };
 
-    var getSLDfromCSS = function(layername, css, url) {
-        var sld = '';
-        //TODO: change URL
-        $.ajax({
-            url: url,
-            data: {
-                stylename: layername,
-                style: css
-            },
-            async: false,
-            type: 'POST',
-            success: function(response) {
-                sld = response;
-            }
-        });
-        return sld;
-    };
-
     var fitWorldByScreen = function(m, bounds) {
     	//http://stackoverflow.com/questions/6048975/google-maps-v3-how-to-calculate-the-zoom-level-for-a-given-bounds
 
@@ -2057,13 +1800,29 @@ FM.MapUtils = function() {
         exportLayers: exportLayers,
         zoomTo: zoomTo,
         zoomToCountry: zoomToCountry,
-        getSLDfromCSS: getSLDfromCSS,
         fitWorldByScreen: fitWorldByScreen
     }
 
 }();;
 FM.Plugins = {
-
+    /*
+    //geocoder
+    "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.geocoder/1.0/Control.OSMGeocoder.js"
+    "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.geocoder/1.0/Control.OSMGeocoder.css"
+    //geosearch
+    "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.geosearch/1.0/l.control.geosearch.js",
+    "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.geosearch/1.0/l.geosearch.provider.openstreetmap.js"
+    "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.geosearch/1.0/l.geosearch.css"
+    //mouseposition
+    "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.mouseposition/1.0/L.Control.MousePosition.js"
+    "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.mouseposition/1.0/L.Control.MousePosition.css"
+    //drawcontrol
+    "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.draw/1.0/leaflet.draw.js"
+    "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.draw/1.0/leaflet.draw.css"
+    //controlloading
+    "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.control.loading/1.0/Control.Loading.js"
+    "http://fenixrepo.fao.org/cdn/js/leaflet/plugins/leaflet.control.loading/1.0/Control.Loading.css"
+    */
     _addzoomcontrol: function(_fenixmap, show) {
     	if( show ) {
 	    	var pos = typeof _fenixmap.options.plugins.zoomcontrol === 'string' ? 
@@ -2328,7 +2087,9 @@ FM.SpatialQuery = {
      */
     getFeatureInfoJoin: function(l, layerPoint, latlng, fenixmap) {
         // setting a custom popup if it's not available
-        if (l.layer.customgfi == null ) FMDEFAULTLAYER.joinDefaultPopUp(l.layer)
+        if (l.layer.customgfi == null )
+            FMDEFAULTLAYER.joinDefaultPopUp(l.layer)
+
         FM.SpatialQuery.getFeatureInfoStandard(l, layerPoint, latlng, fenixmap);
     },
 
@@ -2362,7 +2123,6 @@ FM.SpatialQuery = {
         Y = new Number(Y);
         Y = Y.toFixed(0) //13.3714
         var url = fenixmap.options.url.MAP_SERVICE_GFI_STANDARD;
-        //var url = FMCONFIG.BASEURL_MAPS  + FMCONFIG.MAP_SERVICE_GFI_STANDARD;
         url += '?SERVICE=WMS';
         url += '&VERSION=1.1.1';
         url += '&REQUEST=GetFeatureInfo';
