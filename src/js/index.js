@@ -20,6 +20,8 @@ define([
 
         _.extend(this, C, {initial: o});
 
+        require("../css/fenix-ui-map-creator.css");
+
         this._parseInput(o);
 
         this.fenix_ui_mapConfig = o.fenix_ui_map;
