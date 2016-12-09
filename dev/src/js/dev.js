@@ -9,8 +9,6 @@ define([
 
     'use strict';
 
-    var MODEL = ModelEdu;
-
     var LANG = 'en';
 
     var s = {
@@ -28,9 +26,13 @@ define([
     Dev.prototype.start = function () {
 
         window.mapCreator = new MapCreator({
+            
+            model: ModelEdu,
+            
             el: s.STANDARD,
+            
             lang: LANG,
-            model: MODEL,
+
             fenix_ui_map: {
                 guiController: {
                     container: '#toolbar',
@@ -54,13 +56,19 @@ define([
                     }
                 },
                 labels: true,
-                highlightCountry: ['TCD', 'MLI', 'NER']
+                highlightCountry: ['TCD', 'MLI', 'NER'],
+                zoomToCountry: ['TCD', 'MLI', 'NER']
             }
         });
 
         mapCreator.on('ready', _.bind(function () {
 
             mapCreator.addLayer(L.tileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png'));
+
+            mapCreator.addLayer(ModelPop, {
+                opacity: 1,
+                colorramp: 'Reds'
+            });
 
         }, this));
 

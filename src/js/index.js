@@ -72,7 +72,9 @@ define([
     /**
      * Add a layer to map
      */
-    MapCreator.prototype.addLayer = function (model) {
+    MapCreator.prototype.addLayer = function (model, modelLayerConf) {
+
+        modelLayerConf = modelLayerConf || {}
 
         var layer;
 
@@ -96,7 +98,7 @@ define([
         else
             layer = this.createLayerFenix(model);
 
-        layer = new FM.layer(layer);
+        layer = new FM.layer(_.extend(layer, modelLayerConf));
 
         if (typeof model === 'object' && model['metadata'] && model['metadata']['title'] && model['metadata']['title']['EN'])
             layer.layer.layertitle = model['metadata']['title']['EN'];
@@ -275,7 +277,7 @@ define([
 
     };
 
-    MapCreator.prototype.createLayerFenix = function (model, options) {
+    MapCreator.prototype.createLayerFenix = function (model) {
         var metadata = model.metadata;
         var layer = {};
         // Define the layer
@@ -295,7 +297,7 @@ define([
         //if (model.hasOwnProperty("datasource"))
         //  layer.urlWMS = metadata["datasource"];
 
-        layer.urlWMS = this.fenix_ui_map.DEFAULT_WMS_SERVER;
+        layer.urlWMS = this.DEFAULT_WMS_SERVER;
         layer.layertitle = {
             en: 'Data Layer'
         };

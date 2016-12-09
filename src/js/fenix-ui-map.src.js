@@ -11,11 +11,12 @@ var FM = {};
 FM.CONFIG = {
 
 	MAP_SERVICE_SHADED: 'http://fenix.fao.org/test/geo/fenix/mapclassify/join/',
-	DEFAULT_WMS_SERVER: 'http://fenix.fao.org/demo/fenix/geoserver',
+
+    ZOOM_TO_BBOX: 'http://fenix.fao.org/geo/fenix/spatialquery/db/spatial/bbox/layer/',
 
 	MAP_SERVICE_GFI_STANDARD: 'http://fenix.fao.org/test/geo/fenix/mapclassify/request/',
 
-	ZOOM_TO_BBOX: 'http://fenix.fao.org/geo/fenix/spatialquery/db/spatial/bbox/layer/',
+    DEFAULT_WMS_SERVER: 'http://fenix.fao.org/demo/fenix/geoserver',
 
 	BASEURL_MAPS: 'http://fenixapps2.fao.org/maps-demo',
 
@@ -25,7 +26,7 @@ FM.CONFIG = {
 	LAYER_LABELS: 'http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png',
 };
 
-FMCONFIG = FM.CONFIG;;
+FM.CONFIG = FM.CONFIG;
 FM.Class = function () {};
 
 FM.Class.extend = function (props) {
@@ -367,7 +368,7 @@ FM.WMSUtils = FM.Class.extend({
         $("#" + id).empty();
         FM.UIUtils.loadingPanel(id, '30px');
 
-        var url = FMCONFIG.MAP_SERVICE_WMS_GET_CAPABILITIES;
+        var url = FM.CONFIG.MAP_SERVICE_WMS_GET_CAPABILITIES;
         url += (url.indexOf('?') > 0)? "&": "?";
         url += 'SERVICE=WMS';
         url += '&VERSION=1.1.1';
@@ -463,7 +464,7 @@ FM.WMSUtils = FM.Class.extend({
 
     _WMSCapabilities: function(id, fenixmap, wmsServerURL) {
         // TODO: check it because in theory it shouldn't be needed
-        var url = FMCONFIG.MAP_SERVICE_WMS_GET_CAPABILITIES;
+        var url = FM.CONFIG.MAP_SERVICE_WMS_GET_CAPABILITIES;
         url += (url.indexOf('?') > 0)? "&": "?";
         url += 'SERVICE=WMS';
         url += '&VERSION=1.1.1';
@@ -510,7 +511,7 @@ FM.WMSUtils = FM.Class.extend({
 
 
     WFSCapabilities: function(id, fenixmap, wmsServerURL) {
-        var url = FMCONFIG.MAP_SERVICE_WMS_GET_CAPABILITIES;
+        var url = FM.CONFIG.MAP_SERVICE_WMS_GET_CAPABILITIES;
         url += (url.indexOf('?') > 0)? "&": "?";
         url += 'SERVICE=WFS';
         url += '&VERSION=1.0.0';
@@ -667,12 +668,12 @@ FMDEFAULTLAYER = {
     },
 
     _getWMSLayer:function(layername, urlWMS, styles, srs) {
-        // TODO: remove FMCONFIG from here!
+        // TODO: remove FM.CONFIG from here!
         var layer = {};
         layer.layers = layername;
         layer.styles = (styles)?styles:'';
         layer.srs = (srs)?srs:'EPSG:3857';
-        layer.urlWMS = (urlWMS)?urlWMS: FMCONFIG.DEFAULT_WMS_SERVER;
+        layer.urlWMS = (urlWMS)?urlWMS: FM.CONFIG.DEFAULT_WMS_SERVER;
         return layer;
     },
 
@@ -899,8 +900,8 @@ FM.Map = FM.Class.extend({
         this.mapOptions = $.extend(true, {}, this.mapOptions, mapOptions);
 
         // extent if exist FM.CONFIG
-        if (FMCONFIG)
-            this.options.url = $.extend(true, {}, FMCONFIG, options && options.url );
+        if (FM.CONFIG)
+            this.options.url = $.extend(true, {}, FM.CONFIG, options && options.url );
 
         var suffix = FM.Util.randomID();
         var mapContainerID =  suffix + '-container-map';
@@ -1148,7 +1149,7 @@ FM.Map = FM.Class.extend({
             $('#'+ l.id + '-controller-item-getlegend').css('display', 'inline-block');
             $('#'+ l.id + '-controller-item-opacity').css('display', 'block');
         }
-        var _this = this;
+        var self = this;
         var url = this.options.url.MAP_SERVICE_SHADED;
         $.ajax({
             type: "POST",
@@ -1157,7 +1158,7 @@ FM.Map = FM.Class.extend({
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             success: function(response) {
-                _this._createShadeLayer(l, response, isReload);
+                self._createShadeLayer(l, response, isReload);
             }
         });
     },
@@ -1226,47 +1227,45 @@ FM.Map = FM.Class.extend({
         $('#'+ l.id + '-controller-item-getlegend').css('display', 'none');
         $('#'+ l.id + '-controller-item-getlegend-holder').slideUp("slow");
         $('#'+ l.id + '-controller-item-opacity').css('display', 'none');
-        var _this = this;
+        
+        var self = this;
         var url = this.options.url.MAP_SERVICE_SHADED;
-        var r = new RequestHandler();
-        r.open('POST', url);
-        r.setContentType('application/x-www-form-urlencoded');
-        r.request.onload= function () {
-            // TODO: make a specific function to clear the old layer
-            // cleaning the pointLayers (if they were created)
-            _this._createPointLayer(l, this.responseText );
-        };
-        r.send(FM.Util.parseLayerRequest(l.layer));
-        r.request.onerror = function () {
-            // TODO: make a specific function to clear the old layer
-            // cleaning the pointLayers (if they were created)
-            if ( l.layer.pointsLayers ) {
-                for(var i=0; i < l.layer.pointsLayers.length; i++) {
-                    this.map.removeLayer(l.layer.pointsLayers[i]);
-                }
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: JSON.stringify(l.layer),
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function(response) {
+                console.log('response', response)
+                
+                self._createPointLayer(l, response);
             }
-        };
+        });
     },
 
-    _createPointLayer: function(l, response) {
-        if (typeof response == 'string') response = $.parseJSON(response);
+    _createPointLayer: function(l, response, isReload) {
+        if (typeof response == 'string')
+            response = $.parseJSON(response);
         l.layer.sldurl = response.sldurl;
         l.layer.urlWMS = response.geoserverwms;
         l.layer.legendHTML = response.legendHTML;
         l.layer.pointsJSON = response.pointsJSON;
-        this._refreshPointLayer(l);
+        this._refreshPointLayer(l);       
     },
 
     _refreshPointLayer:function (l) {
         // cleaning the pointLayers (if they were created)
+        if (typeof l.layer.pointsJSON == 'string')
+            l.layer.pointsJSON = $.parseJSON(l.layer.pointsJSON);
+
         if ( l.layer.pointsLayers ) {
             for(var i=0; i < l.layer.pointsLayers.length; i++) {
                 this.map.removeLayer(l.layer.pointsLayers[i]);
             }
         }
-        if (typeof l.layer.pointsJSON == 'string') l.layer.pointsJSON = $.parseJSON(l.layer.pointsJSON);
 
-        var _this = this;
+        var self = this;
         l.layer.pointsLayers = [];
         for(var i=0; i < l.layer.pointsJSON.length; i++) {
             var latlon = new L.LatLng(l.layer.pointsJSON[i].lat, l.layer.pointsJSON[i].lon);
@@ -1279,24 +1278,27 @@ FM.Map = FM.Class.extend({
             if ( l.layer.measurementuni != null )
                 l.layer.pointsJSON[i].properties.measurementunit = l.layer.measurementunit;
 
-            if (l.layer.pointColor != null) properties.color = l.layer.pointColor;
-            if (l.layer.pointFillColor != null) properties.fillColor = l.layer.pointFillColor;
-            if (l.layer.pointFillOpacity != null) properties.fillOpacity = l.layer.pointFillOpacity;
+            if (l.layer.pointColor != null)
+                properties.color = l.layer.pointColor;
+            if (l.layer.pointFillColor != null)
+                properties.fillColor = l.layer.pointFillColor;
+            if (l.layer.pointFillOpacity != null)
+                properties.fillOpacity = l.layer.pointFillOpacity;
 
             var marker = new L.CircleMarker(latlon, properties).addTo(this.map);
 
             marker.setRadius(l.layer.pointsJSON[i].radius);
             marker.bindPopup(properties.title + ' - ' + properties.value );
             marker.on('mouseover', function () {
-                $("#" + _this.suffix +"-popup-join-point-holder").show();
-                $("#" + _this.suffix +"-popup-join-point-text").empty();
-                $("#" + _this.suffix +"-popup-join-point-value").empty();
-                $("#" + _this.suffix +"-popup-join-point-text").append( this.options.title );
+                $("#" + self.suffix +"-popup-join-point-holder").show();
+                $("#" + self.suffix +"-popup-join-point-text").empty();
+                $("#" + self.suffix +"-popup-join-point-value").empty();
+                $("#" + self.suffix +"-popup-join-point-text").append( this.options.title );
                 // TODO: N.B. l.layer.measurementunit is used **/
-                $("#" + _this.suffix +"-popup-join-point-value").append(this.options.value + '  <i>' + l.layer.measurementunit + '</i>');
+                $("#" + self.suffix +"-popup-join-point-value").append(this.options.value + '  <i>' + l.layer.measurementunit + '</i>');
             });
             marker.on('mouseout', function () {
-                $("#" + _this.suffix +"-popup-join-point-holder").hide();
+                $("#" + self.suffix +"-popup-join-point-holder").hide();
             });
             l.layer.pointsLayers.push(marker);
         }
@@ -1331,13 +1333,13 @@ FM.Map = FM.Class.extend({
     // interface plugins
     initializePlugins: function() {
         if ( this.options.plugins != null ) {
-            var _this = this;
+            var self = this;
             $.each(this.options.plugins, function(key, value) {
                 var pname = key.toLowerCase(),
                 	invoke = '_add' + pname;
 
                 if (FM.Plugins[invoke])
-                	_this.plugins[pname] = FM.Plugins[invoke](_this, value);
+                	self.plugins[pname] = FM.Plugins[invoke](self, value);
             });
         }
     },
