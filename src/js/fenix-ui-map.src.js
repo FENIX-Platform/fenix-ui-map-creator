@@ -571,31 +571,21 @@ FM.WMSUtils = FM.Class.extend({
         },
         browserPrefixes = 'webkit moz o ms khtml'.split(' ');
 
-    // check for native support
     if (typeof document.exitFullscreen != 'undefined') {
-        //console.log('fullScreenApi if');
         fullScreenApi.supportsFullScreen = true;
     } else {
-       // console.log('fullScreenApi else');
-        // check for fullscreen support by vendor prefix
         for (var i = 0, il = browserPrefixes.length; i < il; i++ ) {
             fullScreenApi.prefix = browserPrefixes[i];
-
             if (typeof document[fullScreenApi.prefix + 'CancelFullScreen' ] != 'undefined' ) {
-                //console.log('fullScreenApi.CancelFullScreen');
                 fullScreenApi.supportsFullScreen = true;
                 break;
             }
         }
     }
 
-    // update methods to do something useful
     if (fullScreenApi.supportsFullScreen) {
-        //console.log('fullScreenApi.qua');
         fullScreenApi.fullScreenEventName = fullScreenApi.prefix + 'fullscreenchange';
-
         fullScreenApi.isFullScreen = function() {
-            //console.log('fullScreenApi.isFullScreen');
             switch (this.prefix) {
                 case '':
                     return document.fullScreen;
@@ -606,11 +596,9 @@ FM.WMSUtils = FM.Class.extend({
             }
         }
         fullScreenApi.requestFullScreen = function(el) {
-            //console.log('fullScreenApi.requestFullScreen');
             return (this.prefix === '') ? el.requestFullscreen() : el[this.prefix + 'RequestFullScreen']();
         }
         fullScreenApi.cancelFullScreen = function(el) {
-           // console.log('fullScreenApi.cancelFullScreen');
                 return (this.prefix === '') ?
                 document.exitFullscreen() :
                 document[this.prefix + 'CancelFullScreen']();
@@ -644,8 +632,8 @@ FMDEFAULTLAYER = {
             case "GAUL0_ISO3"           : return FMDEFAULTLAYER._getGAUL('gaul0_faostat_3857_2', 'iso3_code', 'the_geom', isjoin, 'faost_n', measurementunit, 'ISO3'); break;
             case "GAUL0_BOUNDARIES"     : return FMDEFAULTLAYER._getWMSLayer('gaul0_line_3857'); break;
             case "GAUL1"                : return FMDEFAULTLAYER._getGAUL('gaul1_3857', 'adm1_code', 'the_geom', isjoin, 'adm1_name', measurementunit, null); break;
-//            case "GAUL1"                : return FMDEFAULTLAYER._getGAUL('gaul1_3857', 'adm1_code', 'the_geom', isjoin, 'adm1_name', measurementunit, null); break;
-//            case "GAUL2"                : return FMDEFAULTLAYER._getGAUL('gaul2_3857', 'adm2_code', 'the_geom', isjoin, 'adm2_name', measurementunit, null); break;
+        //            case "GAUL1"                : return FMDEFAULTLAYER._getGAUL('gaul1_3857', 'adm1_code', 'the_geom', isjoin, 'adm1_name', measurementunit, null); break;
+        //            case "GAUL2"                : return FMDEFAULTLAYER._getGAUL('gaul2_3857', 'adm2_code', 'the_geom', isjoin, 'adm2_name', measurementunit, null); break;
             // TODO: change to a standard GAUL2 layer. 'gaul2_3857_2'is another GAUL2 used with the new popup (the old gaul2 as content.ftl used by countrystat)
             case "GAUL2"                : return FMDEFAULTLAYER._getGAUL('gaul2_3857', 'adm2_code', 'the_geom', isjoin, 'adm2_name', measurementunit, null); break;
         }
@@ -679,7 +667,6 @@ FMDEFAULTLAYER = {
 
     /** TODO: handle multilanguage **/
     joinDefaultPopUp: function( layer ) {
-        //console.log(layer);
         var measurementunit  = (layer.measurementunit)? " " + layer.measurementunit +"": "";
         var joinlabel  = (layer.joincolumnlabel)? "<div class='fm-popup-join-title'>{{" + layer.joincolumnlabel +"}}</div>": "";
         layer.customgfi = {
@@ -959,11 +946,8 @@ FM.Map = FM.Class.extend({
             
             for (var x = 0; x < classes.length; x++) {
                 
-                console.log(classes[x].selectorText)
 
                 if (classes[x].selectorText.indexOf(className)>-1 ) {
-
-                    console.log(classes[x].selectorText)
 
                     if(!ret[className])
                         ret[className]=[];
@@ -975,8 +959,6 @@ FM.Map = FM.Class.extend({
         }
 
         this.fenixStyles = getStyle('.color-main');
-
-        console.log('FMMAP fenixStyles',fenixStyles);//*/
     },
     
     createMap: function(lat, lng, zoom) {
@@ -1108,8 +1090,8 @@ FM.Map = FM.Class.extend({
                 case 'JOIN':
                     if (l.layer.jointype.toLocaleUpperCase() == 'SHADED')
                         this.addShadedLayer(l);
-                    else if (l.layer.jointype.toLocaleUpperCase() == 'POINT')
-                        this.addPointLayer(l);
+                    //else if (l.layer.jointype.toLocaleUpperCase() == 'POINT')
+                    //    this.addPointLayer(l);
                 break;
                 case 'WMS': this.addLayerWMS(l); break;
                 default: this.addLayerWMS(l); break;
@@ -1215,7 +1197,7 @@ FM.Map = FM.Class.extend({
             console.war("_openlegend error:" + e);
         }
     },
-
+/*
     addPointLayer: function(l) {
         // adding the layer to the controller
         this.controller.layerAdded(l);
@@ -1236,9 +1218,7 @@ FM.Map = FM.Class.extend({
             data: JSON.stringify(l.layer),
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
-            success: function(response) {
-                console.log('response', response)
-                
+            success: function(response) {                
                 self._createPointLayer(l, response);
             }
         });
@@ -1294,7 +1274,6 @@ FM.Map = FM.Class.extend({
                 $("#" + self.suffix +"-popup-join-point-text").empty();
                 $("#" + self.suffix +"-popup-join-point-value").empty();
                 $("#" + self.suffix +"-popup-join-point-text").append( this.options.title );
-                // TODO: N.B. l.layer.measurementunit is used **/
                 $("#" + self.suffix +"-popup-join-point-value").append(this.options.value + '  <i>' + l.layer.measurementunit + '</i>');
             });
             marker.on('mouseout', function () {
@@ -1302,7 +1281,7 @@ FM.Map = FM.Class.extend({
             });
             l.layer.pointsLayers.push(marker);
         }
-    },
+    },*/
 
     // syncronize the maps on movement
     syncOnMove: function (mapToSync) {
@@ -1460,7 +1439,6 @@ FM.Map = FM.Class.extend({
                 dataType: 'jsonp',
                 jsonpCallback: cbName,
                 success: function(json) {
-                    //console.log('JSONP',url, json)
                     self.highlightLayer.addData(json);
                     self.highlightLayer.bringToFront();
                 }
@@ -1707,19 +1685,18 @@ FM.MapUtils = function() {
 
         var url = m.options.url.ZOOM_TO_BBOX + layer +'/'+ column+'/'+ codes.toString();
 
-        $.ajax({
-            type: "GET",
-            url: url,
-            success: function(response) {
-                if (m.hasOwnProperty("map"))
-                    m.map.fitBounds(response);
-                else
-                    m.fitBounds(response);
-            }
+        $.getJSON(url, function(response) {
+
+            if (m.hasOwnProperty("map"))
+                m.map.fitBounds(response);
+            else
+                m.fitBounds(response);
+        }).error(function(e) { 
+            console.log('zoomTo error',codes)
         });
     };
 
-    var zoomToCountry = function(m, column, codes) {
+    var zoomC = function(m, column, codes) {
         zoomTo(m, "country", column, codes);
     };
 
@@ -1759,11 +1736,12 @@ FM.MapUtils = function() {
         syncMapsOnMove: syncMapsOnMove,
         exportLayers: exportLayers,
         zoomTo: zoomTo,
-        zoomToCountry: zoomToCountry,
+        zoomToCountry: zoomC,
         fitWorldByScreen: fitWorldByScreen
     }
 
 }();;
+
 FM.Plugins = {
     /*
     //geocoder
@@ -2888,12 +2866,9 @@ FM.MAPController = FM.Class.extend({
 
     _layerGUIOptions:function(l) {
         var gui = l.gui;
-        // at Gaul Level 1 remove the point layer option
         if (l.layer.layertype == 'JOIN') {
             if ( l.layer.gui !=null )
                 if (l.layer.gui.nojoinlayerswitch != null && l.layer.gui.nojoinlayerswitch) {
-                    // TODO: hide pointlayer option
-                    // hiding the legend
                     $('#'+ l.id + '-controller-item-switchjointype').css('display', 'none');
                 }
         }
@@ -3456,7 +3431,6 @@ FM.Layer = FM.Class.extend({
 
         // language
         lang: 'EN' //ISO2
-
     },
 
     leafletLayer: '',
@@ -3553,13 +3527,12 @@ FM.Layer = FM.Class.extend({
         }
     },
 
-    /** shortcut **/
-    addPointLayer: function(fenixmap) {
+    /*addPointLayer: function(fenixmap) {
         if ( fenixmap )
             fenixmap.addPointLayer(this);
         else if ( this._fenixmap)
             this._fenixmap.addPointLayer(this);
-    },
+    },*/
 
     addLayerWMS: function(fenixmap) {
         if ( fenixmap )

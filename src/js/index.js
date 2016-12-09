@@ -24,7 +24,7 @@ define([
 
         this._parseInput(o);
 
-        this.fenix_ui_mapConfig = o.fenix_ui_map;
+        this._mapConf = o.fenix_ui_map;
 
         var valid = this._validateInput();
 
@@ -42,6 +42,8 @@ define([
             log.error("Impossible to create MapCreator");
             log.error(valid)
         }
+
+        return this;
 
     }
 
@@ -218,7 +220,7 @@ define([
         //var myPivotatorConfig=this.fenixTool.parseInut(this.initial.model.metadata.dsd, this.pivotatorConfig);
         //var model = this.pivotator.pivot(this.model, this.pivotatorConfig);
 
-        self.fenixMap = new FM.Map(self.$el, self.fenix_ui_mapConfig);
+        self.fenixMap = new FM.Map(self.$el, self._mapConf);
         self.fenixMap.createMap();
 
         self.leafletMap = self.fenixMap.map;
@@ -337,7 +339,6 @@ define([
             if (model['metadata'].hasOwnProperty("title")) {
                 if (model['metadata']['title'][this.lang]) {
                     layer.layertitle = model['metadata']['title'][this.lang];
-                    //console.log('title',this.lang, layer.layertitle)
                 }
             }
             else {
@@ -369,21 +370,20 @@ define([
                 });
             });
 
-            var zoomlayer = layer.layers.split(":");
+            var layerName = layer.layers.split(":");
 
-            zoomlayer = zoomlayer.length > 1 ? zoomlayer[1] : zoomlayer[0];
-
-            this.fenixMap.zoomTo(zoomlayer, layer.joincolumn, codes);
+            layerName = layerName.length > 1 ? layerName[1] : layerName[0];
+            
+            if(!this._mapConf.zoomToCountry)
+                this.fenixMap.zoomTo(layerName, layer.joincolumn, codes);
 
             if (this.initial.colorRamp)
                 layer.colorramp = this.initial.colorRamp;
 
             return layer;
 
-        } else {
-            //console.error(this.errors);
-            //throw new Error("FENIX Map creator has not a valid JOIN configuration");
-        }
+        } else
+            throw new Error("FENIX Map creator has not a valid JOIN configuration");
     };
 
     MapCreator.prototype.getJoinLayer = function (model) {

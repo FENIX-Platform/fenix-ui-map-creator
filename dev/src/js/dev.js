@@ -25,7 +25,7 @@ define([
 
     Dev.prototype.start = function () {
 
-        window.mapCreator = new MapCreator({
+        window.M = new MapCreator({
             
             model: ModelEdu,
             
@@ -61,11 +61,11 @@ define([
             }
         });
 
-        mapCreator.on('ready', _.bind(function () {
+        M.on('ready', _.bind(function () {
 
-            mapCreator.addLayer(L.tileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png'));
+            M.addLayer(L.tileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png'));
 
-            mapCreator.addLayer(ModelPop, {
+            M.addLayer(ModelPop, {
                 opacity: 1,
                 colorramp: 'Reds'
             });
