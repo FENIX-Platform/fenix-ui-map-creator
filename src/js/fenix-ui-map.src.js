@@ -1004,8 +1004,8 @@ FM.Map = FM.Class.extend({
                 layers: this.options.url.LAYER_BOUNDARIES,
                 layertitle: 'Country Boundaries',
                 urlWMS: this.options.url.DEFAULT_WMS_SERVER,
-                opacity: '0.9',
-                lang: 'en',
+                opacity: 0.9,
+                lang: this.options.lang.toUpperCase(),
                 hideLayerInControllerList: true
             });
             //this.addLayer(this.layerBoundaries)
@@ -1031,7 +1031,6 @@ FM.Map = FM.Class.extend({
             if(typeof this.options.zoomToCountry[0] === 'string') {
                 this.zoomToCountry('iso3', this.options.zoomToCountry);
             }
-
             else if(typeof this.options.zoomToCountry[0] === 'number') {
                 this.zoomToCountry('adm0_code', this.options.zoomToCountry);
             }
@@ -2566,12 +2565,23 @@ FM.MAPController = FM.Class.extend({
     loadIcon: function(toLoad, visibleBox) {
         var guiBox = toLoad + 'Box';
         var guiIcon = toLoad + 'Icon';
+        var titBox = '';
+
 
         visibleBox = typeof visibleBox !== 'undefined' ? visibleBox : false;
 
-        this.$boxMenuContainer.append(
-            FM.Util.replaceAll(FM.guiController[guiBox], 'REPLACE', this.suffix)
-        );
+
+        var lang = this._fenixMap.options.lang;
+
+        if(guiBox==='overlayBox')
+            titBox = i18n[ lang ]['map_select_overlay'];
+        else if(guiBox==='baselayerBox')
+            titBox = i18n[ lang ]['map_baselayers'];
+
+        var $txt = $(FM.Util.replaceAll(FM.guiController[guiBox], 'REPLACE', this.suffix));
+        $txt.find('.fm-controller-box-title').html(titBox);
+
+        this.$boxMenuContainer.append($txt);
 
         if(visibleBox===false) {
             this.$boxMenu.hide();
@@ -2885,7 +2895,6 @@ FM.MAPController = FM.Class.extend({
         var self = this;
 
         // setting the zIndex and updating it
-        //console.log(this.zIndexBaseLayer);
         l.layer.zindex = this.zIndexBaseLayer;
         this.zIndexBaseLayer = this.zIndexBaseLayer + 2;
 
@@ -3165,12 +3174,7 @@ FM.MAPController = FM.Class.extend({
         var l = this.layersMap.get(layerID);
         l.layer.zindex = updatedZIndex;
         l.leafletLayer.setZindex = updatedZIndex;
-        try {
-            document.getElementById(l.id).style.zIndex=updatedZIndex;
-        }catch (e) {
-           // console.log('error updateZIndex: ' + l.id + ' doesnt exists');
-        }
-
+        $(l.id).css({zIndex: updatedZIndex});
     },
 
     /**
@@ -3271,6 +3275,14 @@ FM.guiController = {
         '<div id="REPLACE-controller-baselayer-content" class="fm-controller-box-content"></div>' +
     '</div>',
 
+    overlayBox:
+    '<div class="fm-box-zindex fx-toolbar-map-holder " id="REPLACE-controller-overlay-box">' +
+        '<div id="REPLACE-controller-overlay-title" class="fm-controller-box-title">Selected Layers</div>' +
+        '<div id="REPLACE-controller-overlay-remove" class="fm-icon-close-panel-sprite fm-icon-close fm-icon-right"></div>' +
+        '<div class="fm-standard-hr"></div>' +
+        '<div id="REPLACE-controller-overlay-content" class="fm-controller-box-content"></div>'+
+    '</div>',
+
     baselayer:
     '<div id="REPLACE-controller-box-item" class="fm-box-zindex fx-toolbar-map-holder  fm-controller-box-item-baselayer-content">' +
     '<div id="REPLACE-controller-item">' +
@@ -3289,14 +3301,6 @@ FM.guiController = {
 
     overlayIcon:
     "<div class='fm-box-zindex fx-toolbar-map-holder '><div class='fm-icon-sprite fm-overlays' id='REPLACE-controller-overlayIcon'></div></div>",
-
-    overlayBox:
-    '<div class="fm-box-zindex fx-toolbar-map-holder " id="REPLACE-controller-overlay-box">' +
-        '<div id="REPLACE-controller-overlay-title" class="fm-controller-box-title">Selected Layers</div>' +
-        '<div id="REPLACE-controller-overlay-remove" class="fm-icon-close-panel-sprite fm-icon-close fm-icon-right"></div>' +
-        '<div class="fm-standard-hr"></div>' +
-        '<div id="REPLACE-controller-overlay-content" class="fm-controller-box-content"></div>'+
-    '</div>',
 
     overlay:
     '<div id="REPLACE-controller-item-box" class="fm-box-zindex fx-toolbar-map-holder  fm-controller-box-item">' +
@@ -3361,13 +3365,21 @@ FM.guiController = {
 };;
 FM.guiMap = {
     disclaimerfao_en:
-            'The designations employed and the presentation of material in the maps ' +
-            'do not imply the expression of any opinion whatsoever on the part of ' +
-            'FAO concerning the legal or constitutional status of any country,' +
-            'territory or sea area, or concerning the delimitation of frontiers. ' +
-            'South Sudan declared its independence on July 9, 2011.' +
-            'Due to data availability, the assessment presented in the map for Sudan ' +
-            'and South Sudan reflects thesituation up to 2011 for the former Sudan.',
+        'The designations employed and the presentation of material in the maps ' +
+        'do not imply the expression of any opinion whatsoever on the part of ' +
+        'FAO concerning the legal or constitutional status of any country,' +
+        'territory or sea area, or concerning the delimitation of frontiers. ' +
+        'South Sudan declared its independence on July 9, 2011.' +
+        'Due to data availability, the assessment presented in the map for Sudan ' +
+        'and South Sudan reflects thesituation up to 2011 for the former Sudan.',
+    disclaimerfao_fr:
+        "Les appellations employées et la présentation du matériel dans les cartes"+
+        "N'impliquent aucune prise de position de la part de"+
+        "FAO concernant le statut juridique ou constitutionnel de tout pays,"+
+        "Territoire ou zone maritime, ni quant à la délimitation des frontières."+
+        "Le Sud-Soudan a déclaré son indépendance le 9 juillet 2011."+
+        "En raison de la disponibilité des données, l'évaluation présentée dans la carte pour le Soudan"+
+        "Et le Sud-Soudan reflète la situation jusqu'en 2011 pour l'ancien Soudan",
     disclaimerfao_es: '',
     disclaimerfao_es_styled: '<div class="fm-disclaimerfao-text"></div>',
     disclaimerfao_fr: '',

@@ -18,7 +18,7 @@ define({
     "selectaWMSServer": "Select a WMS Server",
     "addaWMSServer": "Add a WMS Server",
     "nolegendavailable": "The legend is not available",
-    
+    //from vbox tab map
     map_select_overlay: "Select Overlayer",
     map_baselayers: "Base Layers",
     map_selected_layers: "Selected Layers",

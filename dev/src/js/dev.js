@@ -9,7 +9,8 @@ define([
 
     'use strict';
 
-    var LANG = 'en';
+    //var LANG = 'en';
+    var LANG = 'fr';
 
     var s = {
         STANDARD: "#standard",
@@ -43,14 +44,16 @@ define([
                 baselayers: {
                     cartodb: {
                         title_en: "CartoDB light",
+                        title_fr: "CartoDB light",
                         url: 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',
                         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
                         subdomains: 'abcd',
                         maxZoom: 19
                     },
                     esri_grayscale: {
-                        url: "http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
                         title_en: "Esri WorldGrayCanvas",
+                        title_fr: "Esri WorldGrayCanvas",
+                        url: "http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
                         attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
                         maxZoom: 16
                     }

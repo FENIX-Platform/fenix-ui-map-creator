@@ -24,6 +24,8 @@ define([
 
         this._parseInput(o);
 
+        o.fenix_ui_map.lang = o.lang;
+
         this._mapConf = o.fenix_ui_map;
 
         var valid = this._validateInput();
