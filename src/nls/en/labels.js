@@ -17,5 +17,11 @@ define({
     "layersubicons": "Click to open the layer's menu",
     "selectaWMSServer": "Select a WMS Server",
     "addaWMSServer": "Add a WMS Server",
-    "nolegendavailable": "The legend is not available"
+    "nolegendavailable": "The legend is not available",
+    
+    map_select_overlay: "Select Overlayer",
+    map_baselayers: "Base Layers",
+    map_selected_layers: "Selected Layers",
+    map_show_bounds: "Show Map Boundaries",
+    map_show_labels: "Show Map Labels"
 });

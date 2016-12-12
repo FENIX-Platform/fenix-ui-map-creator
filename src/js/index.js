@@ -419,7 +419,6 @@ define([
 
         if (this._validateJoinColumnInput(geoColumn)) {
 
-
             var layer = null;
             var codelist = geoColumn['domain']['codes'][0]['idCodeList'].toLowerCase();
 

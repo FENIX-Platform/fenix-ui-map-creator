@@ -17,5 +17,12 @@ define({
     "layersubicons": "Cliquez pour ouvrir le menu des couches",
     "selectaWMSServer": "Selectionnez un serveur WMS",
     "addaWMSServer": "Ajoutez un serveur WMS",
-    "nolegendavailable": "Legende non disponible"
+    "nolegendavailable": "Legende non disponible",
+
+    map_select_overlay: "Sélectionner la Surcouche",
+    map_baselayers: "Couches de base",
+    map_selected_layers: "Couches sélectionnés",
+    map_show_bounds: "Voir la carte des limites",
+    map_show_labels: "Voir la carte des étiquettes"
+
 });
