@@ -2575,9 +2575,9 @@ FM.MAPController = FM.Class.extend({
         var lang = this._fenixMap.options.lang || 'en';
 
         if(guiBox==='overlayBox')
-            titBox = i18nLabels[ lang ]['map_select_overlay'];
+            titBox = i18nLabels[ lang.toLowerCase() ]['map_select_overlay'];
         else if(guiBox==='baselayerBox')
-            titBox = i18nLabels[ lang ]['map_baselayers'];
+            titBox = i18nLabels[ lang.toLowerCase() ]['map_baselayers'];
 
         var $txt = $(FM.Util.replaceAll(FM.guiController[guiBox], 'REPLACE', this.suffix));
         $txt.find('.fm-controller-box-title').html(titBox);
