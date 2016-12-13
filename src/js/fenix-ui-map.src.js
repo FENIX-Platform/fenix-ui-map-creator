@@ -1691,8 +1691,6 @@ FM.MapUtils = function() {
                 m.map.fitBounds(response);
             else
                 m.fitBounds(response);
-        }).error(function(e) { 
-            console.log('zoomTo error',codes)
         });
     };
 
