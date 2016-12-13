@@ -54,10 +54,10 @@ module.exports = {
     plugins: clearArray([
         new webpack.ProvidePlugin({$: "jquery", jQuery: "jquery"}),
         isProduction(new CleanWebpackPlugin([distFolderPath]), undefined),
-        isProduction(new webpack.optimize.UglifyJsPlugin({
+        /*isProduction(new webpack.optimize.UglifyJsPlugin({
             compress: {warnings: false},
             output: {comments: false}
-        })),
+        })),*/
         isProduction(new ExtractTextPlugin(packageJson.name + '.min.css')),
         isDevelop(new HtmlWebpackPlugin({
             inject: "body",

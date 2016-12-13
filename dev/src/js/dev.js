@@ -9,8 +9,11 @@ define([
 
     'use strict';
 
-    //var LANG = 'en';
-    var LANG = 'fr';
+    var LANG = 'en';
+    //var LANG = 'fr';
+    
+    if(location.hash)
+        LANG = location.hash.replace('#','');
 
     var s = {
         STANDARD: "#standard",

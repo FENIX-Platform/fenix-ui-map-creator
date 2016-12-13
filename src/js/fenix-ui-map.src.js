@@ -4,7 +4,8 @@ define([
     '../nls/labels'
     ],
 
-function($, _, L, HashMap, Bootstrap, Rangeslider, i18n) {
+function($, _, L, HashMap, Bootstrap, Rangeslider,
+    i18nLabels) {
 
 var FM = {};
 
@@ -2571,12 +2572,12 @@ FM.MAPController = FM.Class.extend({
         visibleBox = typeof visibleBox !== 'undefined' ? visibleBox : false;
 
 
-        var lang = this._fenixMap.options.lang;
+        var lang = this._fenixMap.options.lang || 'en';
 
         if(guiBox==='overlayBox')
-            titBox = i18n[ lang ]['map_select_overlay'];
+            titBox = i18nLabels[ lang ]['map_select_overlay'];
         else if(guiBox==='baselayerBox')
-            titBox = i18n[ lang ]['map_baselayers'];
+            titBox = i18nLabels[ lang ]['map_baselayers'];
 
         var $txt = $(FM.Util.replaceAll(FM.guiController[guiBox], 'REPLACE', this.suffix));
         $txt.find('.fm-controller-box-title').html(titBox);
