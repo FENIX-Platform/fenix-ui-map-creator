@@ -6385,4 +6385,7 @@ div#legend.bottomright div table {
 
 /*# sourceMappingURL=fenix-ui-map-creator.css.map */
 
+.fm-opacity-slider-baselayers {
+    display:none
+}
 /*# sourceMappingURL=fenix-ui-map-creator.min.css.map*/

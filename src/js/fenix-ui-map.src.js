@@ -3293,7 +3293,7 @@ FM.guiController = {
                 '<label>' +
             '</div>' +
             '<div style="clear:both"></div>' +
-            '<div class="fm-opacity-slider-baselayers" id="REPLACE-controller-item-opacity" style="display:none"></div>' +
+            //'<input type="text" class="fm-opacity-slider-baselayers" id="REPLACE-controller-item-opacity" style="display:none" value="1" />' +
         '</div>' +
     '</div>' +
     '</div>',
@@ -3311,7 +3311,7 @@ FM.guiController = {
             '<div style="clear:both"></div>' +
             '<div class="fm-controller-box-icons">' +
                 '<div class="fm-icon-enable" id="REPLACE-controller-item-enabledisable"></div>' +
-                '<div class="fm-opacity-slider" style="margin-right:10px;" id="REPLACE-controller-item-opacity"></div>' +
+                '<input type="text" class="fm-opacity-slider" style="margin-right:10px;" id="REPLACE-controller-item-opacity" value="1" />' +
             '</div>' +
             '<div style="clear:both"></div>' +
             '<div class="fm-controller-box-subicons" id="REPLACE-controller-item-subicons" style="display:none;">' +
