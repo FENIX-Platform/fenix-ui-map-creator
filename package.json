@@ -1,6 +1,6 @@
 {
   "name": "fenix-ui-map-creator",
-  "version": "2.7.9-beta.18",
+  "version": "2.7.9-beta.25",
   "description": "FENIX map component creator",
   "main": "dist/fenix-ui-map-creator.min.js",
   "scripts": {

@@ -219,7 +219,9 @@ define([
 
         var self = this;
 
-        //var myPivotatorConfig=this.fenixTool.parseInut(this.initial.model.metadata.dsd, this.pivotatorConfig);
+        this.$el.empty();
+
+            //var myPivotatorConfig=this.fenixTool.parseInut(this.initial.model.metadata.dsd, this.pivotatorConfig);
         //var model = this.pivotator.pivot(this.model, this.pivotatorConfig);
 
         self.fenixMap = new FM.Map(self.$el, self._mapConf);
