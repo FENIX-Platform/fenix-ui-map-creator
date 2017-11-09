@@ -130,7 +130,7 @@ define([
             return;
         }
 
-        this.fenixMap.invalidateSize()
+        this.fenixMap.invalidateSize();
 
         return this;
     };
@@ -142,6 +142,7 @@ define([
         this.id = this.initial.id;
         this.$el = $(this.initial.el);
         this.model = this.initial.model;
+        this.lang = this.initial.lang || "EN";
 
         //pivotator config
         var pc = {};
@@ -392,6 +393,7 @@ define([
             muColumn = {};
 
         metadata['dsd']['columns'].forEach(_.bind(function (col, index) {
+
             if (col.subject === this.geoSubject || col.id === this.geoSubject) {
                 geoColumn = col;
                 geoColumn.index = index;
@@ -408,12 +410,12 @@ define([
 
         // getting the right measurement unit if the new label exists
         metadata['dsd']['columns'].forEach(_.bind(function (column, index) {
-            if (muColumn.id + '_' + this.lang) {
+            if (column.id == (muColumn.id + '_' + this.lang)) {
+            //if (muColumn.id + '_' + this.lang) {
                 muColumn = column;
                 muColumn.index = index;
             }
         }, this));
-
 
         if (this._validateJoinColumnInput(geoColumn)) {
 
@@ -437,8 +439,8 @@ define([
             // get joinData
             layer.joindata = this.getJoinData(model['data'], geoColumn.index, valueColumn.index);
 
-            // TODO: check on the column index
             layer.measurementunit = model['data'][0][muColumn.index];
+            //if ( model['data'][0][muColumn.index] == muColumn.values.codes[0].codes[0].code ) layer.measurementunit = muColumn.values.codes[0].codes[0].label[this.lang.toUpperCase()];
 
             // TODO: check if is the right legendtitle
             layer.legendtitle = layer.measurementunit;

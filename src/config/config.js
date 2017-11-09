@@ -51,7 +51,7 @@ define(function () {
 
         valueSubject: 'value',
         // measurement unit
-        muSubject: null,
+        muSubject: 'um',
 
         // Mapping with the
         join: {
